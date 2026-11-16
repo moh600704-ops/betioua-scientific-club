@@ -1,533 +1,248 @@
-<!DOCTYPE html>  <html lang="ar" dir="rtl">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <title>النادي العلمي لمعهد بطيوة | BÉTIOUA SCIENTIFIC CLUB</title>  <meta  
-name="description"  
-content="النادي العلمي لمعهد بطيوة: فضاء للاهتمام بالعلوم والهندسة والتكنولوجيا والابتكار التطبيقي."  
-/>
-
-  <meta name="theme-color" content="#080b12" />    <link rel="stylesheet" href="style.css" />  
-</head>  <body>    <!-- HEADER & DESKTOP NAVIGATION -->    <header class="top-header">  
-    <div class="container header-inner">  <a href="index.html" class="brand" aria-label="BÉTIOUA Scientific Club - Home">  
-
-    <svg class="brand-mark" viewBox="0 0 36 36" fill="none"  
-      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">  
-      <path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z"  
-        stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/>  
-      <path d="M18 18L26.5 13"  
-        stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>  
-      <circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/>  
-      <circle cx="18" cy="18" r="2.8" fill="#F97316"/>  
-    </svg>  
-
-    <div class="brand-text">  
-      <span class="brand-title" data-i18n="brandTitle">  
-        النادي العلمي لمعهد بطيوة  
-      </span>  
-      <span class="brand-sub" data-i18n="brandSub">  
-        BÉTIOUA SCIENTIFIC CLUB  
-      </span>  
-    </div>  
-
-  </a>  
-
-  <!-- DESKTOP ICON NAVIGATION -->  
-  <nav class="desktop-nav" aria-label="Main Navigation">  
-
-    <a href="index.html" class="nav-icon-link active" data-nav="index.html"  
-      aria-label="Home">  
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-        aria-hidden="true">  
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>  
-        <polyline points="9 22 9 12 15 12 15 22"/>  
-      </svg>  
-      <span class="nav-tooltip" data-i18n="navHome">الرئيسية</span>  
-    </a>  
-
-    <a href="about.html" class="nav-icon-link" data-nav="about.html"  
-      aria-label="About">  
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-        aria-hidden="true">  
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>  
-        <circle cx="9" cy="7" r="4"/>  
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>  
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>  
-      </svg>  
-      <span class="nav-tooltip" data-i18n="navAbout">من نحن</span>  
-    </a>  
-
-    <a href="innovators.html" class="nav-icon-link" data-nav="innovators.html"  
-      aria-label="Innovators">  
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-        aria-hidden="true">  
-        <path d="M9 18h6"/>  
-        <path d="M10 22h4"/>  
-        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>  
-      </svg>  
-      <span class="nav-tooltip" data-i18n="navInnovators">المبتكرون</span>  
-    </a>  
-
-    <a href="activities.html" class="nav-icon-link" data-nav="activities.html"  
-      aria-label="Activities">  
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-        aria-hidden="true">  
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>  
-        <line x1="16" y1="2" x2="16" y2="6"/>  
-        <line x1="8" y1="2" x2="8" y2="6"/>  
-        <line x1="3" y1="10" x2="21" y2="10"/>  
-      </svg>  
-      <span class="nav-tooltip" data-i18n="navActivities">النشاطات</span>  
-    </a>  
-
-    <a href="contact.html" class="nav-icon-link" data-nav="contact.html"  
-      aria-label="Contact">  
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-        aria-hidden="true">  
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>  
-        <polyline points="22,6 12,13 2,6"/>  
-      </svg>  
-      <span class="nav-tooltip" data-i18n="navContact">تواصل معنا</span>  
-    </a>  
-
-  </nav>  
-
-  <!-- LANGUAGE SWITCH -->  
-  <button id="langToggleBtn" class="lang-btn" type="button"  
-    aria-label="Switch Language">  
-
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"  
-      stroke="currentColor" stroke-width="2" aria-hidden="true">  
-      <circle cx="12" cy="12" r="10"/>  
-      <line x1="2" y1="12" x2="22" y2="12"/>  
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>  
-    </svg>  
-
-    <span data-i18n="langToggle">EN</span>  
-  </button>  
-
-</div>
-
-  </header>    <main>  <!-- HERO SECTION -->  
-<section class="hero-section">  
-  <div class="container hero-grid">  
-
-    <div class="hero-content">  
-
-      <div class="inst-badge">  
-        <span class="dot"></span>  
-        <span data-i18n="instBadge">  
-          معهد التكوين المهني — بطيوة  
-        </span>  
-      </div>  
-
-      <h1 class="hero-title">  
-        <span data-i18n="heroTitle1">فكّر أبعد...</span>  
-        <span class="highlight" data-i18n="heroTitle2">  
-          واصنع المستقبل.  
-        </span>  
-      </h1>  
-
-      <p class="hero-desc" data-i18n="heroDesc">  
-        حيث يلتقي الفضول العلمي بالإبداع الهندسي، وتتحول الأفكار إلى  
-        إمكانيات حقيقية. مساحة للاهتمام بالمعرفة والتجريب والتكنولوجيا  
-        واستكشاف آفاق الابتكار التطبيقي.  
-      </p>  
-
-      <div class="hero-actions">  
-
-        <a href="innovators.html" class="btn btn-primary">  
-          <span data-i18n="btnExploreProjects">استكشف المشاريع</span>  
-
-          <svg class="arrow-icon" width="18" height="18"  
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-            stroke-width="2.2" aria-hidden="true">  
-            <line x1="19" y1="12" x2="5" y2="12"/>  
-            <polyline points="12 19 5 12 12 5"/>  
-          </svg>  
-        </a>  
-
-        <a href="about.html" class="btn btn-secondary">  
-          <span data-i18n="btnDiscoverClub">اكتشف النادي</span>  
-        </a>  
-
-      </div>  
-    </div>  
-
-
-    <!-- HERO IMAGE -->  
-    <div class="hero-visual-wrapper">  
-      <div class="hero-visual-card">  
-
-        <img  
-          src="file_000000001e008243a422471eb02cacec.png"  
-          alt="تصميم فني لمحرك توربيني وتروس صناعية"  
-          fetchpriority="high"  
-          decoding="async"  
-        />  
-
-        <span class="tech-corner tl"></span>  
-        <span class="tech-corner br"></span>  
-
-      </div>  
-    </div>  
-
-  </div>  
-</section>  
-
-
-<!-- CORE DOMAINS -->  
-<section class="section reveal">  
-  <div class="container">  
-
-    <div class="section-header">  
-
-      <span class="section-kicker" data-i18n="domainsKicker">  
-        محاور الاهتمام التقني  
-      </span>  
-
-      <h2 class="section-title" data-i18n="domainsTitle">  
-        مساحات للتجريب والابتكار التطبيقي  
-      </h2>  
-
-      <p class="section-subtitle" data-i18n="domainsSubtitle">  
-        استكشاف مجالات الهندسة والتكنولوجيا وربط المعرفة النظرية بالتطبيق العملي.  
-      </p>  
-
-    </div>  
-
-
-    <div class="cards-grid-3">  
-
-      <!-- DOMAIN 01 -->  
-      <article class="tech-card">  
-        <div>  
-
-          <div class="card-top">  
-            <div class="card-icon-box">  
-              <svg width="22" height="22" viewBox="0 0 24 24"  
-                fill="none" stroke="currentColor" stroke-width="1.8"  
-                aria-hidden="true">  
-                <circle cx="12" cy="12" r="3"/>  
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>  
-              </svg>  
-            </div>  
-            <span class="card-num">01</span>  
-          </div>  
-
-          <h3 data-i18n="domain1Title">  
-            الهندسة والصيانة الصناعية  
-          </h3>  
-
-          <p data-i18n="domain1Desc">  
-            استكشاف الأنظمة الميكانيكية والهيدروليكية ومبادئ الصيانة الصناعية.  
-          </p>  
-
-        </div>  
-      </article>  
-
-
-      <!-- DOMAIN 02 -->  
-      <article class="tech-card">  
-        <div>  
-
-          <div class="card-top">  
-            <div class="card-icon-box">  
-              <svg width="22" height="22" viewBox="0 0 24 24"  
-                fill="none" stroke="currentColor" stroke-width="1.8"  
-                aria-hidden="true">  
-                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>  
-                <rect x="9" y="9" width="6" height="6"/>  
-                <line x1="9" y1="1" x2="9" y2="4"/>  
-                <line x1="15" y1="1" x2="15" y2="4"/>  
-                <line x1="9" y1="20" x2="9" y2="23"/>  
-                <line x1="15" y1="20" x2="15" y2="23"/>  
-                <line x1="20" y1="9" x2="23" y2="9"/>  
-                <line x1="20" y1="14" x2="23" y2="14"/>  
-                <line x1="1" y1="9" x2="4" y2="9"/>  
-                <line x1="1" y1="14" x2="4" y2="14"/>  
-              </svg>  
-            </div>  
-            <span class="card-num">02</span>  
-          </div>  
-
-          <h3 data-i18n="domain2Title">  
-            الأنظمة المدمجة والأتمتة  
-          </h3>  
-
-          <p data-i18n="domain2Desc">  
-            التعرف على دوائر التحكم الآلي والمتحكمات الدقيقة والمستشعرات والروبوتيك.  
-          </p>  
-
-        </div>  
-      </article>  
-
-
-      <!-- DOMAIN 03 -->  
-      <article class="tech-card">  
-        <div>  
-
-          <div class="card-top">  
-            <div class="card-icon-box">  
-              <svg width="22" height="22" viewBox="0 0 24 24"  
-                fill="none" stroke="currentColor" stroke-width="1.8"  
-                aria-hidden="true">  
-                <polygon points="12 2 2 7 12 12 22 7 12 2"/>  
-                <polyline points="2 17 12 22 22 17"/>  
-                <polyline points="2 12 12 17 22 12"/>  
-              </svg>  
-            </div>  
-            <span class="card-num">03</span>  
-          </div>  
-
-          <h3 data-i18n="domain3Title">  
-            الابتكار وتطوير النماذج الأولية  
-          </h3>  
-
-          <p data-i18n="domain3Desc">  
-            استكشاف مراحل تطوير الأفكار الهندسية من التخطيط والرسم إلى بناء النماذج الأولية.  
-          </p>  
-
-        </div>  
-      </article>  
-
-    </div>  
-
-
-    <p class="disclaimer-note">  
-
-      <svg width="15" height="15" viewBox="0 0 24 24"  
-        fill="none" stroke="currentColor" stroke-width="2"  
-        aria-hidden="true">  
-        <circle cx="12" cy="12" r="10"/>  
-        <line x1="12" y1="16" x2="12" y2="12"/>  
-        <line x1="12" y1="8" x2="12.01" y2="8"/>  
-      </svg>  
-
-      <span data-i18n="domainsDisclaimer">  
-        تمثل هذه المجالات محاور اهتمام مقترحة، ويمكن تحديثها وفق التوجهات والبرامج المعتمدة للنادي.  
-      </span>  
-
-    </p>  
-
-  </div>  
-</section>  
-
-
-<!-- INNOVATORS & ACTIVITIES PREVIEW -->  
-<section class="section reveal">  
-  <div class="container split-grid">  
-
-    <div class="tech-card">  
-
-      <div>  
-        <span class="status-pill" data-i18n="prepBadge">  
-          قيد الإعداد والتوثيق  
-        </span>  
-
-        <h3 data-i18n="showcaseInnovatorsTitle">  
-          فضاء المبتكرين والإنجازات  
-        </h3>  
-
-        <p data-i18n="showcaseInnovatorsDesc">  
-          يجري إعداد هذا الفضاء لتقديم المشاريع والأفكار التقنية بعد توثيقها وتجهيزها للعرض.  
-        </p>  
-      </div>  
-
-      <a href="innovators.html" class="text-link">  
-        <span data-i18n="linkToInnovators">  
-          انتقل إلى فضاء المبتكرين  
-        </span>  
-        <span aria-hidden="true">←</span>  
-      </a>  
-
-    </div>  
-
-
-    <div class="tech-card">  
-
-      <div>  
-        <span class="section-kicker" data-i18n="activitiesKicker">  
-          برنامج الفعاليات  
-        </span>  
-
-        <h3 data-i18n="showcaseActivitiesTitle">  
-          الورشات والمعارض العلمية  
-        </h3>  
-
-        <p data-i18n="showcaseActivitiesDesc">  
-          سيتم تخصيص هذه المساحة للتعريف بالنشاطات والورشات واللقاءات العلمية عند توفر معلوماتها.  
-        </p>  
-      </div>  
-
-      <a href="activities.html" class="text-link">  
-        <span data-i18n="linkToActivities">  
-          استعرض صفحة النشاطات  
-        </span>  
-        <span aria-hidden="true">←</span>  
-      </a>  
-
-    </div>  
-
-  </div>  
-</section>  
-
-
-<!-- CALL TO ACTION -->  
-<section class="section reveal">  
-  <div class="container">  
-
-    <div class="cta-box">  
-
-      <div>  
-        <h2 class="section-title" data-i18n="ctaTitle">  
-          هل لديك فكرة مشروع أو رغبة في التعاون العلمي؟  
-        </h2>  
-
-        <p class="section-subtitle" data-i18n="ctaDesc">  
-          الأفكار الجديدة والتعاون العلمي يمكن أن يفتحا آفاقاً واسعة للابتكار والتطوير التقني.  
-        </p>  
-      </div>  
-
-      <a href="contact.html" class="btn btn-primary">  
-        <span data-i18n="ctaBtn">تواصل مع النادي</span>  
-      </a>  
-
-    </div>  
-
-  </div>  
-</section>
-
-  </main>    <!-- FOOTER -->    <footer class="site-footer">  
-    <div class="container">  <div class="footer-grid">  
-
-    <div>  
-
-      <div class="brand" style="margin-bottom: 14px;">  
-
-        <svg class="brand-mark" viewBox="0 0 36 36"  
-          fill="none" xmlns="http://www.w3.org/2000/svg"  
-          aria-hidden="true">  
-          <path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z"  
-            stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/>  
-          <path d="M18 18L26.5 13"  
-            stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>  
-          <circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/>  
-          <circle cx="18" cy="18" r="2.8" fill="#F97316"/>  
-        </svg>  
-
-        <div class="brand-text">  
-          <span class="brand-title" data-i18n="brandTitle">  
-            النادي العلمي لمعهد بطيوة  
-          </span>  
-          <span class="brand-sub" data-i18n="brandSub">  
-            BÉTIOUA SCIENTIFIC CLUB  
-          </span>  
-        </div>  
-
-      </div>  
-
-      <p class="section-subtitle" style="font-size: 0.88rem;"  
-        data-i18n="footerDesc">  
-        فضاء للاهتمام بالابتكار العلمي والتجريب الهندسي وتطوير المهارات التقنية.  
-      </p>  
-
-    </div>  
-
-
-    <div>  
-
-      <h4 class="footer-heading" data-i18n="footerLinksTitle">  
-        أقسام الموقع  
-      </h4>  
-
-      <ul class="footer-links">  
-        <li><a href="index.html" data-i18n="navHome">الرئيسية</a></li>  
-        <li><a href="about.html" data-i18n="navAbout">من نحن</a></li>  
-        <li><a href="innovators.html" data-i18n="navInnovators">المبتكرون</a></li>  
-        <li><a href="activities.html" data-i18n="navActivities">النشاطات</a></li>  
-        <li><a href="contact.html" data-i18n="navContact">تواصل معنا</a></li>  
-      </ul>  
-
-    </div>  
-
-
-    <div>  
-
-      <h4 class="footer-heading" data-i18n="footerLocationTitle">  
-        الموقع  
-      </h4>  
-
-      <p class="section-subtitle" style="font-size: 0.88rem;"  
-        data-i18n="footerLocationText">  
-        بطيوة، ولاية وهران، الجزائر.  
-      </p>  
-
-    </div>  
-
-  </div>  
-
-
-  <div class="footer-bottom">  
-
-    <span data-i18n="footerCopyright">  
-      © 2026 النادي العلمي لمعهد بطيوة — جميع الحقوق محفوظة.  
-    </span>  
-
-    <span>THINK BEYOND. BUILD THE FUTURE.</span>  
-
-  </div>  
-
-</div>
-
-  </footer>    <!-- MOBILE BOTTOM NAVIGATION -->    <nav class="mobile-dock" aria-label="Mobile Navigation">  <a href="index.html" class="dock-item active" data-nav="index.html">  
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-    aria-hidden="true">  
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>  
-    <polyline points="9 22 9 12 15 12 15 22"/>  
-  </svg>  
-  <span data-i18n="navHome">الرئيسية</span>  
-</a>  
-
-<a href="about.html" class="dock-item" data-nav="about.html">  
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-    aria-hidden="true">  
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>  
-    <circle cx="9" cy="7" r="4"/>  
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>  
-    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>  
-  </svg>  
-  <span data-i18n="navAbout">من نحن</span>  
-</a>  
-
-<a href="innovators.html" class="dock-item" data-nav="innovators.html">  
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-    aria-hidden="true">  
-    <path d="M9 18h6"/>  
-    <path d="M10 22h4"/>  
-    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>  
-  </svg>  
-  <span data-i18n="navInnovators">المبتكرون</span>  
-</a>  
-
-<a href="activities.html" class="dock-item" data-nav="activities.html">  
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-    aria-hidden="true">  
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>  
-    <line x1="16" y1="2" x2="16" y2="6"/>  
-    <line x1="8" y1="2" x2="8" y2="6"/>  
-    <line x1="3" y1="10" x2="21" y2="10"/>  
-  </svg>  
-  <span data-i18n="navActivities">النشاطات</span>  
-</a>  
-
-<a href="contact.html" class="dock-item" data-nav="contact.html">  
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  
-    aria-hidden="true">  
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>  
-    <polyline points="22,6 12,13 2,6"/>  
-  </svg>  
-  <span data-i18n="navContact">تواصل معنا</span>  
-</a>
-
-  </nav>    <!-- MAIN JAVASCRIPT -->    <script src="app.js"></script>  </body>  
-</html>  
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05070c" />
+  <title data-i18n="titleHome">النادي العلمي لمعهد بطيوة | BÉTIOUA SCIENTIFIC CLUB</title>
+  <meta name="description" content="الموقع الرسمي للنادي العلمي لمعهد التكوين المهني ببطيوة — فضاء للابتكار العلمي، الهندسة، والتجريب التطبيقي." data-i18n-content="descHome" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BÉTIOUA SCIENTIFIC CLUB" />
+  <meta property="og:title" content="النادي العلمي لمعهد بطيوة | BÉTIOUA SCIENTIFIC CLUB" data-i18n-content="titleHome" />
+  <meta property="og:description" content="الموقع الرسمي للنادي العلمي لمعهد التكوين المهني ببطيوة — فضاء للابتكار العلمي، الهندسة، والتجريب التطبيقي." data-i18n-content="descHome" />
+  <meta property="og:image" content="https://betioua-scientific-club.vercel.app/file_000000001e008243a422471eb02cacec.png" />
+  <meta property="og:url" content="https://betioua-scientific-club.vercel.app/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+  <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('bsc-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';}}catch(e){}</script>
+</head>
+<body data-page="home">
+  <header class="top-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="BÉTIOUA SCIENTIFIC CLUB">
+        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z" stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/><path d="M18 18L26.5 13" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/><circle cx="18" cy="18" r="2.8" fill="#F97316"/></svg>
+        <div class="brand-text">
+          <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
+          <span class="brand-sub" data-i18n="brandSub">BÉTIOUA SCIENTIFIC CLUB</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-icon-link active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="nav-tooltip" data-i18n="navHome">الرئيسية</span>
+        </a>
+        <a href="about.html" class="nav-icon-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="nav-tooltip" data-i18n="navAbout">من نحن</span>
+        </a>
+        <a href="innovators.html" class="nav-icon-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+          <span class="nav-tooltip" data-i18n="navInnovators">المبتكرون</span>
+        </a>
+        <a href="activities.html" class="nav-icon-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="nav-tooltip" data-i18n="navActivities">النشاطات</span>
+        </a>
+        <a href="contact.html" class="nav-icon-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span class="nav-tooltip" data-i18n="navContact">تواصل معنا</span>
+        </a>
+      </nav>
+
+      <button id="langToggleBtn" class="lang-btn" type="button" aria-label="Switch to English">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span data-i18n="langToggle">EN</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="cinematic-hero">
+      <div class="hero-bg-media">
+        <img src="file_000000001e008243a422471eb02cacec.png" alt="محرك توربيني صناعي" data-i18n-alt="altHero" fetchpriority="high" onerror="this.style.display='none'" />
+      </div>
+      <div class="hero-bg-overlay"></div>
+
+      <div class="container">
+        <div class="hero-content-box">
+          <div class="inst-badge">
+            <span class="dot"></span>
+            <span data-i18n="instBadge">معهد التكوين المهني — بطيوة</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span data-i18n="heroTitle1">فكّر أبعد...</span>
+            <span class="highlight" data-i18n="heroTitle2">واصنع المستقبل.</span>
+          </h1>
+
+          <p class="hero-desc" data-i18n="heroDesc">حيث يلتقي الفضول العلمي بالانضباط الهندسي. يمثل النادي العلمي لمعهد بطيوة فضاءً مفتوحاً للمتدربين والمكونين والمبدعين للتجريب، وتبادل الخبرات، وتحويل الأفكار الطموحة إلى حلول تقنية ونماذج تطبيقية ملموسة.</p>
+
+          <div class="hero-actions">
+            <a href="innovators.html" class="btn btn-primary">
+              <span data-i18n="btnExploreProjects">استكشف المشاريع</span>
+              <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </a>
+            <a href="about.html" class="btn btn-secondary"><span data-i18n="btnDiscoverClub">اكتشف النادي</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker" data-i18n="domainsKicker">محاور الاهتمام التقني</span>
+          <h2 class="section-title" data-i18n="domainsTitle">مساحات للتجريب والابتكار التطبيقي</h2>
+          <p class="section-subtitle" data-i18n="domainsSubtitle">نركز على ربط المعرفة النظرية بالتطبيق العملي في المجالات الهندسية والتكنولوجية.</p>
+        </div>
+
+        <div class="hud-grid-3">
+          <div class="hud-item">
+            <div class="hud-frame">
+              <article class="hud-inner">
+                <div class="hud-neon-icon amber"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+                <h3 data-i18n="domain1Title">الهندسة والصيانة الصناعية</h3>
+                <p data-i18n="domain1Desc">استكشاف الأنظمة الميكانيكية والكهربائية الصناعية، وتطوير حلول الفحص والصيانة الوقائية والذكية.</p>
+                <span class="hud-code-tag">SYS // 01</span>
+              </article>
+            </div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-frame">
+              <article class="hud-inner">
+                <div class="hud-neon-icon cyan"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+                <h3 data-i18n="domain2Title">الأنظمة المدمجة والأتمتة</h3>
+                <p data-i18n="domain2Desc">تصميم دوائر التحكم الآلي، برمجة المتحكمات الدقيقة، وتوظيف المستشعرات وتقنيات الروبوتيك.</p>
+                <span class="hud-code-tag">AUTO // 02</span>
+              </article>
+            </div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-frame">
+              <article class="hud-inner">
+                <div class="hud-neon-icon amber"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/><line x1="12" y1="1" x2="12" y2="2"/><line x1="3" y1="8" x2="2" y2="8"/><line x1="22" y1="8" x2="21" y2="8"/><line x1="5.6" y1="3.6" x2="4.9" y2="2.9"/><line x1="18.4" y1="3.6" x2="19.1" y2="2.9"/></svg></div>
+                <h3 data-i18n="domain3Title">الابتكار وتطوير النماذج الأولية</h3>
+                <p data-i18n="domain3Desc">مرافقة الأفكار الهندسية منذ مرحلة التخطيط والرسم التقني وحتى بناء نماذج أولية قابلة للاختبار.</p>
+                <span class="hud-code-tag">INNOV // 03</span>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <p class="disclaimer-note">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span data-i18n="domainsDisclaimer">ملاحظة: تمثل هذه المحاور توجهات علمية وتقنية عامة قابلة للتحديث وفق البرامج المعتمدة للنادي.</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="container split-grid">
+        <div class="tech-card">
+          <div>
+            <span class="status-pill" data-i18n="prepBadge">قيد الإعداد والتوثيق</span>
+            <h3 data-i18n="showcaseInnovatorsTitle">فضاء المبتكرين والإنجازات</h3>
+            <p data-i18n="showcaseInnovatorsDesc">نعمل حالياً على توثيق وتجهيز الدفعة الأولى من مشاريع المتدربين والأفكار التقنية لعرضها بشكل رسمي.</p>
+          </div>
+          <a href="innovators.html" class="text-link">
+            <span data-i18n="linkToInnovators">انتقل إلى فضاء المبتكرين</span>
+            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </a>
+        </div>
+
+        <div class="tech-card">
+          <div>
+            <span class="section-kicker" data-i18n="activitiesKicker">برنامج الفعاليات</span>
+            <h3 data-i18n="showcaseActivitiesTitle">الورشات والمعارض العلمية</h3>
+            <p data-i18n="showcaseActivitiesDesc">يجري إعداد جدول الورشات التطبيقية واللقاءات العلمية المقبلة داخل المعهد.</p>
+          </div>
+          <a href="activities.html" class="text-link">
+            <span data-i18n="linkToActivities">استعرض صفحة النشاطات</span>
+            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="container">
+        <div class="cta-box">
+          <div>
+            <h2 class="section-title" data-i18n="ctaTitle">هل لديك فكرة مشروع أو رغبة في التعاون العلمي؟</h2>
+            <p class="section-subtitle" data-i18n="ctaDesc">نرحب بمبادرات المتدربين، توجيهات المكونين، وشراكات المؤسسات المهتمة بالابتكار التقني.</p>
+          </div>
+          <a href="contact.html" class="btn btn-primary"><span data-i18n="ctaBtn">تواصل مع النادي</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand" style="margin-bottom: 14px;">
+            <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z" stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/><path d="M18 18L26.5 13" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/><circle cx="18" cy="18" r="2.8" fill="#F97316"/></svg>
+            <div class="brand-text">
+              <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
+              <span class="brand-sub" data-i18n="brandSub">BÉTIOUA SCIENTIFIC CLUB</span>
+            </div>
+          </div>
+          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerDesc">فضاء مؤسسي للابتكار العلمي، التجريب الهندسي، وتطوير المهارات التقنية.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading" data-i18n="footerLinksTitle">أقسام الموقع</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" data-i18n="navHome">الرئيسية</a></li>
+            <li><a href="about.html" data-i18n="navAbout">من نحن</a></li>
+            <li><a href="innovators.html" data-i18n="navInnovators">المبتكرون</a></li>
+            <li><a href="activities.html" data-i18n="navActivities">النشاطات</a></li>
+            <li><a href="contact.html" data-i18n="navContact">تواصل معنا</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading" data-i18n="footerLocationTitle">الموقع المؤسسي</h4>
+          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerLocationText">معهد التكوين المهني — بطيوة، ولاية وهران، الجزائر.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span data-i18n="footerCopyright">© 2026 النادي العلمي لمعهد بطيوة — جميع الحقوق محفوظة.</span>
+        <span>THINK BEYOND. BUILD THE FUTURE.</span>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="mobile-dock" aria-label="Mobile navigation">
+    <a href="index.html" class="dock-item active" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span data-i18n="navHome">الرئيسية</span>
+    </a>
+    <a href="about.html" class="dock-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span data-i18n="navAbout">من نحن</span>
+    </a>
+    <a href="innovators.html" class="dock-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+      <span data-i18n="navInnovators">المبتكرون</span>
+    </a>
+    <a href="activities.html" class="dock-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span data-i18n="navActivities">النشاطات</span>
+    </a>
+    <a href="contact.html" class="dock-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span data-i18n="navContact">تواصل معنا</span>
+    </a>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>
