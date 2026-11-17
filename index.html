@@ -61,7 +61,7 @@
   </header>
 
   <main>
-    <!-- FULL-BLEED CINEMATIC HERO SECTION -->
+    <!-- FULL-BLEED CINEMATIC HERO + INTERACTIVE TELEMETRY GRID -->
     <section class="cinematic-hero">
       <div class="hero-bg-media">
         <img 
@@ -70,7 +70,14 @@
           onerror="this.style.display='none'"
         />
       </div>
+      <canvas id="heroTelemetryCanvas" class="hero-telemetry-canvas" aria-hidden="true"></canvas>
       <div class="hero-bg-overlay"></div>
+
+      <!-- Corner Engineering Coordinates HUD -->
+      <div class="hero-hud-meta top-meta" aria-hidden="true">
+        <span>SECTOR: BÉTIOUA // 35.80°N 0.26°W</span>
+        <span class="hud-live-pill"><i class="pulse-dot"></i> SYS.ONLINE</span>
+      </div>
 
       <div class="container">
         <div class="hero-content-box">
@@ -101,7 +108,57 @@
       </div>
     </section>
 
-    <!-- CHAMFERED HUD DOMAINS SECTION -->
+    <!-- ENGINEERING TELEMETRY TICKER -->
+    <div class="telemetry-ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>INDUSTRIAL MAINTENANCE // الصيانة الصناعية</span>
+        <span class="sep">◆</span>
+        <span>EMBEDDED SYSTEMS &amp; IoT // الأنظمة المدمجة</span>
+        <span class="sep">◆</span>
+        <span>PLC AUTOMATION // التحكم الآلي</span>
+        <span class="sep">◆</span>
+        <span>CAD &amp; PROTOTYPING // النمذجة الأولية</span>
+        <span class="sep">◆</span>
+        <span>ROBOTICS LAB // الروبوتيك التطبيقي</span>
+        <span class="sep">◆</span>
+        <span>INDUSTRIAL MAINTENANCE // الصيانة الصناعية</span>
+        <span class="sep">◆</span>
+        <span>EMBEDDED SYSTEMS &amp; IoT // الأنظمة المدمجة</span>
+        <span class="sep">◆</span>
+        <span>PLC AUTOMATION // التحكم الآلي</span>
+        <span class="sep">◆</span>
+        <span>CAD &amp; PROTOTYPING // النمذجة الأولية</span>
+        <span class="sep">◆</span>
+        <span>ROBOTICS LAB // الروبوتيك التطبيقي</span>
+        <span class="sep">◆</span>
+      </div>
+    </div>
+
+    <!-- INSTITUTIONAL METRICS STRIP (FACTUAL & VERIFIED) -->
+    <section class="metrics-strip reveal">
+      <div class="container">
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <span class="metric-val">03</span>
+            <span class="metric-lbl" data-i18n="metric1Label">محاور هندسية وتقنية</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">AR / EN</span>
+            <span class="metric-lbl" data-i18n="metric2Label">واجهة مؤسسية ثنائية اللغة</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">100%</span>
+            <span class="metric-lbl" data-i18n="metric3Label">توجه تطبيقي ومخبري</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">INSPFP</span>
+            <span class="metric-lbl" data-i18n="metric4Label">معهد التكوين المهني — بطيوة</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAMFERED HUD DOMAINS SECTION WITH LASER SCAN -->
     <section class="section reveal">
       <div class="container">
         <div class="section-header">
@@ -115,6 +172,7 @@
           <div class="hud-item">
             <div class="hud-frame">
               <article class="hud-inner">
+                <div class="hud-scanline" aria-hidden="true"></div>
                 <div class="hud-neon-icon amber">
                   <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="3"/>
@@ -132,6 +190,7 @@
           <div class="hud-item">
             <div class="hud-frame">
               <article class="hud-inner">
+                <div class="hud-scanline" aria-hidden="true"></div>
                 <div class="hud-neon-icon cyan">
                   <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="4" y="4" width="16" height="16" rx="2"/>
@@ -153,6 +212,7 @@
           <div class="hud-item">
             <div class="hud-frame">
               <article class="hud-inner">
+                <div class="hud-scanline" aria-hidden="true"></div>
                 <div class="hud-neon-icon amber">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 18h6"/>
@@ -177,6 +237,40 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           <span data-i18n="domainsDisclaimer">ملاحظة: تمثل هذه المحاور توجهات علمية وتقنية عامة قابلة للتحديث وفق البرامج المعتمدة للنادي.</span>
         </p>
+      </div>
+    </section>
+
+    <!-- ENGINEERING WORKFLOW PIPELINE (4 CONNECTED STAGES) -->
+    <section class="section reveal">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker" data-i18n="workflowKicker">منهجية العمل الهندسي</span>
+          <h2 class="section-title" data-i18n="workflowTitle">من الفكرة الأولية إلى النموذج القابل للاختبار</h2>
+          <p class="section-subtitle" data-i18n="workflowSubtitle">مسار منظم يرافق فرق المتدربين خطوة بخطوة لضمان الدقة التقنية والتوثيق العلمي.</p>
+        </div>
+
+        <div class="pipeline-grid">
+          <div class="pipeline-step">
+            <span class="step-badge">01</span>
+            <h3 data-i18n="step1Title">التشخيص وصياغة الفكرة</h3>
+            <p data-i18n="step1Desc">تحديد المشكلة التقنية أو الصناعية ودراسة الجدوى العملية داخل ورشات المعهد.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="step-badge">02</span>
+            <h3 data-i18n="step2Title">التصميم والمحاكاة</h3>
+            <p data-i18n="step2Desc">رسم المخططات الكهربائية والميكانيكية واختبار الدوائر رقمياً قبل التنفيذ.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="step-badge">03</span>
+            <h3 data-i18n="step3Title">التركيب والنمذجة</h3>
+            <p data-i18n="step3Desc">تجميع المكونات، برمجة وحدات التحكم، وبناء النموذج الأولي وفق معايير السلامة.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="step-badge">04</span>
+            <h3 data-i18n="step4Title">الاختبار والتوثيق</h3>
+            <p data-i18n="step4Desc">قياس الأداء الفعلي، معالجة الملاحظات، وإعداد الملف التقني لعرض المشروع.</p>
+          </div>
+        </div>
       </div>
     </section>
 
