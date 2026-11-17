@@ -22,6 +22,12 @@ const translations = {
     btnExploreProjects: "استكشف المشاريع",
     btnDiscoverClub: "اكتشف النادي",
 
+    // Institutional Metrics Strip
+    metric1Label: "محاور هندسية وتقنية",
+    metric2Label: "واجهة مؤسسية ثنائية اللغة",
+    metric3Label: "توجه تطبيقي ومخبري",
+    metric4Label: "معهد التكوين المهني — بطيوة",
+
     // Home Domains (HUD Cards)
     domainsKicker: "محاور الاهتمام التقني",
     domainsTitle: "مساحات للتجريب والابتكار التطبيقي",
@@ -33,6 +39,19 @@ const translations = {
     domain3Title: "الابتكار وتطوير النماذج الأولية",
     domain3Desc: "مرافقة الأفكار الهندسية منذ مرحلة التخطيط والرسم التقني وحتى بناء نماذج أولية قابلة للاختبار.",
     domainsDisclaimer: "ملاحظة: تمثل هذه المحاور توجهات علمية وتقنية عامة قابلة للتحديث وفق البرامج المعتمدة للنادي.",
+
+    // Engineering Workflow Pipeline
+    workflowKicker: "منهجية العمل الهندسي",
+    workflowTitle: "من الفكرة الأولية إلى النموذج القابل للاختبار",
+    workflowSubtitle: "مسار منظم يرافق فرق المتدربين خطوة بخطوة لضمان الدقة التقنية والتوثيق العلمي.",
+    step1Title: "التشخيص وصياغة الفكرة",
+    step1Desc: "تحديد المشكلة التقنية أو الصناعية ودراسة الجدوى العملية داخل ورشات المعهد.",
+    step2Title: "التصميم والمحاكاة",
+    step2Desc: "رسم المخططات الكهربائية والميكانيكية واختبار الدوائر رقمياً قبل التنفيذ.",
+    step3Title: "التركيب والنمذجة",
+    step3Desc: "تجميع المكونات، برمجة وحدات التحكم، وبناء النموذج الأولي وفق معايير السلامة.",
+    step4Title: "الاختبار والتوثيق",
+    step4Desc: "قياس الأداء الفعلي، معالجة الملاحظات، وإعداد الملف التقني لعرض المشروع.",
 
     // Home Showcase & Activities Preview
     prepBadge: "قيد الإعداد والتوثيق",
@@ -115,6 +134,12 @@ const translations = {
     btnExploreProjects: "Explore Projects",
     btnDiscoverClub: "Discover the Club",
 
+    // Institutional Metrics Strip
+    metric1Label: "Engineering & Tech Domains",
+    metric2Label: "Bilingual Institutional Interface",
+    metric3Label: "Hands-On Lab Orientation",
+    metric4Label: "Vocational Training Institute — Bétioua",
+
     // Home Domains (HUD Cards)
     domainsKicker: "Technical Focus Areas",
     domainsTitle: "Spaces for Experimentation & Applied Innovation",
@@ -126,6 +151,19 @@ const translations = {
     domain3Title: "Innovation & Prototyping",
     domain3Desc: "Supporting engineering ideas from technical planning and CAD design to building testable functional prototypes.",
     domainsDisclaimer: "Note: These domains represent general scientific directions subject to updates in accordance with official club programs.",
+
+    // Engineering Workflow Pipeline
+    workflowKicker: "Engineering Methodology",
+    workflowTitle: "From Initial Concept to Testable Prototype",
+    workflowSubtitle: "A structured workflow guiding trainee teams step by step to ensure technical precision and scientific documentation.",
+    step1Title: "Diagnosis & Ideation",
+    step1Desc: "Identifying technical or industrial challenges and assessing practical feasibility within institute workshops.",
+    step2Title: "Design & Simulation",
+    step2Desc: "Drafting electrical and mechanical schematics and testing circuits digitally prior to assembly.",
+    step3Title: "Assembly & Prototyping",
+    step3Desc: "Integrating components, programming control units, and building functional prototypes under safety standards.",
+    step4Title: "Testing & Documentation",
+    step4Desc: "Measuring real-world performance, refining iterations, and compiling technical documentation for showcase.",
 
     // Home Showcase & Activities Preview
     prepBadge: "In Preparation & Documentation",
@@ -207,6 +245,90 @@ function applyLanguage(lang) {
   localStorage.setItem("bsc_lang", activeLang);
 }
 
+function initHeroTelemetryCanvas() {
+  const canvas = document.getElementById("heroTelemetryCanvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let animId = null;
+  const nodeCount = window.innerWidth < 768 ? 22 : 42;
+  const maxDist = window.innerWidth < 768 ? 110 : 150;
+  const nodes = [];
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    width = canvas.width = rect.width;
+    height = canvas.height = rect.height;
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      amber: i % 5 === 0
+    });
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      a.x += a.vx;
+      a.y += a.vy;
+
+      if (a.x < 0 || a.x > width) a.vx *= -1;
+      if (a.y < 0 || a.y > height) a.vy *= -1;
+
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * 0.28;
+          ctx.strokeStyle = a.amber || b.amber
+            ? `rgba(249, 115, 22, ${alpha})`
+            : `rgba(56, 189, 248, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+
+      ctx.fillStyle = a.amber ? "rgba(251, 146, 60, 0.75)" : "rgba(56, 189, 248, 0.75)";
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.amber ? 2.1 : 1.7, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    animId = requestAnimationFrame(render);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && animId) {
+      cancelAnimationFrame(animId);
+      animId = null;
+    } else if (!document.hidden && !animId) {
+      render();
+    }
+  });
+
+  render();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const savedLang = localStorage.getItem("bsc_lang") || "ar";
   applyLanguage(savedLang);
@@ -240,4 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
+
+  // Start lightweight engineering telemetry background on Home
+  initHeroTelemetryCanvas();
 });
