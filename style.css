@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BÉTIOUA SCIENTIFIC CLUB — CINEMATIC HUD DESIGN SYSTEM (V4.1)
+   BÉTIOUA SCIENTIFIC CLUB — CINEMATIC HUD DESIGN SYSTEM (V4.2)
    Fonts are loaded via <link> in each page <head> (no @import here).
    ========================================================================== */
 
@@ -87,7 +87,6 @@ ul { list-style: none; }
   z-index: 2;
 }
 
-/* Arrow icons: drawn pointing left (RTL). Flipped automatically in LTR. */
 .arrow-icon { flex-shrink: 0; }
 html[dir="ltr"] .arrow-icon { transform: scaleX(-1); }
 
@@ -246,7 +245,7 @@ html[dir="ltr"] .arrow-icon { transform: scaleX(-1); }
 }
 
 /* ==========================================================================
-   FULL-BLEED CINEMATIC HERO
+   FULL-BLEED CINEMATIC HERO + TELEMETRY CANVAS
    ========================================================================== */
 main { flex: 1; }
 
@@ -256,7 +255,7 @@ main { flex: 1; }
   min-height: 82svh;
   display: flex;
   align-items: center;
-  padding: 72px 0 88px;
+  padding: 84px 0 88px;
   overflow: hidden;
   border-bottom: 1px solid rgba(56, 189, 248, 0.16);
 }
@@ -272,19 +271,71 @@ main { flex: 1; }
   transform: scale(1.02);
 }
 
+.hero-telemetry-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
 .hero-bg-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(to top, var(--bg-primary) 2%, rgba(5, 7, 12, 0.22) 50%, rgba(5, 7, 12, 0.55) 100%),
-    radial-gradient(circle at 75% 45%, rgba(5, 7, 12, 0.05) 0%, rgba(5, 7, 12, 0.72) 90%);
+    linear-gradient(to top, var(--bg-primary) 2%, rgba(5, 7, 12, 0.24) 50%, rgba(5, 7, 12, 0.58) 100%),
+    radial-gradient(circle at 75% 45%, rgba(5, 7, 12, 0.06) 0%, rgba(5, 7, 12, 0.74) 90%);
 }
 
 html[dir="ltr"] .hero-bg-overlay {
   background:
-    linear-gradient(to top, var(--bg-primary) 2%, rgba(5, 7, 12, 0.22) 50%, rgba(5, 7, 12, 0.55) 100%),
-    radial-gradient(circle at 25% 45%, rgba(5, 7, 12, 0.05) 0%, rgba(5, 7, 12, 0.72) 90%);
+    linear-gradient(to top, var(--bg-primary) 2%, rgba(5, 7, 12, 0.24) 50%, rgba(5, 7, 12, 0.58) 100%),
+    radial-gradient(circle at 25% 45%, rgba(5, 7, 12, 0.06) 0%, rgba(5, 7, 12, 0.74) 90%);
+}
+
+/* Corner Engineering Coordinates HUD */
+.hero-hud-meta {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  right: 20px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: rgba(148, 163, 184, 0.78);
+  pointer-events: none;
+}
+
+.hud-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(8, 13, 24, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  color: var(--accent-cyan);
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.82); }
 }
 
 .hero-content-box { max-width: 660px; }
@@ -372,6 +423,84 @@ html[dir="ltr"] .hero-bg-overlay {
 .btn-secondary:hover { border-color: var(--accent-cyan); background: rgba(15, 23, 42, 0.92); }
 
 /* ==========================================================================
+   ENGINEERING TELEMETRY TICKER
+   ========================================================================== */
+.telemetry-ticker {
+  background: rgba(8, 12, 20, 0.95);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.16);
+  padding: 11px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  font-family: 'Space Grotesk', 'IBM Plex Sans Arabic', monospace;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  animation: tickerScroll 28s linear infinite;
+}
+
+.ticker-track .sep {
+  color: var(--accent-amber);
+  font-size: 0.65rem;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   INSTITUTIONAL METRICS STRIP
+   ========================================================================== */
+.metrics-strip {
+  padding: 34px 0 10px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+}
+
+.metric-box {
+  background: linear-gradient(180deg, rgba(14, 20, 33, 0.85) 0%, rgba(8, 12, 20, 0.92) 100%);
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-md);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-val {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  line-height: 1.2;
+}
+
+.metric-lbl {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
    SECTIONS
    ========================================================================== */
 .section { padding: 72px 0; }
@@ -393,10 +522,7 @@ html[dir="ltr"] .hero-bg-overlay {
 .section-subtitle { color: var(--text-secondary); font-size: 0.98rem; }
 
 /* ==========================================================================
-   CHAMFERED HUD CARDS
-   .hud-item  : unclipped wrapper that carries drop-shadow + hover lift
-   .hud-frame : chamfered neon border (clip-path)
-   .hud-inner : chamfered dark glass plate (clip-path)
+   CHAMFERED HUD CARDS + LASER SCANLINE
    ========================================================================== */
 .hud-grid-3 { display: grid; grid-template-columns: 1fr; gap: 26px; }
 @media (min-width: 768px) { .hud-grid-3 { grid-template-columns: repeat(3, 1fr); } }
@@ -442,6 +568,22 @@ html[dir="ltr"] .hero-bg-overlay {
   align-items: center;
   text-align: center;
   position: relative;
+  overflow: hidden;
+}
+
+.hud-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -100%;
+  height: 55%;
+  background: linear-gradient(180deg, transparent 0%, rgba(56, 189, 248, 0.12) 85%, rgba(56, 189, 248, 0.35) 100%);
+  pointer-events: none;
+  transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hud-item:hover .hud-scanline {
+  top: 110%;
 }
 
 .hud-inner::before,
@@ -480,6 +622,66 @@ html[dir="ltr"] .hero-bg-overlay {
   letter-spacing: 0.14em;
   color: var(--accent-cyan);
   opacity: 0.8;
+}
+
+/* ==========================================================================
+   ENGINEERING WORKFLOW PIPELINE (4 CONNECTED STAGES)
+   ========================================================================== */
+.pipeline-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 768px) {
+  .pipeline-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+.pipeline-step {
+  position: relative;
+  background: linear-gradient(180deg, rgba(14, 20, 33, 0.9) 0%, rgba(8, 12, 20, 0.96) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  transition: var(--transition-smooth);
+}
+
+.pipeline-step:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-4px);
+}
+
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(249, 115, 22, 0.14);
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  color: #fb923c;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.2);
+}
+
+.pipeline-step h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.pipeline-step p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 /* ==========================================================================
