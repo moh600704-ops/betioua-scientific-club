@@ -11,6 +11,42 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script>document.documentElement.classList.add('js');</script>
+  <style>
+    /* Interactive 3D Hero Canvas Layer */
+    #hero3dContainer {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: auto;
+      touch-action: pan-y;
+    }
+    #hero3dContainer canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .hero-bg-overlay {
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(to top, var(--bg-primary) 4%, rgba(5, 7, 12, 0.42) 52%, rgba(5, 7, 12, 0.72) 100%),
+        radial-gradient(circle at 75% 45%, rgba(5, 7, 12, 0.12) 0%, rgba(5, 7, 12, 0.84) 85%);
+    }
+    html[dir="ltr"] .hero-bg-overlay {
+      background:
+        linear-gradient(to top, var(--bg-primary) 4%, rgba(5, 7, 12, 0.42) 52%, rgba(5, 7, 12, 0.72) 100%),
+        radial-gradient(circle at 25% 45%, rgba(5, 7, 12, 0.12) 0%, rgba(5, 7, 12, 0.84) 85%);
+    }
+    .cinematic-hero .container {
+      position: relative;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .cinematic-hero .hero-actions,
+    .cinematic-hero .inst-badge {
+      pointer-events: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -61,16 +97,19 @@
   </header>
 
   <main>
-    <!-- FULL-BLEED CINEMATIC HERO + INTERACTIVE TELEMETRY GRID -->
+    <!-- FULL-BLEED CINEMATIC 3D INTERACTIVE HERO -->
     <section class="cinematic-hero">
       <div class="hero-bg-media">
         <img 
           src="file_000000001e008243a422471eb02cacec.png" 
           alt="Industrial Turbine Background"
+          style="opacity: 0.34;"
           onerror="this.style.display='none'"
         />
       </div>
-      <canvas id="heroTelemetryCanvas" class="hero-telemetry-canvas" aria-hidden="true"></canvas>
+
+      <!-- Interactive Three.js 3D Scene -->
+      <div id="hero3dContainer" aria-hidden="true"></div>
       <div class="hero-bg-overlay"></div>
 
       <!-- Corner Engineering Coordinates HUD -->
@@ -389,6 +428,173 @@
     </a>
   </nav>
 
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function initHero3D() {
+      const container = document.getElementById('hero3dContainer');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isMobile = () => window.innerWidth < 768;
+
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      } catch (e) {
+        return; // Graceful fallback to background image if WebGL is unavailable
+      }
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x05070c, 0.048);
+
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.z = isMobile() ? 9.5 : 8;
+
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile() ? 1.5 : 2));
+      container.appendChild(renderer.domElement);
+
+      // Master 3D Engineering Assembly Group
+      const assembly = new THREE.Group();
+      scene.add(assembly);
+
+      let baseY = 0.1;
+
+      function updatePosition() {
+        const mobile = isMobile();
+        const isLTR = document.documentElement.dir === 'ltr';
+        if (mobile) {
+          baseY = 1.95; // Upper-third placement so it stays above mobile headline
+          assembly.position.set(0, baseY, -0.5);
+          assembly.scale.set(0.66, 0.66, 0.66);
+        } else {
+          baseY = 0.1;
+          assembly.position.set(isLTR ? 2.4 : -2.4, baseY, 0);
+          assembly.scale.set(1.05, 1.05, 1.05);
+        }
+      }
+      updatePosition();
+
+      // 1. Central Glowing Icosahedron Wireframe (Primary Cyan)
+      const coreGeo = new THREE.IcosahedronGeometry(1.45, 1);
+      const coreWire = new THREE.WireframeGeometry(coreGeo);
+      const coreMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: isMobile() ? 0.58 : 0.72 });
+      const coreMesh = new THREE.LineSegments(coreWire, coreMat);
+      assembly.add(coreMesh);
+
+      // 2. Inner Solid Energy Core (Subtle Amber Accent)
+      const innerGeo = new THREE.OctahedronGeometry(0.68, 0);
+      const innerMat = new THREE.MeshBasicMaterial({ color: 0xf97316, wireframe: true, transparent: true, opacity: 0.78 });
+      const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+      assembly.add(innerMesh);
+
+      // 3. Outer Gyroscopic Turbine Ring 1 (Primary Cyan)
+      const ring1Geo = new THREE.TorusGeometry(2.25, 0.024, 12, 80);
+      const ring1Mat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: isMobile() ? 0.48 : 0.62 });
+      const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+      ring1.rotation.x = Math.PI / 3;
+      assembly.add(ring1);
+
+      // 4. Outer Gyroscopic Turbine Ring 2 (Subtle Amber Accent)
+      const ring2Geo = new THREE.TorusGeometry(2.65, 0.015, 12, 80);
+      const ring2Mat = new THREE.MeshBasicMaterial({ color: 0xf97316, transparent: true, opacity: 0.32 });
+      const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+      ring2.rotation.y = Math.PI / 4;
+      assembly.add(ring2);
+
+      // 5. Floating 3D Data Nodes
+      const particlesCount = 90;
+      const posArray = new Float32Array(particlesCount * 3);
+      for (let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 9;
+      }
+      const particlesGeo = new THREE.BufferGeometry();
+      particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const particlesMat = new THREE.PointsMaterial({
+        size: 0.055,
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.68
+      });
+      const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+      scene.add(particlesMesh);
+
+      // Pointer Events (Horizontal drag on touch, full tilt on mouse)
+      let targetRotX = 0, targetRotY = 0, isDragging = false, prevX = 0, prevY = 0;
+
+      container.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        prevX = e.clientX;
+        prevY = e.clientY;
+      });
+      ['pointerup', 'pointercancel'].forEach((ev) =>
+        window.addEventListener(ev, () => { isDragging = false; })
+      );
+      container.addEventListener('pointermove', (e) => {
+        const touch = e.pointerType !== 'mouse';
+        if (isDragging) {
+          targetRotY += (e.clientX - prevX) * 0.008;
+          if (!touch) targetRotX += (e.clientY - prevY) * 0.008;
+          prevX = e.clientX;
+          prevY = e.clientY;
+        } else if (!touch) {
+          targetRotY = (e.clientX / window.innerWidth * 2 - 1) * 0.55;
+          targetRotX = (e.clientY / window.innerHeight * 2 - 1) * 0.35;
+        }
+        targetRotX = Math.max(-0.7, Math.min(0.7, targetRotX));
+      });
+
+      // Reposition dynamically when language direction (rtl/ltr) changes
+      new MutationObserver(updatePosition)
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
+
+      // Responsive ResizeObserver
+      new ResizeObserver(() => {
+        const w = container.clientWidth, h = container.clientHeight;
+        if (!w || !h) return;
+        camera.aspect = w / h;
+        camera.position.z = isMobile() ? 9.5 : 8;
+        camera.updateProjectionMatrix();
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile() ? 1.5 : 2));
+        renderer.setSize(w, h);
+        updatePosition();
+      }).observe(container);
+
+      let animId = null, heroVisible = true;
+      function frame() {
+        animId = requestAnimationFrame(frame);
+        const t = performance.now() * 0.001;
+        coreMesh.rotation.y += 0.0045;
+        coreMesh.rotation.x += 0.002;
+        innerMesh.rotation.y -= 0.009;
+        innerMesh.rotation.z += 0.006;
+        ring1.rotation.z += 0.005;
+        ring2.rotation.x -= 0.004;
+        particlesMesh.rotation.y += 0.0012;
+
+        // Non-accumulating smooth levitation around baseY
+        assembly.position.y = baseY + Math.sin(t * 1.4) * 0.09;
+        ring1.position.y = Math.sin(t * 1.8) * 0.04;
+        ring2.position.y = Math.cos(t * 1.5) * 0.04;
+
+        assembly.rotation.y += (targetRotY - assembly.rotation.y) * 0.06;
+        assembly.rotation.x += (targetRotX - assembly.rotation.x) * 0.06;
+        renderer.render(scene, camera);
+      }
+
+      function sync() {
+        const shouldRun = heroVisible && !document.hidden && !reduceMotion;
+        if (shouldRun && !animId) frame();
+        else if (!shouldRun && animId) { cancelAnimationFrame(animId); animId = null; }
+      }
+
+      new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; sync(); }).observe(container);
+      document.addEventListener('visibilitychange', sync);
+
+      renderer.render(scene, camera); // Initial static frame even if reduceMotion is enabled
+      sync();
+    });
+  </script>
 </body>
 </html>
