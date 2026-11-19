@@ -19,12 +19,64 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" />
   <link rel="stylesheet" href="style.css" />
   <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('bsc-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';}}catch(e){}</script>
+  <style>
+    /* Innovators: model-led header, process strip, no frames, no heavy images */
+    .iv-hero{padding-top:56px;padding-bottom:8px}
+    .iv-grid{display:grid;gap:8px;align-items:center}
+    .iv-stage{order:-1;--mx:0;--my:0;position:relative;touch-action:pan-y}
+    .iv-plate{width:min(100%,400px);margin:0 auto;aspect-ratio:460/400;
+      transform:perspective(1000px) rotateX(calc(var(--my)*-6deg)) rotateY(calc(var(--mx)*8deg))}
+    .iv-svg{width:100%;height:100%;display:block;overflow:visible}
+    .iv-copy .section-title{margin:6px 0 10px}
+    .iv-copy .section-subtitle{max-width:40ch;margin-bottom:20px}
+    .iv-pill{gap:9px}
+    .iv-dot{width:7px;height:7px;border-radius:50%;background:var(--accent-amber);box-shadow:0 0 0 0 rgba(249,115,22,.6);animation:ivPing 2s ease-out infinite}
+    @keyframes ivPing{to{box-shadow:0 0 0 9px rgba(249,115,22,0)}}
+    @media(min-width:900px){
+      .iv-hero{padding-top:84px;min-height:calc(100vh - 140px);display:flex;align-items:center}
+      .iv-hero .container{width:100%}
+      .iv-grid{grid-template-columns:1fr 1.05fr;gap:40px}
+      .iv-stage{order:0}.iv-plate{width:min(100%,540px)}
+    }
+    .iv-orbit{animation:ivSpin 70s linear infinite}
+    .iv-node{animation:ivSpin 70s linear infinite reverse}
+    .iv-outer{animation:ivSpin 120s linear infinite reverse}
+    .iv-prog{animation:ivSpin 16s linear infinite}
+    .iv-gear{animation:ivSpin 24s linear infinite}
+    .iv-pulse{animation:ivBlink 1.8s ease-in-out infinite}
+    @keyframes ivSpin{to{transform:rotate(360deg)}}
+    @keyframes ivBlink{50%{opacity:.35}}
+    .iv-stage.paused *{animation-play-state:paused!important}
+    .sec-tight{padding:40px 0 56px}
+    .iv-flow{list-style:none;position:relative;display:grid;gap:26px}
+    .iv-flow::before{content:"";position:absolute;top:8px;bottom:8px;inset-inline-start:27px;width:1px;background:linear-gradient(var(--accent-amber),var(--border-subtle) 40%%,var(--border-subtle));opacity:.8}
+    .iv-step{position:relative;display:flex;align-items:center;gap:18px}
+    .iv-node-box{position:relative;z-index:1;flex:none;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:#0b111e;border:1px solid var(--border-subtle);color:#64748b;box-shadow:0 0 0 6px var(--bg-primary);transition:var(--transition-smooth)}
+    .iv-node-box em{position:absolute;top:-9px;inset-inline-end:-9px;min-width:24px;height:20px;padding:0 5px;border-radius:6px;display:grid;place-items:center;font:700 .68rem 'Space Grotesk',monospace;font-style:normal;letter-spacing:.06em;color:#64748b;background:#0b111e;border:1px solid var(--border-subtle)}
+    .iv-st{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+    .iv-st h3{font-size:1.12rem;font-weight:700;color:var(--text-secondary)}
+    .iv-step.is-now .iv-node-box{border-color:var(--accent-amber);color:#fb923c;box-shadow:0 0 0 6px var(--bg-primary),0 0 24px rgba(249,115,22,.28)}
+    .iv-step.is-now .iv-node-box em{color:#fb923c;border-color:rgba(249,115,22,.55)}
+    .iv-step.is-now h3{color:#fff}
+    .iv-now{font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:999px;color:#fb923c;background:rgba(249,115,22,.14);border:1px solid rgba(249,115,22,.4)}
+    @media(min-width:768px){
+      .iv-flow{grid-template-columns:repeat(3,1fr);gap:20px}
+      .iv-flow::before{top:28px;bottom:auto;inset-inline:16.6%%;width:auto;height:1px;background:linear-gradient(90deg,var(--accent-amber),var(--border-subtle) 45%%,var(--border-subtle))}
+      .iv-step{flex-direction:column;text-align:center;gap:16px}
+      .iv-st{justify-content:center;flex-direction:column;gap:8px}
+    }
+    .cta-line{margin-top:56px;padding-top:30px;border-top:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+    .cta-title{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.3}
+    .js .rvx{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+    .js .rvx.in-view{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){.js .rvx{opacity:1;transform:none;transition:none}.iv-svg *{animation:none!important}.iv-dot{animation:none}}
+  </style>
 </head>
 <body data-page="innovators">
   <header class="top-header">
     <div class="container header-inner">
       <a href="index.html" class="brand" aria-label="BÉTIOUA SCIENTIFIC CLUB">
-        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z" stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/><path d="M18 18L26.5 13" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/><circle cx="18" cy="18" r="2.8" fill="#F97316"/></svg>
+        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bmG" x1="4" y1="3" x2="32" y2="33" gradientUnits="userSpaceOnUse"><stop stop-color="#7DD3FC"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs><path d="M18 2.5L31.5 10.25V25.75L18 33.5L4.5 25.75V10.25L18 2.5Z" fill="#0B1220" stroke="url(#bmG)" stroke-width="1.6" stroke-linejoin="round"/><path d="M25.1 18L27.54 19.05L27.03 21.25L24.38 21.12L23.02 23.02L24 25.49L22.09 26.69L20.3 24.72L18 25.1L16.95 27.54L14.75 27.03L14.88 24.38L12.98 23.02L10.51 24L9.31 22.09L11.28 20.3L10.9 18L8.46 16.95L8.97 14.75L11.62 14.88L12.98 12.98L12 10.51L13.91 9.31L15.7 11.28L18 10.9L19.05 8.46L21.25 8.97L21.12 11.62L23.02 12.98L25.49 12L26.69 13.91L24.72 15.7ZM21.7 18A3.7 3.7 0 1 0 14.3 18A3.7 3.7 0 1 0 21.7 18Z" fill="#E2E8F0" fill-rule="evenodd"/><circle cx="18" cy="18" r="2.1" fill="#F97316"/></svg>
         <div class="brand-text">
           <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
           <span class="brand-sub" data-i18n="brandSub">BÉTIOUA SCIENTIFIC CLUB</span>
@@ -58,114 +110,39 @@
   </header>
 
   <main>
-    <section class="section page-top">
-      <div class="container">
-        <div class="page-banner">
-          <img class="page-banner-img" src="file_00000000ea8081f4aa92f109a73c7446.png" alt="ذراع لحام روبوتية صناعية" data-i18n-alt="altInnovators" onerror="this.style.display='none'" />
-          <div class="page-banner-overlay">
-            <span class="section-kicker" data-i18n="innoKicker">المبتكرون</span>
-            <h1 class="section-title" data-i18n="innoTitle">فضاء المبتكرين والإنجازات</h1>
-            <p class="section-subtitle" data-i18n="innoLead">مساحة مخصصة لعرض مشاريع المتدربين وأفكارهم التقنية بعد توثيقها.</p>
-          </div>
+    <!-- HERO: text + light SVG model of the current state -->
+    <section class="section page-top iv-hero">
+      <div class="container iv-grid">
+        <div class="iv-copy">
+          <span class="section-kicker" data-i18n="innoKicker">المبتكرون</span>
+          <h1 class="section-title" data-i18n="innoTitle">فضاء المبتكرين</h1>
+          <p class="section-subtitle" data-i18n="innoLead">مشاريع المتدربين وأفكارهم، بعد توثيقها.</p>
+          <span class="status-pill iv-pill"><i class="iv-dot"></i><span data-i18n="prepBadge">قيد الإعداد والتوثيق</span></span>
         </div>
-        <p class="visual-caption" data-i18n="innoCaption">صورة توضيحية</p>
+        <div class="iv-stage" id="ivStage" aria-hidden="true"><div class="iv-plate"><svg class="iv-svg" viewBox="0 0 460 400" fill="none" aria-hidden="true"><defs><radialGradient id="ivM" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4e6a8c"/><stop offset=".55" stop-color="#9fb8d8"/><stop offset="1" stop-color="#6b86a8"/></radialGradient><radialGradient id="ivGlow"><stop offset="0" stop-color="#38bdf8" stop-opacity=".22"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient></defs><circle cx="230" cy="200" r="198" fill="url(#ivGlow)"/><g class="iv-outer" style="transform-origin:230px 200px"><circle cx="230" cy="200" r="184" stroke="#38bdf8" stroke-opacity=".3" stroke-dasharray="2 9"/><circle cx="230" cy="16" r="4" fill="#38bdf8"/><circle cx="389" cy="292" r="3" fill="#f97316"/><circle cx="71" cy="292" r="3" fill="#38bdf8"/></g><circle cx="230" cy="200" r="125" stroke="#38bdf8" stroke-opacity=".16"/><g class="iv-orbit" style="transform-origin:230px 200px"><g stroke="#38bdf8" stroke-opacity=".28" stroke-dasharray="2 5"><line x1="230" y1="138" x2="230" y2="101"/><line x1="283.69" y1="169" x2="315.74" y2="150.5"/><line x1="283.69" y1="231" x2="315.74" y2="249.5"/><line x1="230" y1="262" x2="230" y2="299"/><line x1="176.31" y1="231" x2="144.26" y2="249.5"/><line x1="176.31" y1="169" x2="144.26" y2="150.5"/></g><g class="iv-node" style="transform-origin:230px 75px"><g transform="translate(230 75)"><circle r="26" fill="rgba(249,115,22,.10)" stroke="#f97316" stroke-width="1.6"/><circle cy="-6" r="6.5" stroke="#fb923c" stroke-opacity="1" stroke-width="1.8"/><path d="M-13 15a13 11 0 0 1 26 0" stroke="#fb923c" stroke-opacity="1" stroke-width="1.8" stroke-linecap="round"/><circle class="iv-pulse" cx="19" cy="-19" r="4.5" fill="#f97316" stroke="#05070c" stroke-width="2"/></g></g><g class="iv-node" style="transform-origin:338.25px 137.5px"><g transform="translate(338.25 137.5)"><circle r="26" fill="rgba(11,17,30,.9)" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="3 5" stroke-opacity=".55"/><circle cy="-6" r="6.5" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8"/><path d="M-13 15a13 11 0 0 1 26 0" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></g></g><g class="iv-node" style="transform-origin:338.25px 262.5px"><g transform="translate(338.25 262.5)"><circle r="26" fill="rgba(11,17,30,.9)" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="3 5" stroke-opacity=".55"/><circle cy="-6" r="6.5" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8"/><path d="M-13 15a13 11 0 0 1 26 0" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></g></g><g class="iv-node" style="transform-origin:230px 325px"><g transform="translate(230 325)"><circle r="26" fill="rgba(11,17,30,.9)" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="3 5" stroke-opacity=".55"/><circle cy="-6" r="6.5" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8"/><path d="M-13 15a13 11 0 0 1 26 0" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></g></g><g class="iv-node" style="transform-origin:121.75px 262.5px"><g transform="translate(121.75 262.5)"><circle r="26" fill="rgba(11,17,30,.9)" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="3 5" stroke-opacity=".55"/><circle cy="-6" r="6.5" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8"/><path d="M-13 15a13 11 0 0 1 26 0" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></g></g><g class="iv-node" style="transform-origin:121.75px 137.5px"><g transform="translate(121.75 137.5)"><circle r="26" fill="rgba(11,17,30,.9)" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="3 5" stroke-opacity=".55"/><circle cy="-6" r="6.5" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8"/><path d="M-13 15a13 11 0 0 1 26 0" stroke="#7DD3FC" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/></g></g></g><g class="iv-prog" style="transform-origin:230px 200px"><circle cx="230" cy="200" r="62" stroke="#38bdf8" stroke-opacity=".18" stroke-width="3"/><circle cx="230" cy="200" r="62" stroke="#f97316" stroke-width="3" stroke-linecap="round" stroke-dasharray="116 274" transform="rotate(-90 230 200)"/></g><circle cx="230" cy="200" r="46" fill="#0b111e" stroke="#38bdf8" stroke-opacity=".5"/><g class="iv-gear" style="transform-origin:230px 200px"><path d="M256 200L263.87 202.99L262.71 209.28L254.29 209.27L251.03 215.28L255.64 222.32L251.01 226.73L244.21 221.78L238.03 224.73L237.63 233.13L231.28 233.98L228.69 225.97L221.97 224.73L216.69 231.29L211.07 228.24L213.68 220.24L208.97 215.28L200.84 217.49L198.08 211.72L204.9 206.78L204 200L196.13 197.01L197.29 190.72L205.71 190.73L208.97 184.72L204.36 177.68L208.99 173.27L215.79 178.22L221.97 175.27L222.37 166.87L228.72 166.02L231.31 174.03L238.03 175.27L243.31 168.71L248.93 171.76L246.32 179.76L251.03 184.72L259.16 182.51L261.92 188.28L255.1 193.22ZM239 200A9 9 0 1 0 221 200A9 9 0 1 0 239 200Z" fill="url(#ivM)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".55"/></g><circle cx="230" cy="200" r="7" fill="#0b111e" stroke="#f97316" stroke-width="1.5"/></svg></div></div>
       </div>
     </section>
 
-    <section class="section reveal" style="padding-top: 24px;">
+    <!-- PROCESS: the current step is highlighted -->
+    <section class="section sec-tight iv-proc">
       <div class="container">
-        <div class="status-card">
-          <span class="status-pill" data-i18n="prepBadge">قيد الإعداد والتوثيق</span>
-          <h2 data-i18n="innoStatusTitle">الدفعة الأولى قيد التوثيق</h2>
-          <p class="section-subtitle" data-i18n="innoStatusDesc">نعمل على جمع وتوثيق المشاريع الأولى. ستُنشر هنا فور اكتمال ملفاتها.</p>
-        </div>
-      </div>
-    </section>
+        <ol class="iv-flow"><li class="iv-step is-now rvx"><span class="iv-node-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg><em>01</em></span><div class="iv-st"><h3 data-i18n="innoCard1Title">التوثيق</h3><span class="iv-now" data-i18n="innoNow">الآن</span></div></li><li class="iv-step rvx"><span class="iv-node-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><em>02</em></span><div class="iv-st"><h3 data-i18n="innoCard2Title">المرافقة</h3></div></li><li class="iv-step rvx"><span class="iv-node-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><em>03</em></span><div class="iv-st"><h3 data-i18n="innoCard3Title">العرض</h3></div></li>
+        </ol>
 
-    <section class="section reveal" style="padding-top: 24px;">
-      <div class="container">
-        <div class="cards-grid-3">
-          <article class="tech-card">
-            <div>
-              <div class="card-top">
-                <div class="card-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
-                <span class="card-num">01</span>
-              </div>
-              <h3 data-i18n="innoCard1Title">توثيق المشاريع</h3>
-              <p data-i18n="innoCard1Desc">إعداد ملف تعريفي لكل مشروع: الفكرة، المجال التقني، والمراحل المنجزة.</p>
-            </div>
-          </article>
-          <article class="tech-card">
-            <div>
-              <div class="card-top">
-                <div class="card-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-                <span class="card-num">02</span>
-              </div>
-              <h3 data-i18n="innoCard2Title">مرافقة المكونين</h3>
-              <p data-i18n="innoCard2Desc">توجيه الأفكار الهندسية خلال مراحل التخطيط والتجريب.</p>
-            </div>
-          </article>
-          <article class="tech-card">
-            <div>
-              <div class="card-top">
-                <div class="card-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
-                <span class="card-num">03</span>
-              </div>
-              <h3 data-i18n="innoCard3Title">عرض الإنجازات</h3>
-              <p data-i18n="innoCard3Desc">عرض النماذج والمشاريع المكتملة بشكل منظم حين تكتمل ملفاتها.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+        <!-- Innovator profiles (photo, name, specialty, project) will be added here once the institute sends them. -->
 
-    <section class="section reveal">
-      <div class="container">
-        <div class="cta-box">
-          <div>
-            <h2 class="section-title" data-i18n="ctaTitle">هل لديك فكرة مشروع أو رغبة في التعاون العلمي؟</h2>
-            <p class="section-subtitle" data-i18n="ctaDesc">نرحب بمبادرات المتدربين، توجيهات المكونين، وشراكات المؤسسات المهتمة بالابتكار التقني.</p>
-          </div>
+        <div class="cta-line rvx">
+          <h2 class="cta-title" data-i18n="ctaTitle">لديك فكرة مشروع؟</h2>
           <a href="contact.html" class="btn btn-primary"><span data-i18n="ctaBtn">تواصل مع النادي</span></a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="brand" style="margin-bottom: 14px;">
-            <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z" stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/><path d="M18 18L26.5 13" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/><circle cx="18" cy="18" r="2.8" fill="#F97316"/></svg>
-            <div class="brand-text">
-              <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
-              <span class="brand-sub" data-i18n="brandSub">BÉTIOUA SCIENTIFIC CLUB</span>
-            </div>
-          </div>
-          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerDesc">فضاء مؤسسي للابتكار العلمي، التجريب الهندسي، وتطوير المهارات التقنية.</p>
-        </div>
-
-        <div>
-          <h4 class="footer-heading" data-i18n="footerLinksTitle">أقسام الموقع</h4>
-          <ul class="footer-links">
-            <li><a href="index.html" data-i18n="navHome">الرئيسية</a></li>
-            <li><a href="innovators.html" data-i18n="navInnovators">المبتكرون</a></li>
-            <li><a href="activities.html" data-i18n="navActivities">النشاطات</a></li>
-            <li><a href="contact.html" data-i18n="navContact">تواصل معنا</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-heading" data-i18n="footerLocationTitle">الموقع المؤسسي</h4>
-          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerLocationText">معهد التكوين المهني — بطيوة، ولاية وهران، الجزائر.</p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span data-i18n="footerCopyright">© 2026 النادي العلمي لمعهد بطيوة — جميع الحقوق محفوظة.</span>
-        <span>THINK BEYOND. BUILD THE FUTURE.</span>
-      </div>
+  <footer class="slim-footer">
+    <div class="container slim-footer-inner">
+      <span data-i18n="footerCopyright">© 2026 النادي العلمي لمعهد بطيوة</span>
+      <span class="slim-motto">THINK BEYOND. BUILD THE FUTURE.</span>
     </div>
   </footer>
 
@@ -188,6 +165,59 @@
     </a>
   </nav>
 
+  <script>
+/* Short copy for this page only. Same keys as app.js, so the AR/EN toggle keeps working. */
+(function () {
+  var AR = {
+    innoKicker: "المبتكرون", innoTitle: "فضاء المبتكرين", innoLead: "مشاريع المتدربين وأفكارهم، بعد توثيقها.",
+    prepBadge: "قيد الإعداد والتوثيق", innoNow: "الآن",
+    innoCard1Title: "التوثيق", innoCard2Title: "المرافقة", innoCard3Title: "العرض",
+    ctaTitle: "لديك فكرة مشروع؟", ctaBtn: "تواصل مع النادي",
+    footerCopyright: "© 2026 النادي العلمي لمعهد بطيوة"
+  };
+  var EN = {
+    innoKicker: "Innovators", innoTitle: "The Innovators Space", innoLead: "Trainees' projects and ideas, once documented.",
+    prepBadge: "Documentation in progress", innoNow: "Now",
+    innoCard1Title: "Documentation", innoCard2Title: "Mentoring", innoCard3Title: "Showcase",
+    ctaTitle: "Got a project idea?", ctaBtn: "Contact the club",
+    footerCopyright: "© 2026 Bétioua Scientific Club"
+  };
+  // Registered before app.js's own listener, so the text is in place when the language is applied.
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof translations !== "undefined") { Object.assign(translations.ar, AR); Object.assign(translations.en, EN); }
+  });
+
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var items = [].slice.call(document.querySelectorAll(".rvx"));
+  if (!("IntersectionObserver" in window) || reduce) { items.forEach(function (e) { e.classList.add("in-view"); }); }
+  else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in-view"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(function (e) { io.observe(e); });
+  }
+
+  // Model: gentle pointer tilt; everything pauses when off screen (SVG + CSS only)
+  var st = document.getElementById("ivStage");
+  if (!st) return;
+  var vis = false, raf = 0, mx = 0, my = 0, sx = 0, sy = 0;
+  function tick() {
+    raf = 0; if (!vis) return;
+    sx += (mx - sx) * 0.12; sy += (my - sy) * 0.12;
+    st.style.setProperty("--mx", sx.toFixed(3)); st.style.setProperty("--my", sy.toFixed(3));
+    if (Math.abs(mx - sx) > 0.002 || Math.abs(my - sy) > 0.002) raf = requestAnimationFrame(tick);
+  }
+  function kick() { if (vis && !raf) raf = requestAnimationFrame(tick); }
+  addEventListener("pointermove", function (e) {
+    if (e.pointerType && e.pointerType !== "mouse") return;
+    mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; kick();
+  }, { passive: true });
+  function pause() { st.classList.toggle("paused", !vis || document.hidden); }
+  if ("IntersectionObserver" in window) { new IntersectionObserver(function (es) { vis = es[0].isIntersecting; pause(); kick(); }).observe(st); }
+  else { vis = true; kick(); }
+  document.addEventListener("visibilitychange", pause);
+})();
+</script>
   <script src="app.js"></script>
 </body>
-</html>
+        </html>
