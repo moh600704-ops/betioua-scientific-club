@@ -205,7 +205,7 @@ html[dir="ltr"] .arrow-icon { transform: scaleX(-1); }
   border-radius: 20px;
   padding: 6px 8px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 4px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.82);
 }
