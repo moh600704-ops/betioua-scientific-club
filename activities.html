@@ -19,12 +19,60 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" />
   <link rel="stylesheet" href="style.css" />
   <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('bsc-lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';}}catch(e){}</script>
+  <style>
+    /* Activities: isometric hall model (SVG + CSS only), no frames, no heavy images */
+    .ac-hero{padding-top:56px;padding-bottom:8px}
+    .ac-grid-hero{display:grid;gap:0;align-items:center}
+    .ac-copy .section-title{margin:6px 0 10px}
+    .ac-copy .section-subtitle{max-width:40ch;margin-bottom:20px}
+    .ac-pill{gap:9px}
+    .ac-dot{width:7px;height:7px;border-radius:50%;background:var(--accent-amber);box-shadow:0 0 0 0 rgba(249,115,22,.6);animation:acPing 2s ease-out infinite}
+    @keyframes acPing{to{box-shadow:0 0 0 9px rgba(249,115,22,0)}}
+    .ac-stage{--mx:0;--my:0;order:-1;position:relative;touch-action:pan-y}
+    .ac-plate{width:min(100%,620px);margin:0 auto;aspect-ratio:640/440;
+      transform:perspective(1200px) rotateX(calc(var(--my)*-4deg)) rotateY(calc(var(--mx)*6deg))}
+    .ac-svg{width:100%;height:100%;display:block;overflow:visible}
+    .sc-spin{animation:scSpin 12s linear infinite}
+    .sc-spin.rev{animation-direction:reverse}
+    @keyframes scSpin{to{transform:rotate(360deg)}}
+    .sc-bob{animation:scBob 4s ease-in-out infinite}
+    @keyframes scBob{50%{transform:translateY(-7px)}}
+    .sc-link{animation:scDash 3s linear infinite}
+    @keyframes scDash{to{stroke-dashoffset:-32}}
+    .zone{transition:filter .35s ease}
+    .zone .pad polygon{transition:fill .35s,stroke-opacity .35s}
+    .zone.on{filter:drop-shadow(0 0 12px rgba(249,115,22,.55))}
+    .zone.on .sc-badge circle{fill:#f97316}
+    .ac-stage.paused *{animation-play-state:paused!important}
+    @media(min-width:900px){
+      .ac-hero{padding-top:84px;min-height:calc(100vh - 140px);display:flex;align-items:center}
+      .ac-hero .container{width:100%}
+      .ac-grid-hero{grid-template-columns:1fr 1.15fr;gap:24px}
+      .ac-stage{order:0}.ac-plate{width:min(100%,680px)}
+    }
+    .sec-tight{padding:36px 0 56px}
+    .ac-list{list-style:none;display:grid;gap:22px}
+    .ac-item{display:flex;align-items:center;gap:18px;cursor:default}
+    .ac-box{position:relative;flex:none;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:#0b111e;border:1px solid var(--border-accent);color:var(--accent-cyan);box-shadow:0 0 22px rgba(56,189,248,.14);transition:var(--transition-smooth)}
+    .ac-box em{position:absolute;top:-9px;inset-inline-end:-9px;min-width:24px;height:20px;padding:0 5px;border-radius:6px;display:grid;place-items:center;font:700 .68rem 'Space Grotesk',monospace;font-style:normal;letter-spacing:.06em;color:#fb923c;background:#0b111e;border:1px solid rgba(249,115,22,.5)}
+    .ac-item h3{font-size:1.12rem;font-weight:700}
+    .ac-item:hover .ac-box,.ac-item.on .ac-box{border-color:var(--accent-amber);color:#fb923c;transform:translateY(-3px)}
+    @media(min-width:768px){
+      .ac-list{grid-template-columns:repeat(3,1fr);gap:20px}
+      .ac-item{flex-direction:column;text-align:center;gap:16px;padding:6px 0}
+    }
+    .cta-line{margin-top:56px;padding-top:30px;border-top:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+    .cta-title{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.3}
+    .js .rvx{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+    .js .rvx.in-view{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){.js .rvx{opacity:1;transform:none;transition:none}.ac-svg *{animation:none!important}.ac-dot{animation:none}}
+  </style>
 </head>
 <body data-page="activities">
   <header class="top-header">
     <div class="container header-inner">
       <a href="index.html" class="brand" aria-label="BÉTIOUA SCIENTIFIC CLUB">
-        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z" stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/><path d="M18 18L26.5 13" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/><circle cx="18" cy="18" r="2.8" fill="#F97316"/></svg>
+        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bmG" x1="4" y1="3" x2="32" y2="33" gradientUnits="userSpaceOnUse"><stop stop-color="#7DD3FC"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs><path d="M18 2.5L31.5 10.25V25.75L18 33.5L4.5 25.75V10.25L18 2.5Z" fill="#0B1220" stroke="url(#bmG)" stroke-width="1.6" stroke-linejoin="round"/><path d="M25.1 18L27.54 19.05L27.03 21.25L24.38 21.12L23.02 23.02L24 25.49L22.09 26.69L20.3 24.72L18 25.1L16.95 27.54L14.75 27.03L14.88 24.38L12.98 23.02L10.51 24L9.31 22.09L11.28 20.3L10.9 18L8.46 16.95L8.97 14.75L11.62 14.88L12.98 12.98L12 10.51L13.91 9.31L15.7 11.28L18 10.9L19.05 8.46L21.25 8.97L21.12 11.62L23.02 12.98L25.49 12L26.69 13.91L24.72 15.7ZM21.7 18A3.7 3.7 0 1 0 14.3 18A3.7 3.7 0 1 0 21.7 18Z" fill="#E2E8F0" fill-rule="evenodd"/><circle cx="18" cy="18" r="2.1" fill="#F97316"/></svg>
         <div class="brand-text">
           <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
           <span class="brand-sub" data-i18n="brandSub">BÉTIOUA SCIENTIFIC CLUB</span>
@@ -58,114 +106,34 @@
   </header>
 
   <main>
-    <section class="section page-top">
-      <div class="container">
-        <div class="page-banner">
-          <img class="page-banner-img" src="file_00000000eb08210be08163cdf073487.png" alt="روبوت صناعي متحرك" data-i18n-alt="altActivities" onerror="this.style.display='none'" />
-          <div class="page-banner-overlay">
-            <span class="section-kicker" data-i18n="actKicker">النشاطات</span>
-            <h1 class="section-title" data-i18n="actTitle">الورشات والمعارض العلمية</h1>
-            <p class="section-subtitle" data-i18n="actLead">فعاليات النادي من ورشات تطبيقية ولقاءات علمية ومعارض للنماذج التقنية.</p>
-          </div>
+    <section class="section page-top ac-hero">
+      <div class="container ac-grid-hero">
+        <div class="ac-copy">
+          <span class="section-kicker" data-i18n="actKicker">النشاطات</span>
+          <h1 class="section-title" data-i18n="actTitle">الورشات والمعارض</h1>
+          <p class="section-subtitle" data-i18n="actLead">ورشات تطبيقية ولقاءات ومعارض علمية.</p>
+          <span class="status-pill ac-pill"><i class="ac-dot"></i><span data-i18n="actBadge">البرنامج قيد الإعداد</span></span>
         </div>
-        <p class="visual-caption" data-i18n="actCaption">صورة توضيحية</p>
+        <div class="ac-stage" id="acStage" aria-hidden="true"><div class="ac-plate"><svg class="ac-svg" viewBox="0 0 640 440" fill="none" aria-hidden="true"><defs><radialGradient id="scM" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4e6a8c"/><stop offset=".55" stop-color="#9fb8d8"/><stop offset="1" stop-color="#6b86a8"/></radialGradient><radialGradient id="scM2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#3f7896"/><stop offset=".55" stop-color="#8fd0ea"/><stop offset="1" stop-color="#4f8fb0"/></radialGradient><radialGradient id="scGlow"><stop offset="0" stop-color="#38bdf8" stop-opacity=".2"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient></defs><ellipse cx="320" cy="215" rx="310" ry="190" fill="url(#scGlow)"/><polygon points="60.2,206 320,356 320,368 60.2,218" fill="#07101d" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1" stroke-linejoin="round"/><polygon points="579.8,206 320,356 320,368 579.8,218" fill="#050b15" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1" stroke-linejoin="round"/><polygon points="320,56 579.8,206 320,356 60.2,206" fill="#0b1424" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.2" stroke-linejoin="round"/><line x1="363.3" y1="81" x2="103.5" y2="231" stroke="#38bdf8" stroke-opacity=".1"/><line x1="276.7" y1="81" x2="536.5" y2="231" stroke="#38bdf8" stroke-opacity=".1"/><line x1="406.6" y1="106" x2="146.8" y2="256" stroke="#38bdf8" stroke-opacity=".1"/><line x1="233.4" y1="106" x2="493.2" y2="256" stroke="#38bdf8" stroke-opacity=".1"/><line x1="449.9" y1="131" x2="190.1" y2="281" stroke="#38bdf8" stroke-opacity=".1"/><line x1="190.1" y1="131" x2="449.9" y2="281" stroke="#38bdf8" stroke-opacity=".1"/><line x1="493.2" y1="156" x2="233.4" y2="306" stroke="#38bdf8" stroke-opacity=".1"/><line x1="146.8" y1="156" x2="406.6" y2="306" stroke="#38bdf8" stroke-opacity=".1"/><line x1="536.5" y1="181" x2="276.7" y2="331" stroke="#38bdf8" stroke-opacity=".1"/><line x1="103.5" y1="181" x2="363.3" y2="331" stroke="#38bdf8" stroke-opacity=".1"/><g class="zone" data-z="0"><g class="pad "><polygon points="103.5,206 190.1,256 190.1,253 103.5,203" fill="#0a1424" stroke="rgb(56,189,248)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/><polygon points="276.7,206 190.1,256 190.1,253 276.7,203" fill="#07101d" stroke="rgb(56,189,248)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/><polygon points="190.1,153 276.7,203 190.1,253 103.5,203" fill="rgba(56,189,248,.10)" stroke="rgb(56,189,248)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/></g><polygon points="140.7,192.5 208.3,231.5 208.3,209.5 140.7,170.5" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="239.5,213.5 208.3,231.5 208.3,209.5 239.5,191.5" fill="#07101d" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="171.9,152.5 239.5,191.5 208.3,209.5 140.7,170.5" fill="#101c31" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><g transform="matrix(0.866 .5 -0.866 .5 320 31)"><g class="sc-spin" style="transform-origin:62px 225px;animation-duration:12s"><path d="M73.5 225L76.9 226.5L76.3 229.5L72.6 229.5L70.8 232.4L72.5 235.7L70 237.7L67.2 235.3L64 236.3L63.2 240L60 239.9L59.4 236.2L56.2 235L53.3 237.2L50.9 235.1L52.8 231.9L51.2 228.9L47.5 228.7L47 225.6L50.5 224.4L51.2 221.1L48.5 218.5L50.1 215.8L53.6 217.1L56.2 215L55.8 211.3L58.8 210.3L60.6 213.6L64 213.7L66 210.6L68.9 211.7L68.3 215.4L70.8 217.6L74.4 216.5L75.9 219.3L73 221.7ZM66 225A4 4 0 1 0 58 225A4 4 0 1 0 66 225Z" fill="url(#scM)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".7" stroke-width=".8"/></g><g class="sc-spin rev" style="transform-origin:87px 225px;animation-duration:9.3s"><path d="M94.5 225L96.9 226.3L96.2 228.8L93.5 228.7L91.7 230.9L92.2 233.5L89.7 234.6L88.1 232.4L85.3 232.3L83.6 234.4L81.2 233.1L81.9 230.5L80.2 228.3L77.5 228.2L77 225.5L79.5 224.5L80.2 221.7L78.6 219.6L80.4 217.5L82.8 218.8L85.3 217.7L86 215L88.7 215.1L89.2 217.8L91.7 219.1L94.2 218L95.8 220.2L94 222.2ZM90 225A3 3 0 1 0 84 225A3 3 0 1 0 90 225Z" fill="url(#scM2)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".7" stroke-width=".8"/></g><circle cx="62" cy="225" r="2.6" fill="#0b111e" stroke="#f97316" stroke-width=".9"/><circle cx="87" cy="225" r="2" fill="#0b111e" stroke="#f97316" stroke-width=".9"/></g><polygon points="211.8,190.5 222.1,196.5 222.1,190.5 211.8,184.5" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="229.9,192 222.1,196.5 222.1,190.5 229.9,186" fill="#07101d" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="219.5,180 229.9,186 222.1,190.5 211.8,184.5" fill="#1a2a44" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="147.7,170.5 158.1,176.5 158.1,172.5 147.7,166.5" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="164.1,173 158.1,176.5 158.1,172.5 164.1,169" fill="#07101d" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="153.7,163 164.1,169 158.1,172.5 147.7,166.5" fill="#1a2a44" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><line x1="172.1" y1="105" x2="172.1" y2="171" stroke="#f97316" stroke-opacity=".7" stroke-dasharray="2 3"/><g class="sc-badge"><circle cx="172.1" cy="91" r="14" fill="#0b111e" stroke="#f97316" stroke-width="1.5"/><text x="172.1" y="95" text-anchor="middle" font-family="Space Grotesk,monospace" font-size="11" font-weight="700" fill="#fff">01</text></g></g><g class="zone" data-z="2"><g class="pad a"><polygon points="363.3,206 449.9,256 449.9,253 363.3,203" fill="#0a1424" stroke="rgb(249,115,22)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/><polygon points="536.5,206 449.9,256 449.9,253 536.5,203" fill="#07101d" stroke="rgb(249,115,22)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/><polygon points="449.9,153 536.5,203 449.9,253 363.3,203" fill="rgba(249,115,22,.10)" stroke="rgb(249,115,22)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/></g><polygon points="451.6,165 519.2,204 519.2,147 451.6,108" fill="#0c1627" stroke="#f97316" stroke-opacity="0.8" stroke-width="1.1" stroke-linejoin="round"/><polygon points="460.3,161 469,166 469,152 460.3,147" fill="#38bdf8" stroke="#38bdf8" stroke-opacity="0.9" stroke-width="0.6" stroke-linejoin="round" fill-opacity=".55"/><polygon points="474.1,169 482.8,174 482.8,150 474.1,145" fill="#38bdf8" stroke="#38bdf8" stroke-opacity="0.9" stroke-width="0.6" stroke-linejoin="round" fill-opacity=".55"/><polygon points="488,177 496.7,182 496.7,163 488,158" fill="#38bdf8" stroke="#38bdf8" stroke-opacity="0.9" stroke-width="0.6" stroke-linejoin="round" fill-opacity=".55"/><polygon points="501.9,185 510.5,190 510.5,156 501.9,151" fill="#f97316" stroke="#f97316" stroke-opacity="0.9" stroke-width="0.6" stroke-linejoin="round" fill-opacity=".55"/><polyline points="459.4,120.5 489.7,138" fill="none" stroke="#7dd3fc" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round"/><polygon points="391.9,214.5 421.3,231.5 421.3,213.5 391.9,196.5" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="450.8,214.5 421.3,231.5 421.3,213.5 450.8,196.5" fill="#07101d" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="421.3,179.5 450.8,196.5 421.3,213.5 391.9,196.5" fill="#101c31" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="431.7,237.5 450.8,248.5 450.8,238.5 431.7,227.5" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="469.8,237.5 450.8,248.5 450.8,238.5 469.8,227.5" fill="#07101d" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><polygon points="450.8,216.5 469.8,227.5 450.8,238.5 431.7,227.5" fill="#101c31" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="round"/><g transform="matrix(0.866 .5 -0.866 .5 320 35)"><circle class="sc-spin" cx="220" cy="103" r="15" stroke="#38bdf8" stroke-opacity=".6" stroke-dasharray="2 5" style="transform-origin:220px 103px;animation-duration:14s"/></g><g class="sc-bob"><polygon points="402.3,183.5 421.3,194.5 421.3,172.5 402.3,161.5" fill="rgba(56,189,248,.14)" stroke="#7dd3fc" stroke-opacity="0.95" stroke-width="1.2" stroke-linejoin="round"/><polygon points="440.4,183.5 421.3,194.5 421.3,172.5 440.4,161.5" fill="rgba(56,189,248,.06)" stroke="#7dd3fc" stroke-opacity="0.95" stroke-width="1.2" stroke-linejoin="round"/><polygon points="421.3,150.5 440.4,161.5 421.3,172.5 402.3,161.5" fill="rgba(249,115,22,.30)" stroke="#fb923c" stroke-opacity="1" stroke-width="1.3" stroke-linejoin="round"/></g><g transform="matrix(0.866 .5 -0.866 .5 320 43)"><g class="sc-spin" style="transform-origin:260px 109px;animation-duration:6s"><path d="M265.8 109L267.9 110.2L267.2 112.6L264.8 112.3L262.9 114L262.9 116.4L260.5 117L259.5 114.8L257.1 114L255 115.3L253.3 113.4L254.8 111.5L254.2 109L252.1 107.8L252.8 105.4L255.2 105.7L257.1 104L257.1 101.6L259.5 101L260.5 103.2L262.9 104L265 102.7L266.7 104.6L265.2 106.5ZM262.2 109A2.2 2.2 0 1 0 257.8 109A2.2 2.2 0 1 0 262.2 109Z" fill="url(#scM2)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".7" stroke-width=".7"/></g></g><line x1="425.3" y1="105.5" x2="425.3" y2="159.5" stroke="#f97316" stroke-opacity=".7" stroke-dasharray="2 3"/><g class="sc-badge"><circle cx="425.3" cy="91.5" r="14" fill="#0b111e" stroke="#f97316" stroke-width="1.5"/><text x="425.3" y="95.5" text-anchor="middle" font-family="Space Grotesk,monospace" font-size="11" font-weight="700" fill="#fff">03</text></g></g><g class="zone" data-z="1"><g class="pad "><polygon points="212.6,281 320,343 320,340 212.6,278" fill="#0a1424" stroke="rgb(56,189,248)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/><polygon points="427.4,281 320,343 320,340 427.4,278" fill="#07101d" stroke="rgb(56,189,248)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/><polygon points="320,216 427.4,278 320,340 212.6,278" fill="rgba(56,189,248,.10)" stroke="rgb(56,189,248)" stroke-opacity="0.8" stroke-width="1" stroke-linejoin="round"/></g><path d="M293.1 235.5L293.1 242.5A10.4 6 0 0 0 313.9 242.5Z" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M313.9 235.5L313.9 242.5A10.4 6 0 0 1 293.1 242.5Z" fill="#0a1424" stroke="none"/><line x1="293.1" y1="235.5" x2="293.1" y2="242.5" stroke="#38bdf8" stroke-opacity="0.6"/><line x1="313.9" y1="235.5" x2="313.9" y2="242.5" stroke="#38bdf8" stroke-opacity="0.6"/><ellipse cx="303.5" cy="235.5" rx="10.4" ry="6" fill="#14233b" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M354.6 245L354.6 252A10.4 6 0 0 0 375.4 252Z" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M375.4 245L375.4 252A10.4 6 0 0 1 354.6 252Z" fill="#0a1424" stroke="none"/><line x1="354.6" y1="245" x2="354.6" y2="252" stroke="#38bdf8" stroke-opacity="0.6"/><line x1="375.4" y1="245" x2="375.4" y2="252" stroke="#38bdf8" stroke-opacity="0.6"/><ellipse cx="365" cy="245" rx="10.4" ry="6" fill="#14233b" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M248.1 261.5L248.1 268.5A10.4 6 0 0 0 268.9 268.5Z" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M268.9 261.5L268.9 268.5A10.4 6 0 0 1 248.1 268.5Z" fill="#0a1424" stroke="none"/><line x1="248.1" y1="261.5" x2="248.1" y2="268.5" stroke="#38bdf8" stroke-opacity="0.6"/><line x1="268.9" y1="261.5" x2="268.9" y2="268.5" stroke="#38bdf8" stroke-opacity="0.6"/><ellipse cx="258.5" cy="261.5" rx="10.4" ry="6" fill="#14233b" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M280.8 262L280.8 278A39.2 22.6 0 0 0 359.2 278Z" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M359.2 262L359.2 278A39.2 22.6 0 0 1 280.8 278Z" fill="#0a1424" stroke="none"/><line x1="280.8" y1="262" x2="280.8" y2="278" stroke="#38bdf8" stroke-opacity="0.6"/><line x1="359.2" y1="262" x2="359.2" y2="278" stroke="#38bdf8" stroke-opacity="0.6"/><ellipse cx="320" cy="262" rx="39.2" ry="22.6" fill="#101c31" stroke="#38bdf8" stroke-opacity="0.6"/><g transform="matrix(0.866 .5 -0.866 .5 320 37)"><circle cx="225" cy="225" r="21" stroke="#f97316" stroke-opacity=".85" stroke-dasharray="3 6" class="sc-spin" style="transform-origin:225px 225px;animation-duration:18s"/><circle cx="225" cy="225" r="9" fill="rgba(249,115,22,.15)" stroke="#f97316" stroke-opacity=".9"/></g><path d="M371.1 280.5L371.1 287.5A10.4 6 0 0 0 391.9 287.5Z" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M391.9 280.5L391.9 287.5A10.4 6 0 0 1 371.1 287.5Z" fill="#0a1424" stroke="none"/><line x1="371.1" y1="280.5" x2="371.1" y2="287.5" stroke="#38bdf8" stroke-opacity="0.6"/><line x1="391.9" y1="280.5" x2="391.9" y2="287.5" stroke="#38bdf8" stroke-opacity="0.6"/><ellipse cx="381.5" cy="280.5" rx="10.4" ry="6" fill="#14233b" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M264.6 297L264.6 304A10.4 6 0 0 0 285.4 304Z" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M285.4 297L285.4 304A10.4 6 0 0 1 264.6 304Z" fill="#0a1424" stroke="none"/><line x1="264.6" y1="297" x2="264.6" y2="304" stroke="#38bdf8" stroke-opacity="0.6"/><line x1="285.4" y1="297" x2="285.4" y2="304" stroke="#38bdf8" stroke-opacity="0.6"/><ellipse cx="275" cy="297" rx="10.4" ry="6" fill="#14233b" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M326.1 306.5L326.1 313.5A10.4 6 0 0 0 346.9 313.5Z" fill="#0a1424" stroke="#38bdf8" stroke-opacity="0.6"/><path d="M346.9 306.5L346.9 313.5A10.4 6 0 0 1 326.1 313.5Z" fill="#0a1424" stroke="none"/><line x1="326.1" y1="306.5" x2="326.1" y2="313.5" stroke="#38bdf8" stroke-opacity="0.6"/><line x1="346.9" y1="306.5" x2="346.9" y2="313.5" stroke="#38bdf8" stroke-opacity="0.6"/><ellipse cx="336.5" cy="306.5" rx="10.4" ry="6" fill="#14233b" stroke="#38bdf8" stroke-opacity="0.6"/><polygon class="sc-link" points="336.5,292.5 275,283 258.5,247.5 303.5,221.5 365,231 381.5,266.5" stroke="#38bdf8" stroke-opacity=".7" stroke-dasharray="3 5" fill="rgba(56,189,248,.04)"/><circle cx="336.5" cy="292.5" r="5.2" fill="#0b111e" stroke="#f97316" stroke-width="1.5"/><circle cx="336.5" cy="292.5" r="1.8" fill="#f97316"/><circle cx="275" cy="283" r="5.2" fill="#0b111e" stroke="#7dd3fc" stroke-width="1.5"/><circle cx="275" cy="283" r="1.8" fill="#7dd3fc"/><circle cx="258.5" cy="247.5" r="5.2" fill="#0b111e" stroke="#7dd3fc" stroke-width="1.5"/><circle cx="258.5" cy="247.5" r="1.8" fill="#7dd3fc"/><circle cx="303.5" cy="221.5" r="5.2" fill="#0b111e" stroke="#7dd3fc" stroke-width="1.5"/><circle cx="303.5" cy="221.5" r="1.8" fill="#7dd3fc"/><circle cx="365" cy="231" r="5.2" fill="#0b111e" stroke="#7dd3fc" stroke-width="1.5"/><circle cx="365" cy="231" r="1.8" fill="#7dd3fc"/><circle cx="381.5" cy="266.5" r="5.2" fill="#0b111e" stroke="#7dd3fc" stroke-width="1.5"/><circle cx="381.5" cy="266.5" r="1.8" fill="#7dd3fc"/><line x1="320" y1="180" x2="320" y2="238" stroke="#f97316" stroke-opacity=".7" stroke-dasharray="2 3"/><g class="sc-badge"><circle cx="320" cy="166" r="14" fill="#0b111e" stroke="#f97316" stroke-width="1.5"/><text x="320" y="170" text-anchor="middle" font-family="Space Grotesk,monospace" font-size="11" font-weight="700" fill="#fff">02</text></g></g></svg></div></div>
       </div>
     </section>
 
-    <section class="section reveal" style="padding-top: 24px;">
+    <section class="section sec-tight">
       <div class="container">
-        <div class="status-card">
-          <span class="status-pill" data-i18n="prepBadge">قيد الإعداد والتوثيق</span>
-          <h2 data-i18n="actStatusTitle">البرنامج قيد الإعداد</h2>
-          <p class="section-subtitle" data-i18n="actStatusDesc">لم تُحدَّد تواريخ الفعاليات بعد. سيُعلن البرنامج هنا فور اعتماده.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section reveal" style="padding-top: 24px;">
-      <div class="container">
-        <div class="cards-grid-3">
-          <article class="tech-card">
-            <div>
-              <div class="card-top">
-                <div class="card-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-                <span class="card-num">01</span>
-              </div>
-              <h3 data-i18n="actCard1Title">ورشات تطبيقية</h3>
-              <p data-i18n="actCard1Desc">جلسات عملية للتجريب في المجالات الميكانيكية والكهربائية والأتمتة.</p>
-            </div>
-          </article>
-          <article class="tech-card">
-            <div>
-              <div class="card-top">
-                <div class="card-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-                <span class="card-num">02</span>
-              </div>
-              <h3 data-i18n="actCard2Title">لقاءات علمية</h3>
-              <p data-i18n="actCard2Desc">فضاءات لتبادل الخبرات بين المتدربين والمكونين.</p>
-            </div>
-          </article>
-          <article class="tech-card">
-            <div>
-              <div class="card-top">
-                <div class="card-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
-                <span class="card-num">03</span>
-              </div>
-              <h3 data-i18n="actCard3Title">معارض ونماذج</h3>
-              <p data-i18n="actCard3Desc">عرض النماذج الأولية والمشاريع التقنية داخل المعهد.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section reveal">
-      <div class="container">
-        <div class="cta-box">
-          <div>
-            <h2 class="section-title" data-i18n="ctaTitle">هل لديك فكرة مشروع أو رغبة في التعاون العلمي؟</h2>
-            <p class="section-subtitle" data-i18n="ctaDesc">نرحب بمبادرات المتدربين، توجيهات المكونين، وشراكات المؤسسات المهتمة بالابتكار التقني.</p>
-          </div>
+        <ol class="ac-list"><li class="ac-item rvx" data-ac="0"><span class="ac-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><em>01</em></span><h3 data-i18n="actCard1Title">ورشات تطبيقية</h3></li><li class="ac-item rvx" data-ac="1"><span class="ac-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><em>02</em></span><h3 data-i18n="actCard2Title">لقاءات علمية</h3></li><li class="ac-item rvx" data-ac="2"><span class="ac-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><em>03</em></span><h3 data-i18n="actCard3Title">معارض ونماذج</h3></li>
+        </ol>
+        <div class="cta-line rvx">
+          <h2 class="cta-title" data-i18n="ctaTitle">لديك فكرة مشروع؟</h2>
           <a href="contact.html" class="btn btn-primary"><span data-i18n="ctaBtn">تواصل مع النادي</span></a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="brand" style="margin-bottom: 14px;">
-            <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 3L31 10.5V25.5L18 33L5 25.5V10.5L18 3Z" stroke="#E2E8F0" stroke-width="2" stroke-linejoin="round"/><path d="M18 18L26.5 13" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="12.7" r="2.2" fill="#38BDF8"/><circle cx="18" cy="18" r="2.8" fill="#F97316"/></svg>
-            <div class="brand-text">
-              <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
-              <span class="brand-sub" data-i18n="brandSub">BÉTIOUA SCIENTIFIC CLUB</span>
-            </div>
-          </div>
-          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerDesc">فضاء مؤسسي للابتكار العلمي، التجريب الهندسي، وتطوير المهارات التقنية.</p>
-        </div>
-
-        <div>
-          <h4 class="footer-heading" data-i18n="footerLinksTitle">أقسام الموقع</h4>
-          <ul class="footer-links">
-            <li><a href="index.html" data-i18n="navHome">الرئيسية</a></li>
-            <li><a href="innovators.html" data-i18n="navInnovators">المبتكرون</a></li>
-            <li><a href="activities.html" data-i18n="navActivities">النشاطات</a></li>
-            <li><a href="contact.html" data-i18n="navContact">تواصل معنا</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-heading" data-i18n="footerLocationTitle">الموقع المؤسسي</h4>
-          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerLocationText">معهد التكوين المهني — بطيوة، ولاية وهران، الجزائر.</p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span data-i18n="footerCopyright">© 2026 النادي العلمي لمعهد بطيوة — جميع الحقوق محفوظة.</span>
-        <span>THINK BEYOND. BUILD THE FUTURE.</span>
-      </div>
+  <footer class="slim-footer">
+    <div class="container slim-footer-inner">
+      <span data-i18n="footerCopyright">© 2026 النادي العلمي لمعهد بطيوة</span>
+      <span class="slim-motto">THINK BEYOND. BUILD THE FUTURE.</span>
     </div>
   </footer>
 
@@ -188,6 +156,66 @@
     </a>
   </nav>
 
+  <script>
+/* Short copy for this page only. Same keys as app.js, so the AR/EN toggle keeps working. */
+(function () {
+  var AR = {
+    actKicker: "النشاطات", actTitle: "الورشات والمعارض", actLead: "ورشات تطبيقية ولقاءات ومعارض علمية.",
+    actBadge: "البرنامج قيد الإعداد",
+    actCard1Title: "ورشات تطبيقية", actCard2Title: "لقاءات علمية", actCard3Title: "معارض ونماذج",
+    ctaTitle: "لديك فكرة مشروع؟", ctaBtn: "تواصل مع النادي",
+    footerCopyright: "© 2026 النادي العلمي لمعهد بطيوة"
+  };
+  var EN = {
+    actKicker: "Activities", actTitle: "Workshops & Exhibitions", actLead: "Hands-on workshops, scientific meetings and exhibitions.",
+    actBadge: "Program in preparation",
+    actCard1Title: "Workshops", actCard2Title: "Meetings", actCard3Title: "Exhibitions",
+    ctaTitle: "Got a project idea?", ctaBtn: "Contact the club",
+    footerCopyright: "© 2026 Bétioua Scientific Club"
+  };
+  // Registered before app.js's own listener, so the text is in place when the language is applied.
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof translations !== "undefined") { Object.assign(translations.ar, AR); Object.assign(translations.en, EN); }
+  });
+
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var items = [].slice.call(document.querySelectorAll(".rvx"));
+  if (!("IntersectionObserver" in window) || reduce) { items.forEach(function (e) { e.classList.add("in-view"); }); }
+  else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in-view"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(function (e) { io.observe(e); });
+  }
+
+  // Hall model: hover on a list item lights its zone; pointer tilt; pauses when off screen
+  var st = document.getElementById("acStage");
+  if (!st) return;
+  var zones = []; [].slice.call(st.querySelectorAll(".zone")).forEach(function (z) { zones[+z.getAttribute("data-z")] = z; });
+  [].slice.call(document.querySelectorAll(".ac-item")).forEach(function (it) {
+    var i = +it.getAttribute("data-ac");
+    var on = function () { zones[i] && zones[i].classList.add("on"); };
+    var off = function () { zones[i] && zones[i].classList.remove("on"); };
+    it.addEventListener("mouseenter", on); it.addEventListener("mouseleave", off);
+  });
+  var vis = false, raf = 0, mx = 0, my = 0, sx = 0, sy = 0;
+  function tick() {
+    raf = 0; if (!vis) return;
+    sx += (mx - sx) * 0.12; sy += (my - sy) * 0.12;
+    st.style.setProperty("--mx", sx.toFixed(3)); st.style.setProperty("--my", sy.toFixed(3));
+    if (Math.abs(mx - sx) > 0.002 || Math.abs(my - sy) > 0.002) raf = requestAnimationFrame(tick);
+  }
+  function kick() { if (vis && !raf) raf = requestAnimationFrame(tick); }
+  addEventListener("pointermove", function (e) {
+    if (e.pointerType && e.pointerType !== "mouse") return;
+    mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; kick();
+  }, { passive: true });
+  function pause() { st.classList.toggle("paused", !vis || document.hidden); }
+  if ("IntersectionObserver" in window) { new IntersectionObserver(function (es) { vis = es[0].isIntersecting; pause(); kick(); }).observe(st); }
+  else { vis = true; kick(); }
+  document.addEventListener("visibilitychange", pause);
+})();
+</script>
   <script src="app.js"></script>
 </body>
-</html>
+  </html>
