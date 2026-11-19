@@ -27,6 +27,81 @@
   .hero-grid{grid-template-columns:1fr 1.1fr;gap:24px}
   .hero-stage{order:0;height:600px;max-height:none}
 }
+
+/* ===== Home: annotated gear model + lighter lower sections ===== */
+.sec-tight{padding:52px 0}
+@media(min-width:900px){.sec-tight{padding:76px 0}}
+.section-header{margin-bottom:30px;max-width:none}
+.section-title{margin-bottom:0}
+
+/* gear plate: gears, leader lines and callouts share one coordinate system */
+.gx-stage{--p:0;--mx:0;--my:0;position:relative;touch-action:pan-y}
+.gx-plate{position:relative;width:min(100%,1000px);margin:0 auto;aspect-ratio:1000/400;
+  transform:perspective(1200px) rotateX(calc(5deg + var(--my)*-5deg)) rotateY(calc(var(--p)*-9deg + var(--mx)*7deg))}
+.gx-plat{position:absolute;left:25%;top:66%;width:50%;height:auto;z-index:0}
+.gx-svg{position:absolute;left:27%;top:8.75%;width:46%;height:82.5%;overflow:visible;z-index:1}
+.gx-lead{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
+.gx-hub{position:absolute;z-index:3;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;display:grid;place-items:center;
+  font:700 .74rem 'Space Grotesk',monospace;letter-spacing:.04em;color:#fff;background:rgba(5,7,12,.82);border:1.5px solid var(--accent-amber);box-shadow:0 0 14px rgba(249,115,22,.45)}
+.gx-hub.h1{left:40%;top:55%}.gx-hub.h2{left:53.8%;top:33.5%}.gx-hub.h3{left:63.8%;top:51%}
+.gx-co{position:absolute;z-index:3;transform:translateY(-50%)}
+.gx-co h3{font-size:1.12rem;font-weight:700;color:#fff;margin:2px 0 4px}
+.gx-co p{font-size:.9rem;color:var(--text-secondary);line-height:1.55}
+.gx-n{font:600 .7rem 'Space Grotesk',monospace;letter-spacing:.16em;color:var(--accent-cyan)}
+.gx-co.c1{left:0;top:55%;width:24.5%;text-align:right}
+.gx-co.c2{left:70.5%;top:27.5%;width:29%;text-align:left}
+.gx-co.c3{left:75%;top:53.5%;width:25%;text-align:left}
+.gx-list{display:none;list-style:none;margin-top:8px}
+.gx-list li{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-top:1px solid var(--border-subtle)}
+.gx-list li:first-child{border-top:0}
+.gx-ln{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 .74rem 'Space Grotesk',monospace;color:var(--accent-amber);border:1px solid rgba(249,115,22,.55);background:rgba(249,115,22,.08)}
+.gx-list h3{font-size:1.05rem;font-weight:700;margin-bottom:2px}
+.gx-list p{font-size:.92rem;color:var(--text-secondary);line-height:1.55}
+.gx-r{animation:gxSpin 20s linear infinite}
+.gx-r.gx-rev{animation-direction:reverse}
+.gx-dash{animation:gxDash 8s linear infinite}
+@keyframes gxSpin{to{transform:rotate(360deg)}}
+@keyframes gxDash{to{stroke-dashoffset:-110}}
+.gx-stage.paused .gx-r,.gx-stage.paused .gx-dash{animation-play-state:paused}
+@media(max-width:899px){
+  .gx-plate{width:min(100%,460px);aspect-ratio:460/330;transform:perspective(1000px) rotateX(calc(7deg + var(--my)*-5deg)) rotateY(calc(var(--p)*-9deg))}
+  .gx-plat{left:6%;top:60%;width:88%}
+  .gx-svg{left:0;top:0;width:100%;height:100%}
+  .gx-lead,.gx-co{display:none}
+  .gx-hub{width:28px;height:28px;margin:-14px 0 0 -14px;font-size:.66rem}
+  .gx-hub.h1{left:28.3%;top:56%}.gx-hub.h2{left:58.3%;top:30%}.gx-hub.h3{left:80%;top:51.2%}
+  .gx-list{display:block}
+}
+
+/* workflow: connected nodes, titles only */
+.flow{list-style:none;position:relative;display:grid;grid-template-columns:1fr;gap:26px}
+.flow::before{content:"";position:absolute;top:8px;bottom:8px;inset-inline-start:27px;width:1px;background:linear-gradient(var(--accent-cyan),var(--accent-amber));opacity:.5}
+.flow-step{position:relative;display:flex;align-items:center;gap:18px}
+.flow-step h3{font-size:1.12rem;font-weight:700}
+.flow-node{position:relative;z-index:1;flex:none;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+  background:#0b111e;border:1px solid var(--border-accent);color:var(--accent-cyan);
+  box-shadow:0 0 0 6px var(--bg-primary),0 0 22px rgba(56,189,248,.16);transition:var(--transition-smooth)}
+.flow-node em{position:absolute;top:-9px;inset-inline-end:-9px;min-width:24px;height:20px;padding:0 5px;border-radius:6px;display:grid;place-items:center;
+  font:700 .68rem 'Space Grotesk',monospace;font-style:normal;letter-spacing:.06em;color:#fb923c;background:#0b111e;border:1px solid rgba(249,115,22,.5)}
+.flow-step:hover .flow-node{border-color:var(--accent-amber);color:#fb923c;transform:translateY(-3px)}
+@media(min-width:768px){
+  .flow{grid-template-columns:repeat(4,1fr);gap:20px}
+  .flow::before{top:28px;bottom:auto;inset-inline:12.5%;width:auto;height:1px;background:linear-gradient(90deg,var(--accent-cyan),var(--accent-amber))}
+  .flow-step{flex-direction:column;text-align:center;gap:16px}
+}
+
+/* closing call to action: one line, no box */
+.cta-line{margin-top:56px;padding-top:30px;border-top:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+.cta-title{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.3}
+
+/* gentle reveal; always visible without JS/IntersectionObserver */
+.js .rvx{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.js .rvx.in-view{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .js .rvx{opacity:1;transform:none;transition:none}
+  .gx-r,.gx-dash{animation:none}
+}
+.site-footer{margin-top:16px}
   </style>
 </head>
 <body>
@@ -133,181 +208,38 @@
       </div>
     </div>
 
-    <!-- METRICS -->
-    <section class="metrics-strip reveal">
-      <div class="container">
-        <div class="metrics-grid">
-          <div class="metric-box">
-            <span class="metric-val">03</span>
-            <span class="metric-lbl" data-i18n="metric1Label">محاور هندسية وتقنية</span>
-          </div>
-          <div class="metric-box">
-            <span class="metric-val">AR / EN</span>
-            <span class="metric-lbl" data-i18n="metric2Label">واجهة مؤسسية ثنائية اللغة</span>
-          </div>
-          <div class="metric-box">
-            <span class="metric-val">100%</span>
-            <span class="metric-lbl" data-i18n="metric3Label">توجه تطبيقي ومخبري</span>
-          </div>
-          <div class="metric-box">
-            <span class="metric-val">INSPFP</span>
-            <span class="metric-lbl" data-i18n="metric4Label">معهد التكوين المهني — بطيوة</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DOMAINS -->
-    <section class="section reveal">
+    <!-- DOMAINS: one gear per field, labelled on the model -->
+    <section class="section sec-tight">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker" data-i18n="domainsKicker">محاور الاهتمام التقني</span>
-          <h2 class="section-title" data-i18n="domainsTitle">مساحات للتجريب والابتكار التطبيقي</h2>
-          <p class="section-subtitle" data-i18n="domainsSubtitle">نركز على ربط المعرفة النظرية بالتطبيق العملي في المجالات الهندسية والتكنولوجية.</p>
+          <span class="section-kicker" data-i18n="domainsKicker">مجالات العمل</span>
+          <h2 class="section-title" data-i18n="domainsTitle">ثلاثة مجالات، منظومة واحدة</h2>
         </div>
-
-        <div class="hud-grid-3">
-          <div class="hud-item">
-            <div class="hud-frame">
-              <article class="hud-inner">
-                <div class="hud-scanline" aria-hidden="true"></div>
-                <div class="hud-neon-icon amber">
-                  <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"/>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-                  </svg>
-                </div>
-                <h3 data-i18n="domain1Title">الهندسة والصيانة الصناعية</h3>
-                <p data-i18n="domain1Desc">استكشاف الأنظمة الميكانيكية والكهربائية الصناعية، وتطوير حلول الفحص والصيانة الوقائية والذكية.</p>
-                <span class="hud-code-tag">SYS // 01</span>
-              </article>
-            </div>
+        <div class="gx-stage rvx" id="gxStage">
+          <div class="gx-plate">
+            <svg class="gx-plat" viewBox="0 0 300 70" aria-hidden="true"><ellipse cx="150" cy="35" rx="146" ry="30" fill="rgba(56,189,248,.05)" stroke="rgba(56,189,248,.45)"/><ellipse class="gx-dash" cx="150" cy="35" rx="120" ry="24" fill="none" stroke="rgba(56,189,248,.55)" stroke-dasharray="2 9"/><ellipse cx="150" cy="35" rx="90" ry="17" fill="none" stroke="rgba(249,115,22,.4)"/></svg><svg class="gx-svg" viewBox="0 0 460 330" aria-hidden="true"><defs><radialGradient id="gxM1" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4e6a8c"/><stop offset=".55" stop-color="#9fb8d8"/><stop offset="1" stop-color="#6b86a8"/></radialGradient><radialGradient id="gxM2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#3f7896"/><stop offset=".55" stop-color="#8fd0ea"/><stop offset="1" stop-color="#4f8fb0"/></radialGradient></defs><circle cx="137" cy="194" r="95.0" fill="rgba(0,0,0,.4)"/><circle cx="275" cy="108" r="68.0" fill="rgba(0,0,0,.4)"/><circle cx="375" cy="178" r="54.0" fill="rgba(0,0,0,.4)"/><g class="gx-r" style="transform-origin:130px 185px;animation-duration:20s"><g transform="rotate(0 130 185)"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="url(#gxM1)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/><circle cx="130" cy="185" r="66.3" fill="none" stroke="#38bdf8" stroke-opacity=".35"/><circle cx="130" cy="185" r="30.0" fill="none" stroke="#f97316" stroke-opacity=".85" stroke-width="2"/></g></g><circle cx="130" cy="185" r="11.0" fill="#0b111e" stroke="#f97316"/><g class="gx-r gx-rev" style="transform-origin:268px 99px;animation-duration:14.3s"><g transform="rotate(18 268 99)"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="url(#gxM2)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/><circle cx="268" cy="99" r="46.0" fill="none" stroke="#38bdf8" stroke-opacity=".35"/><circle cx="268" cy="99" r="22.5" fill="none" stroke="#f97316" stroke-opacity=".85" stroke-width="2"/></g></g><circle cx="268" cy="99" r="8.2" fill="#0b111e" stroke="#f97316"/><g class="gx-r" style="transform-origin:368px 169px;animation-duration:11.4s"><g transform="rotate(22.5 368 169)"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="url(#gxM1)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/><circle cx="368" cy="169" r="35.9" fill="none" stroke="#38bdf8" stroke-opacity=".35"/><circle cx="368" cy="169" r="18.0" fill="none" stroke="#f97316" stroke-opacity=".85" stroke-width="2"/></g></g><circle cx="368" cy="169" r="6.6" fill="#0b111e" stroke="#f97316"/></svg><svg class="gx-lead" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true"><g stroke="#38bdf8" stroke-opacity=".7" stroke-width="1.2" fill="none"><path d="M255 220H293" vector-effect="non-scaling-stroke"/><path d="M611 110H700" vector-effect="non-scaling-stroke"/><path d="M698 214H745" vector-effect="non-scaling-stroke"/></g><g fill="#f97316"><circle cx="293" cy="220" r="3.5"/><circle cx="611" cy="110" r="3.5"/><circle cx="698" cy="214" r="3.5"/></g></svg><b class="gx-hub h1">01</b><b class="gx-hub h2">02</b><b class="gx-hub h3">03</b><div class="gx-co c1"><span class="gx-n">01 // SYS</span><h3 data-i18n="domain1Title">.</h3><p data-i18n="domain1Desc">.</p></div><div class="gx-co c2"><span class="gx-n">02 // AUTO</span><h3 data-i18n="domain2Title">.</h3><p data-i18n="domain2Desc">.</p></div><div class="gx-co c3"><span class="gx-n">03 // INNOV</span><h3 data-i18n="domain3Title">.</h3><p data-i18n="domain3Desc">.</p></div>
           </div>
-
-          <div class="hud-item">
-            <div class="hud-frame">
-              <article class="hud-inner">
-                <div class="hud-scanline" aria-hidden="true"></div>
-                <div class="hud-neon-icon cyan">
-                  <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="4" y="4" width="16" height="16" rx="2"/>
-                    <rect x="9" y="9" width="6" height="6"/>
-                    <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
-                    <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
-                    <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
-                    <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
-                  </svg>
-                </div>
-                <h3 data-i18n="domain2Title">الأنظمة المدمجة والأتمتة</h3>
-                <p data-i18n="domain2Desc">تصميم دوائر التحكم الآلي، برمجة المتحكمات الدقيقة، وتوظيف المستشعرات وتقنيات الروبوتيك.</p>
-                <span class="hud-code-tag">AUTO // 02</span>
-              </article>
-            </div>
-          </div>
-
-          <div class="hud-item">
-            <div class="hud-frame">
-              <article class="hud-inner">
-                <div class="hud-scanline" aria-hidden="true"></div>
-                <div class="hud-neon-icon amber">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 18h6"/>
-                    <path d="M10 22h4"/>
-                    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
-                    <line x1="12" y1="1" x2="12" y2="2"/>
-                    <line x1="3" y1="8" x2="2" y2="8"/>
-                    <line x1="22" y1="8" x2="21" y2="8"/>
-                    <line x1="5.6" y1="3.6" x2="4.9" y2="2.9"/>
-                    <line x1="18.4" y1="3.6" x2="19.1" y2="2.9"/>
-                  </svg>
-                </div>
-                <h3 data-i18n="domain3Title">الابتكار وتطوير النماذج الأولية</h3>
-                <p data-i18n="domain3Desc">مرافقة الأفكار الهندسية منذ مرحلة التخطيط والرسم التقني وحتى بناء نماذج أولية قابلة للاختبار.</p>
-                <span class="hud-code-tag">INNOV // 03</span>
-              </article>
-            </div>
-          </div>
+          <ol class="gx-list"><li><span class="gx-ln">01</span><div><h3 data-i18n="domain1Title">.</h3><p data-i18n="domain1Desc">.</p></div></li><li><span class="gx-ln">02</span><div><h3 data-i18n="domain2Title">.</h3><p data-i18n="domain2Desc">.</p></div></li><li><span class="gx-ln">03</span><div><h3 data-i18n="domain3Title">.</h3><p data-i18n="domain3Desc">.</p></div></li></ol>
         </div>
-
-        <p class="disclaimer-note">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          <span data-i18n="domainsDisclaimer">ملاحظة: تمثل هذه المحاور توجهات علمية وتقنية عامة قابلة للتحديث وفق البرامج المعتمدة للنادي.</span>
-        </p>
       </div>
     </section>
 
-    <!-- WORKFLOW -->
-    <section class="section reveal">
+    <!-- WORKFLOW + CTA -->
+    <section class="section sec-tight">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker" data-i18n="workflowKicker">منهجية العمل الهندسي</span>
-          <h2 class="section-title" data-i18n="workflowTitle">من الفكرة الأولية إلى النموذج القابل للاختبار</h2>
-          <p class="section-subtitle" data-i18n="workflowSubtitle">مسار منظم يرافق فرق المتدربين خطوة بخطوة لضمان الدقة التقنية والتوثيق العلمي.</p>
+          <span class="section-kicker" data-i18n="workflowKicker">المنهجية</span>
+          <h2 class="section-title" data-i18n="workflowTitle">من الفكرة إلى النموذج</h2>
         </div>
-
-        <div class="pipeline-grid">
-          <div class="pipeline-step">
-            <span class="step-badge">01</span>
-            <h3 data-i18n="step1Title">التشخيص وصياغة الفكرة</h3>
-            <p data-i18n="step1Desc">تحديد المشكلة التقنية أو الصناعية ودراسة الجدوى العملية داخل ورشات المعهد.</p>
-          </div>
-          <div class="pipeline-step">
-            <span class="step-badge">02</span>
-            <h3 data-i18n="step2Title">التصميم والمحاكاة</h3>
-            <p data-i18n="step2Desc">رسم المخططات الكهربائية والميكانيكية واختبار الدوائر رقمياً قبل التنفيذ.</p>
-          </div>
-          <div class="pipeline-step">
-            <span class="step-badge">03</span>
-            <h3 data-i18n="step3Title">التركيب والنمذجة</h3>
-            <p data-i18n="step3Desc">تجميع المكونات، برمجة وحدات التحكم، وبناء النموذج الأولي وفق معايير السلامة.</p>
-          </div>
-          <div class="pipeline-step">
-            <span class="step-badge">04</span>
-            <h3 data-i18n="step4Title">الاختبار والتوثيق</h3>
-            <p data-i18n="step4Desc">قياس الأداء الفعلي، معالجة الملاحظات، وإعداد الملف التقني لعرض المشروع.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SHOWCASE -->
-    <section class="section reveal">
-      <div class="container split-grid">
-        <div class="tech-card">
-          <div>
-            <span class="status-pill" data-i18n="prepBadge">قيد الإعداد والتوثيق</span>
-            <h3 data-i18n="showcaseInnovatorsTitle">فضاء المبتكرين والإنجازات</h3>
-            <p data-i18n="showcaseInnovatorsDesc">نعمل حالياً على توثيق وتجهيز الدفعة الأولى من مشاريع المتدربين والأفكار التقنية لعرضها بشكل رسمي.</p>
-          </div>
-          <a href="innovators.html" class="text-link">
-            <span data-i18n="linkToInnovators">انتقل إلى فضاء المبتكرين</span>
-            <span class="arrow-icon">←</span>
-          </a>
-        </div>
-
-        <div class="tech-card">
-          <div>
-            <span class="section-kicker" data-i18n="activitiesKicker">برنامج الفعاليات</span>
-            <h3 data-i18n="showcaseActivitiesTitle">الورشات والمعارض العلمية</h3>
-            <p data-i18n="showcaseActivitiesDesc">يجري إعداد جدول الورشات التطبيقية واللقاءات العلمية المقبلة داخل المعهد.</p>
-          </div>
-          <a href="activities.html" class="text-link">
-            <span data-i18n="linkToActivities">استعرض صفحة النشاطات</span>
-            <span class="arrow-icon">←</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section reveal">
-      <div class="container">
-        <div class="cta-box">
-          <div>
-            <h2 class="section-title" data-i18n="ctaTitle">هل لديك فكرة مشروع أو رغبة في التعاون العلمي؟</h2>
-            <p class="section-subtitle" data-i18n="ctaDesc">نرحب بمبادرات المتدربين، توجيهات المكونين، وشراكات المؤسسات المهتمة بالابتكار التقني.</p>
-          </div>
-          <a href="contact.html" class="btn btn-primary" data-i18n="ctaBtn">تواصل مع النادي</a>
+        <ol class="flow rvx">
+          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><em>01</em></span><h3 data-i18n="step1Title">الفكرة</h3></li>
+          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><em>02</em></span><h3 data-i18n="step2Title">التصميم</h3></li>
+          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><em>03</em></span><h3 data-i18n="step3Title">التركيب</h3></li>
+          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><polyline points="22 4 12 14 9 11"/></svg><em>04</em></span><h3 data-i18n="step4Title">الاختبار</h3></li>
+        </ol>
+        <div class="cta-line rvx">
+          <h2 class="cta-title" data-i18n="ctaTitle">لديك فكرة مشروع؟</h2>
+          <a href="contact.html" class="btn btn-primary"><span data-i18n="ctaBtn">تواصل مع النادي</span><svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
         </div>
       </div>
     </section>
@@ -330,9 +262,6 @@
               <span class="brand-sub">BÉTIOUA SCIENTIFIC CLUB</span>
             </div>
           </div>
-          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerDesc">
-            فضاء مؤسسي للابتكار العلمي، التجريب الهندسي، وتطوير المهارات التقنية.
-          </p>
         </div>
 
         <div>
@@ -532,6 +461,80 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+})();
+  </script>
+  <script>
+/* Shorter copy for the home page only (same keys as app.js, so the AR/EN toggle keeps working). */
+(function () {
+  var AR = {
+    heroDesc: "فضاء للتجريب والابتكار الهندسي، حيث تتحول الأفكار إلى نماذج حقيقية.",
+    domainsKicker: "مجالات العمل", domainsTitle: "ثلاثة مجالات، منظومة واحدة",
+    domain1Title: "الصيانة الصناعية", domain1Desc: "أنظمة ميكانيكية وكهربائية، وصيانة ذكية.",
+    domain2Title: "الأنظمة المدمجة والأتمتة", domain2Desc: "متحكمات ومستشعرات وروبوتيك.",
+    domain3Title: "النماذج الأولية", domain3Desc: "من الرسم التقني إلى نموذج قابل للاختبار.",
+    workflowKicker: "المنهجية", workflowTitle: "من الفكرة إلى النموذج",
+    step1Title: "الفكرة", step2Title: "التصميم", step3Title: "التركيب", step4Title: "الاختبار",
+    ctaTitle: "لديك فكرة مشروع؟", ctaBtn: "تواصل مع النادي",
+    footerLocationText: "بطيوة، وهران، الجزائر.", footerCopyright: "© 2026 النادي العلمي لمعهد بطيوة"
+  };
+  var EN = {
+    heroDesc: "A space for engineering experiments, where ideas become real prototypes.",
+    domainsKicker: "Fields of work", domainsTitle: "Three fields, one system",
+    domain1Title: "Industrial Maintenance", domain1Desc: "Mechanical and electrical systems, smart upkeep.",
+    domain2Title: "Embedded & Automation", domain2Desc: "Controllers, sensors and robotics.",
+    domain3Title: "Prototyping", domain3Desc: "From technical drawing to a testable model.",
+    workflowKicker: "Method", workflowTitle: "From idea to prototype",
+    step1Title: "Idea", step2Title: "Design", step3Title: "Build", step4Title: "Test",
+    ctaTitle: "Got a project idea?", ctaBtn: "Contact the club",
+    footerLocationText: "Bétioua, Oran, Algeria.", footerCopyright: "© 2026 Bétioua Scientific Club"
+  };
+  // Registered before app.js's own listener, so the new text is in place when the language is applied.
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof translations !== "undefined") {
+      Object.assign(translations.ar, AR);
+      Object.assign(translations.en, EN);
+    }
+  });
+
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var items = [].slice.call(document.querySelectorAll(".rvx"));
+  if (!("IntersectionObserver" in window) || reduce) {
+    items.forEach(function (e) { e.classList.add("in-view"); });
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in-view"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(function (e) { io.observe(e); });
+  }
+
+  // Gear model: tilts with scroll and pointer, pauses when off screen (SVG + CSS only, no WebGL)
+  var stage = document.getElementById("gxStage");
+  if (!stage) return;
+  var vis = false, raf = 0, mx = 0, my = 0, sx = 0, sy = 0;
+  function tick() {
+    raf = 0;
+    if (!vis) return;
+    var r = stage.getBoundingClientRect(), h = innerHeight;
+    var p = Math.max(-1.4, Math.min(1.4, (r.top + r.height / 2 - h / 2) / (h / 2)));
+    sx += (mx - sx) * 0.12; sy += (my - sy) * 0.12;
+    stage.style.setProperty("--p", p.toFixed(3));
+    stage.style.setProperty("--mx", sx.toFixed(3));
+    stage.style.setProperty("--my", sy.toFixed(3));
+    if (Math.abs(mx - sx) > 0.002 || Math.abs(my - sy) > 0.002) raf = requestAnimationFrame(tick);
+  }
+  function kick() { if (vis && !raf) raf = requestAnimationFrame(tick); }
+  addEventListener("scroll", kick, { passive: true });
+  addEventListener("resize", kick);
+  addEventListener("pointermove", function (e) {
+    if (e.pointerType && e.pointerType !== "mouse") return;
+    mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; kick();
+  }, { passive: true });
+  function pause() { stage.classList.toggle("paused", !vis || document.hidden); }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; pause(); kick(); }).observe(stage);
+  } else { vis = true; kick(); }
+  document.addEventListener("visibilitychange", pause);
 })();
   </script>
 </body>
