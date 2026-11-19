@@ -84,11 +84,32 @@
 .flow-node em{position:absolute;top:-9px;inset-inline-end:-9px;min-width:24px;height:20px;padding:0 5px;border-radius:6px;display:grid;place-items:center;
   font:700 .68rem 'Space Grotesk',monospace;font-style:normal;letter-spacing:.06em;color:#fb923c;background:#0b111e;border:1px solid rgba(249,115,22,.5)}
 .flow-step:hover .flow-node{border-color:var(--accent-amber);color:#fb923c;transform:translateY(-3px)}
-@media(min-width:768px){
-  .flow{grid-template-columns:repeat(4,1fr);gap:20px}
-  .flow::before{top:28px;bottom:auto;inset-inline:12.5%;width:auto;height:1px;background:linear-gradient(90deg,var(--accent-cyan),var(--accent-amber))}
-  .flow-step{flex-direction:column;text-align:center;gap:16px}
+
+/* workflow model: exploded stack of four layers (CSS 3D only, no WebGL) */
+.ex-grid{display:grid;gap:34px;align-items:center}
+.ex-stage{--ex:0;--mx:0;--my:0;position:relative;height:390px;perspective:1100px;touch-action:pan-y}
+.ex-stage::before{content:"";position:absolute;inset:8% 6%;background:radial-gradient(ellipse at 50% 55%,rgba(56,189,248,.14),transparent 68%);pointer-events:none}
+.ex-stack{position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-95px 0 0 -95px;transform-style:preserve-3d;
+  transform:rotateX(calc(58deg + var(--my)*-8deg)) rotateZ(calc(-32deg + var(--mx)*16deg))}
+.ex-spin{position:absolute;inset:0;transform-style:preserve-3d;animation:exSway 14s ease-in-out infinite alternate}
+@keyframes exSway{from{transform:rotateZ(-12deg)}to{transform:rotateZ(12deg)}}
+.ex-layer{position:absolute;inset:0;border-radius:12px;border:1px solid rgba(56,189,248,.45);
+  background:linear-gradient(rgba(56,189,248,.07) 1px,transparent 1px) 0 0/19px 19px,linear-gradient(90deg,rgba(56,189,248,.07) 1px,transparent 1px) 0 0/19px 19px,rgba(9,14,26,.86);
+  box-shadow:0 0 24px rgba(56,189,248,.12);
+  transform:translateZ(calc((var(--i) - 1.5)*var(--gap,64px)*var(--ex) + var(--lift,0px)));transition:transform .45s ease,border-color .3s,box-shadow .3s}
+.ex-layer svg{position:absolute;inset:8%;width:84%;height:84%}
+.ex-layer b{position:absolute;top:8px;inset-inline-end:10px;font:700 .72rem 'Space Grotesk',monospace;letter-spacing:.08em;color:#fb923c}
+.ex-layer.on{--lift:16px;border-color:var(--accent-amber);box-shadow:0 0 28px rgba(249,115,22,.35)}
+.ex-axis{position:absolute;left:50%;top:50%;width:0;height:calc(var(--gap,64px)*3*var(--ex));border-inline-start:1px dashed rgba(249,115,22,.7);
+  transform:translateZ(calc(var(--gap,64px)*-1.5*var(--ex))) rotateX(90deg);transform-origin:top}
+.ex-stage.paused .ex-spin{animation-play-state:paused}
+@media(min-width:900px){
+  .ex-grid{grid-template-columns:1fr 1fr;gap:56px}
+  .ex-stage{height:520px}
+  .ex-stack{width:230px;height:230px;margin:-115px 0 0 -115px}
+  .ex-stage{--gap:80px}
 }
+@media(prefers-reduced-motion:reduce){.ex-spin{animation:none}}
 
 /* closing call to action: one line, no box */
 .cta-line{margin-top:56px;padding-top:30px;border-top:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
@@ -227,12 +248,15 @@
           <span class="section-kicker" data-i18n="workflowKicker">المنهجية</span>
           <h2 class="section-title" data-i18n="workflowTitle">من الفكرة إلى النموذج</h2>
         </div>
-        <ol class="flow rvx">
+        <div class="ex-grid rvx">
+          <div class="ex-stage" id="exStage" aria-hidden="true"><div class="ex-stack"><div class="ex-spin"><i class="ex-axis"></i><div class="ex-layer" style="--i:0" data-ex="0"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><path d="M100 58c-22 0-34 17-34 33 0 13 8 20 14 29v10h40v-10c6-9 14-16 14-29 0-16-12-33-34-33z"/><path d="M84 138h32M88 148h24"/><path d="M100 20v16M52 40l11 11M148 40l-11 11M26 92h16M158 92h16"/><path d="M90 108q5-12 10 0t10 0" stroke="#f97316"/></g></svg><b>01</b></div><div class="ex-layer" style="--i:1" data-ex="1"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><circle cx="100" cy="96" r="44"/><circle cx="100" cy="96" r="22" stroke-dasharray="3 6"/><path d="M40 96h120M100 36v120" stroke-opacity=".5"/><path d="M56 160h88M56 154v12M144 154v12" stroke="#f97316"/><path d="M62 160l8-4v8zM138 160l-8-4v8z" fill="#f97316" stroke="#f97316"/></g></svg><b>02</b></div><div class="ex-layer" style="--i:2" data-ex="2"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#f97316"><path d="M150 100L163.8 105.6L161.6 117.5L146.7 117.8L140.5 129.4L148.3 142L139.5 150.3L127.3 141.9L115.5 147.6L114.4 162.4L102.4 164L97.5 149.9L84.5 147.6L75 158.9L64.4 153.2L68.6 138.9L59.5 129.4L45.1 132.9L39.9 122.1L51.7 113L50 100L36.2 94.4L38.4 82.5L53.3 82.2L59.5 70.6L51.7 58L60.5 49.7L72.7 58.1L84.5 52.4L85.6 37.6L97.6 36L102.5 50.1L115.5 52.4L125 41.1L135.6 46.8L131.4 61.1L140.5 70.6L154.9 67.1L160.1 77.9L148.3 87ZM112 100A12 12 0 1 0 88 100A12 12 0 1 0 112 100Z" fill="rgba(249,115,22,.1)"/><circle cx="100" cy="100" r="24" stroke="#38bdf8" stroke-opacity=".7"/></g></svg><b>03</b></div><div class="ex-layer" style="--i:3" data-ex="3"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><circle cx="100" cy="86" r="42"/><path d="M80 87l15 15 28-30" stroke="#f97316" stroke-width="3.2"/><path d="M30 156h28l10-18 14 32 14-24 10 10h66" stroke-opacity=".8"/></g></svg><b>04</b></div></div></div></div>
+          <ol class="flow rvx">
           <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><em>01</em></span><h3 data-i18n="step1Title">الفكرة</h3></li>
           <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><em>02</em></span><h3 data-i18n="step2Title">التصميم</h3></li>
           <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><em>03</em></span><h3 data-i18n="step3Title">التركيب</h3></li>
           <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><polyline points="22 4 12 14 9 11"/></svg><em>04</em></span><h3 data-i18n="step4Title">الاختبار</h3></li>
         </ol>
+        </div>
         <div class="cta-line rvx">
           <h2 class="cta-title" data-i18n="ctaTitle">لديك فكرة مشروع؟</h2>
           <a href="contact.html" class="btn btn-primary"><span data-i18n="ctaBtn">تواصل مع النادي</span><svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
@@ -526,6 +550,39 @@
     new IntersectionObserver(function (es) { vis = es[0].isIntersecting; pause(); kick(); }).observe(stage);
   } else { vis = true; kick(); }
   document.addEventListener("visibilitychange", pause);
+
+  // Workflow model: layers separate as it scrolls into view; hovering a step lifts its layer. Idle cost: none off screen.
+  (function () {
+    var st = document.getElementById("exStage");
+    if (!st) return;
+    var layers = [].slice.call(st.querySelectorAll(".ex-layer"));
+    var steps = [].slice.call(document.querySelectorAll(".flow-step"));
+    steps.forEach(function (s, i) {
+      var on = function () { layers.forEach(function (l, j) { l.classList.toggle("on", i === j); }); };
+      var off = function () { layers[i] && layers[i].classList.remove("on"); };
+      s.addEventListener("mouseenter", on); s.addEventListener("mouseleave", off);
+      s.setAttribute("tabindex", "0"); s.addEventListener("focus", on); s.addEventListener("blur", off);
+    });
+    var vis = false, mx = 0, my = 0, sx = 0, sy = 0, raf = 0, rd = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function tick() {
+      raf = 0; if (!vis) return;
+      var r = st.getBoundingClientRect(), h = innerHeight;
+      var k = rd ? 1 : Math.max(0, Math.min(1, (h - r.top) / (h * 0.7)));
+      sx += (mx - sx) * 0.12; sy += (my - sy) * 0.12;
+      st.style.setProperty("--ex", k.toFixed(3)); st.style.setProperty("--mx", sx.toFixed(3)); st.style.setProperty("--my", sy.toFixed(3));
+      if (Math.abs(mx - sx) > 0.002 || Math.abs(my - sy) > 0.002) raf = requestAnimationFrame(tick);
+    }
+    function kick() { if (vis && !raf) raf = requestAnimationFrame(tick); }
+    addEventListener("scroll", kick, { passive: true }); addEventListener("resize", kick);
+    addEventListener("pointermove", function (e) {
+      if (e.pointerType && e.pointerType !== "mouse") return;
+      mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; kick();
+    }, { passive: true });
+    function pause() { st.classList.toggle("paused", !vis || document.hidden); }
+    if ("IntersectionObserver" in window) { new IntersectionObserver(function (es) { vis = es[0].isIntersecting; pause(); kick(); }).observe(st); }
+    else { vis = true; kick(); }
+    document.addEventListener("visibilitychange", pause);
+  })();
 })();
   </script>
 </body>
