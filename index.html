@@ -6,11 +6,29 @@
   <meta name="theme-color" content="#05070c" />
   <title>النادي العلمي لمعهد بطيوة | BÉTIOUA SCIENTIFIC CLUB</title>
   <meta name="description" content="الموقع الرسمي للنادي العلمي لمعهد التكوين المهني ببطيوة — فضاء للابتكار العلمي، الهندسة، والتجريب التطبيقي." />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BÉTIOUA SCIENTIFIC CLUB" />
+  <meta property="og:locale" content="ar_DZ" />
+  <meta property="og:title" content="النادي العلمي لمعهد بطيوة | BÉTIOUA SCIENTIFIC CLUB" />
+  <meta property="og:description" content="الموقع الرسمي للنادي العلمي لمعهد التكوين المهني ببطيوة — فضاء للابتكار العلمي، الهندسة، والتجريب التطبيقي." />
+  <meta property="og:url" content="https://betioua-scientific-club.vercel.app/" />
+  <meta property="og:image" content="https://betioua-scientific-club.vercel.app/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="النادي العلمي لمعهد بطيوة — مجسم درون هندسي" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="النادي العلمي لمعهد بطيوة | BÉTIOUA SCIENTIFIC CLUB" />
+  <meta name="twitter:description" content="الموقع الرسمي للنادي العلمي لمعهد التكوين المهني ببطيوة — فضاء للابتكار العلمي، الهندسة، والتجريب التطبيقي." />
+  <meta name="twitter:image" content="https://betioua-scientific-club.vercel.app/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <script>document.documentElement.classList.add('js');</script>
+  <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('bsc_lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';}}catch(e){}</script>
   <style>
 /* Hero with 3D drone: text and drone live in separate areas (no overlap) */
 .hero-x{position:relative;overflow:hidden;padding:88px 0 40px;
@@ -20,7 +38,7 @@
 .hero-stage canvas{display:block;width:100%!important;height:100%!important}
 .hero-copy{position:relative;z-index:2}
 .hero-x .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.hero-stage.no-webgl{background:url(file_000000001e008243a422471eb02cacec.png) center/cover;opacity:.5;border-radius:16px}
+.hero-stage.no-webgl{background:url(drone-fallback.svg) center/contain no-repeat}
 @media(min-width:900px){
   .hero-x{padding:110px 0 70px;min-height:calc(100vh - 20px);display:flex;align-items:center}
   .hero-x .container{width:100%}
@@ -124,6 +142,83 @@
 }
 .site-footer{margin-top:16px}
   </style>
+<style>
+.hero-x{--gx:50%;--gy:30%}
+.hero-x::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px circle at var(--gx) var(--gy),rgba(56,189,248,.12),transparent 70%)}
+.hero-title .highlight{background-size:200% 100%;animation:shine 7s ease-in-out infinite alternate}
+@keyframes shine{to{background-position:100% 0}}
+.hero-stage::after{content:"";position:absolute;left:12%;right:12%;bottom:4%;height:30px;background:radial-gradient(ellipse at center,rgba(249,115,22,.35),transparent 70%);filter:blur(10px);pointer-events:none}
+.scroll-cue{display:flex;justify-content:center;padding:6px 0 0}
+.scroll-cue i{width:1px;height:34px;background:linear-gradient(#38bdf8,transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.section-title::after{content:"";display:block;width:44px;height:3px;border-radius:2px;margin-top:14px;background:linear-gradient(90deg,#f97316,#38bdf8)}
+.inno-band{margin-top:56px;display:grid;grid-template-columns:150px 1fr auto;gap:28px;align-items:center;padding:26px 30px;border-radius:22px;background:linear-gradient(120deg,rgba(56,189,248,.08),rgba(249,115,22,.06));border:1px solid var(--border-subtle)}
+.inno-orbit{width:150px!important;height:150px!important;max-width:none;display:block;overflow:visible}
+.inno-orbit g{transform-origin:120px 120px;animation:spin 9s linear infinite}
+.inno-orbit .o2{animation-duration:14s;animation-direction:reverse}.inno-orbit .o3{animation-duration:5s}
+.inno-txt h2{font-size:clamp(1.3rem,2.4vw,1.8rem);margin:4px 0 6px}.inno-txt p{color:var(--text-secondary);margin:0}
+.eyebrow-x{font-size:.78rem;letter-spacing:.08em;color:#38bdf8}
+@media(max-width:700px){.inno-band{grid-template-columns:1fr;text-align:center;justify-items:center}}
+.site-footer.slim{padding:22px 0 100px;margin-top:40px}
+@media(min-width:768px){.site-footer.slim{padding:22px 0}}
+.slim-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px}
+.slim-links{display:flex;gap:22px;flex-wrap:wrap}.slim-links a{color:var(--text-secondary);font-size:.9rem}.slim-links a:hover{color:#38bdf8}
+.slim-copy{font-size:.78rem;color:var(--text-muted,#6b7a90);letter-spacing:.04em}
+@media(prefers-reduced-motion:reduce){.hero-title .highlight,.scroll-cue i,.inno-orbit g{animation:none}}
+</style>
+<style>
+/* ===== v3 bold layer ===== */
+.pbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:200;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#f97316,#38bdf8);pointer-events:none}
+.hero-x::after{content:"BSC";position:absolute;inset-inline:0;bottom:-.16em;text-align:center;font:700 clamp(9rem,32vw,30rem)/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(56,189,248,.09);pointer-events:none;z-index:0;direction:ltr}
+.hero-grid{position:relative;z-index:1}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.hero-copy>*{animation:up .9s cubic-bezier(.22,1,.36,1) both}
+.hero-copy>*:nth-child(2){animation-delay:.12s}.hero-copy>*:nth-child(3){animation-delay:.24s}.hero-copy>*:nth-child(4){animation-delay:.36s}
+.hero-stage::before{content:"";position:absolute;inset:2%;z-index:3;pointer-events:none;
+ background:linear-gradient(#38bdf8,#38bdf8) left top/22px 1.5px no-repeat,linear-gradient(#38bdf8,#38bdf8) left top/1.5px 22px no-repeat,
+ linear-gradient(#38bdf8,#38bdf8) right top/22px 1.5px no-repeat,linear-gradient(#38bdf8,#38bdf8) right top/1.5px 22px no-repeat,
+ linear-gradient(#f97316,#f97316) left bottom/22px 1.5px no-repeat,linear-gradient(#f97316,#f97316) left bottom/1.5px 22px no-repeat,
+ linear-gradient(#f97316,#f97316) right bottom/22px 1.5px no-repeat,linear-gradient(#f97316,#f97316) right bottom/1.5px 22px no-repeat;opacity:.7}
+.hud{position:absolute;inset:0;z-index:4;pointer-events:none;direction:ltr;font:600 .68rem 'Space Grotesk',monospace;letter-spacing:.1em;color:#7dd3fc}
+.hud span{position:absolute;display:flex;gap:8px;align-items:center;padding:4px 9px;border-radius:6px;background:rgba(5,9,16,.7);border:1px solid rgba(56,189,248,.28)}
+.hud b{color:#fb923c;font-weight:700;min-width:3ch;text-align:right;font-variant-numeric:tabular-nums}
+.hud .h1{left:6%;top:8%}.hud .h2{right:6%;top:8%}.hud .h3{left:6%;bottom:8%}
+.hud .live{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+@media(max-width:560px){.hud{font-size:.6rem}.hud .h3{display:none}}
+.ruler{height:14px;margin:0;opacity:.8;background:repeating-linear-gradient(90deg,rgba(148,163,184,.4) 0 1px,transparent 1px 12px) bottom/100% 6px no-repeat,repeating-linear-gradient(90deg,rgba(56,189,248,.7) 0 1px,transparent 1px 60px) bottom/100% 13px no-repeat}
+.manifesto{padding:84px 0 36px}
+.mf-k{display:flex;align-items:center;gap:12px;color:#38bdf8;font:600 .78rem 'Space Grotesk',monospace;letter-spacing:.16em;margin-bottom:22px}
+.mf-k::before{content:"";width:34px;height:2px;background:#f97316}
+.mf-t{font-size:clamp(1.9rem,5.2vw,3.7rem);font-weight:700;line-height:1.35;max-width:1000px;text-wrap:balance}
+.mf-t .w{color:rgba(203,213,225,.2);transition:color .35s,text-shadow .35s}
+.mf-t .w.on{color:#f8fafc}.mf-t .w.hl.on{color:#38bdf8;text-shadow:0 0 28px rgba(56,189,248,.45)}.mf-t .w.am.on{color:#fb923c;text-shadow:0 0 28px rgba(249,115,22,.4)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-block:1px solid var(--border-subtle)}
+.stat{padding:30px 10px;text-align:center;position:relative}
+.stat+.stat::before{content:"";position:absolute;inset-block:26% ;inset-inline-start:0;width:1px;background:var(--border-subtle)}
+.stat b{display:block;font:700 clamp(2.4rem,7vw,4.6rem)/1 'Space Grotesk',sans-serif;background:linear-gradient(180deg,#fff,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:10px;color:var(--text-muted);font-size:.9rem}
+.stat:nth-child(2) b{background:linear-gradient(180deg,#fff,#f97316);-webkit-background-clip:text;background-clip:text}
+/* ID cards */
+.inno-band{grid-template-columns:230px 1fr auto;padding:34px 36px;overflow:hidden}
+.idc-stack{position:relative;width:200px;height:170px;direction:ltr}
+.idc{position:absolute;left:50%;top:50%;width:104px;height:140px;margin:-70px 0 0 -52px;border-radius:12px;padding:12px;background:linear-gradient(160deg,#111b2e,#0a101c);border:1px solid rgba(56,189,248,.4);box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .6s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column;gap:8px}
+.idc svg{width:100%;height:62px}.idc i{display:block;height:5px;border-radius:3px;background:rgba(148,163,184,.3)}.idc i+i{width:60%}
+.idc em{margin-top:auto;font:700 .62rem 'Space Grotesk',monospace;color:#fb923c;letter-spacing:.1em;font-style:normal}
+.idc:nth-child(1){transform:rotate(-14deg) translateX(-46px)}.idc:nth-child(2){transform:translateY(-6px);z-index:2;border-color:#f97316}.idc:nth-child(3){transform:rotate(14deg) translateX(46px)}
+.inno-band:hover .idc:nth-child(1){transform:rotate(-20deg) translateX(-70px)}.inno-band:hover .idc:nth-child(2){transform:translateY(-14px)}.inno-band:hover .idc:nth-child(3){transform:rotate(20deg) translateX(70px)}
+@media(max-width:700px){.inno-band{grid-template-columns:1fr}.idc-stack{margin-inline:auto}}
+/* mega marquee */
+.mega{overflow:hidden;direction:ltr;margin-top:70px;padding-block:6px;border-block:1px solid var(--border-subtle)}
+.mega-track{display:flex;width:max-content;animation:mega 36s linear infinite}
+.mega span{font:700 clamp(3rem,10vw,7.5rem)/1.1 'Space Grotesk',sans-serif;color:transparent;-webkit-text-stroke:1.2px rgba(56,189,248,.55);padding-inline:.35em;white-space:nowrap}
+.mega span:nth-child(even){-webkit-text-stroke-color:rgba(249,115,22,.7)}
+@keyframes mega{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.mega-track,.hero-copy>*,.hud .live{animation:none}}
+.btn-primary{position:relative;overflow:hidden}
+.btn-primary::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s}
+.btn-primary:hover::after{transform:translateX(120%)}
+</style>
 </head>
 <body>
 
@@ -192,6 +287,7 @@
     </div>
     <div class="hero-stage" id="droneStage" aria-hidden="true"></div>
   </div>
+  <div class="scroll-cue" aria-hidden="true"><i></i></div>
 </section>
 
     <!-- TICKER -->
@@ -219,6 +315,17 @@
         <span class="sep">◆</span>
       </div>
     </div>
+
+    <div class="pbar" id="pbar"></div><div class="ruler" aria-hidden="true"></div>
+    <section class="manifesto"><div class="container">
+      <div class="mf-k" data-i18n="mfKicker">MANIFESTO</div>
+      <p class="mf-t" id="mfText" aria-label=""></p>
+      <div class="stats rvx">
+        <div class="stat"><b data-count="3">0</b><span data-i18n="stat1">مجالات تقنية</span></div>
+        <div class="stat"><b data-count="4">0</b><span data-i18n="stat2">مراحل من الفكرة إلى النموذج</span></div>
+        <div class="stat"><b data-count="1">0</b><span data-i18n="stat3">فريق واحد</span></div>
+      </div>
+    </div></section>
 
     <!-- DOMAINS: one gear per field, labelled on the model -->
     <section class="section sec-tight">
@@ -252,6 +359,12 @@
           <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><polyline points="22 4 12 14 9 11"/></svg><em>04</em></span><h3 data-i18n="step4Title">الاختبار</h3></li>
         </ol>
         </div>
+        <div class="inno-band rvx">
+  <div class="idc-stack" aria-hidden="true"><div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 001</em></div><div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 002</em></div><div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 003</em></div></div>
+  <div class="inno-txt"><span class="eyebrow-x" data-i18n="innoEyebrow">المبتكرون</span><h2 data-i18n="innoTitle">وجوه خلف كل نموذج</h2><p data-i18n="innoDesc">تعرّف على المتربصين وأفكارهم ومشاريعهم.</p></div>
+  <a href="innovators.html" class="btn btn-secondary"><span data-i18n="innoBtn">شاهد المبتكرين</span></a>
+</div>
+        <div class="mega" aria-hidden="true"><div class="mega-track"><span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span></div></div>
         <div class="cta-line rvx">
           <h2 class="cta-title" data-i18n="ctaTitle">لديك فكرة مشروع؟</h2>
           <a href="contact.html" class="btn btn-primary"><span data-i18n="ctaBtn">تواصل مع النادي</span><svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
@@ -261,43 +374,16 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="brand" style="margin-bottom: 14px;">
+  <footer class="site-footer slim"><div class="container slim-row">
+<div class="brand">
             <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bmG2" x1="4" y1="3" x2="32" y2="33" gradientUnits="userSpaceOnUse"><stop stop-color="#7DD3FC"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs><path d="M18 2.5L31.5 10.25V25.75L18 33.5L4.5 25.75V10.25L18 2.5Z" fill="#0B1220" stroke="url(#bmG2)" stroke-width="1.6" stroke-linejoin="round"/><path d="M25.1 18L27.54 19.05L27.03 21.25L24.38 21.12L23.02 23.02L24 25.49L22.09 26.69L20.3 24.72L18 25.1L16.95 27.54L14.75 27.03L14.88 24.38L12.98 23.02L10.51 24L9.31 22.09L11.28 20.3L10.9 18L8.46 16.95L8.97 14.75L11.62 14.88L12.98 12.98L12 10.51L13.91 9.31L15.7 11.28L18 10.9L19.05 8.46L21.25 8.97L21.12 11.62L23.02 12.98L25.49 12L26.69 13.91L24.72 15.7ZM21.7 18A3.7 3.7 0 1 0 14.3 18A3.7 3.7 0 1 0 21.7 18Z" fill="#E2E8F0" fill-rule="evenodd"/><circle cx="18" cy="18" r="2.1" fill="#F97316"/></svg>
             <div class="brand-text">
               <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
               <span class="brand-sub">BÉTIOUA SCIENTIFIC CLUB</span>
             </div>
           </div>
-        </div>
-
-        <div>
-          <h4 class="footer-heading" data-i18n="footerLinksTitle">أقسام الموقع</h4>
-          <ul class="footer-links">
-            <li><a href="index.html" data-i18n="navHome">الرئيسية</a></li>
-            <li><a href="innovators.html" data-i18n="navInnovators">المبتكرون</a></li>
-            <li><a href="activities.html" data-i18n="navActivities">النشاطات</a></li>
-            <li><a href="contact.html" data-i18n="navContact">تواصل معنا</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-heading" data-i18n="footerLocationTitle">الموقع المؤسسي</h4>
-          <p class="section-subtitle" style="font-size: 0.88rem;" data-i18n="footerLocationText">
-            معهد التكوين المهني — بطيوة، ولاية وهران، الجزائر.
-          </p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span data-i18n="footerCopyright">© 2026 النادي العلمي لمعهد بطيوة — جميع الحقوق محفوظة.</span>
-        <span>THINK BEYOND. BUILD THE FUTURE.</span>
-      </div>
-    </div>
-  </footer>
+<nav class="slim-links"><a href="innovators.html" data-i18n="navInnovators">المبتكرون</a><a href="activities.html" data-i18n="navActivities">النشاطات</a><a href="contact.html" data-i18n="navContact">تواصل معنا</a></nav>
+<span class="slim-copy">© 2026 BÉTIOUA SCIENTIFIC CLUB</span></div></footer>
 
   <!-- MOBILE DOCK -->
   <nav class="mobile-dock" aria-label="Mobile Navigation">
@@ -320,12 +406,13 @@
   </nav>
 
   <script src="app.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer onerror="var s=document.getElementById('droneStage');if(s)s.classList.add('no-webgl')"></script>
   <script>
 (function () {
   function init() {
     const stage = document.getElementById('droneStage');
-    if (!stage || typeof THREE === 'undefined') return;
+    if (!stage) return;
+    if (typeof THREE === 'undefined') { stage.classList.add('no-webgl'); return; }
     let renderer;
     try { renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); }
     catch (e) { stage.classList.add('no-webgl'); return; }
@@ -575,5 +662,41 @@
   })();
 })();
   </script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+Object.assign(translations.ar,{innoEyebrow:"المبتكرون",innoTitle:"وجوه خلف كل نموذج",innoDesc:"تعرّف على المتربصين وأفكارهم ومشاريعهم.",innoBtn:"شاهد المبتكرين"});
+Object.assign(translations.en,{innoEyebrow:"Innovators",innoTitle:"The people behind every prototype",innoDesc:"Meet the trainees, their ideas and projects.",innoBtn:"Meet the innovators"});
+Object.assign(translations.ar,{mfKicker:"MANIFESTO",mfText:"لا نكتفي بالفكرة. نرسمها، نركّبها، ونختبرها حتى تعمل.",stat1:"مجالات تقنية",stat2:"مراحل من الفكرة إلى النموذج",stat3:"فريق واحد"});
+Object.assign(translations.en,{mfKicker:"MANIFESTO",mfText:"An idea is not enough. We sketch it, build it, and test it until it works.",stat1:"technical fields",stat2:"stages from idea to prototype",stat3:"one team"});
+(function(){
+ var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+ // scroll progress
+ var pb=document.getElementById("pbar"),tk=false;
+ function prog(){tk=false;var h=document.documentElement,m=h.scrollHeight-h.clientHeight;pb.style.transform="scaleX("+(m>0?Math.min(1,h.scrollTop/m):0)+")"}
+ addEventListener("scroll",function(){if(!tk){tk=true;requestAnimationFrame(prog)}},{passive:true});prog();
+ // manifesto words lit by scroll
+ var mf=document.getElementById("mfText"),words=[];
+ function build(){var en=document.documentElement.lang==="en",t=translations[en?"en":"ar"].mfText;mf.setAttribute("aria-label",t);mf.textContent="";words=[];
+  t.split(" ").forEach(function(w,i,a){var sp=document.createElement("span");sp.className="w"+(i===a.length-3||i===a.length-2?" hl":"")+(i===a.length-1?" am":"");sp.textContent=w;mf.appendChild(sp);mf.appendChild(document.createTextNode(" "));words.push(sp)});light()}
+ function light(){if(reduce){words.forEach(function(w){w.classList.add("on")});return}
+  var r=mf.getBoundingClientRect(),vh=innerHeight,p=(vh*.85-r.top)/(vh*.55+r.height*.3);p=Math.max(0,Math.min(1,p));
+  var n=Math.round(p*words.length);words.forEach(function(w,i){w.classList.toggle("on",i<n)})}
+ addEventListener("scroll",light,{passive:true});addEventListener("resize",light);
+ var lb=document.getElementById("langToggleBtn");if(lb)lb.addEventListener("click",function(){setTimeout(build,60)});
+ build();
+ // count up
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+  e.target.querySelectorAll("[data-count]").forEach(function(b){var to=+b.dataset.count,t0=performance.now();if(reduce){b.textContent=to;return}
+   (function f(t){var k=Math.min(1,(t-t0)/1100);b.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)})})},{threshold:.4});
+ var st=document.querySelector(".stats");if(st)io.observe(st);
+ // HUD telemetry
+ var stage=document.getElementById("droneStage");
+ if(stage){var hud=document.createElement("div");hud.className="hud";hud.innerHTML='<span class="h1">ALT <b id="hA">012</b> m</span><span class="h2">RPM <b id="hR">4200</b></span><span class="h3"><i class="live"></i>LINK <b id="hL">98</b>%</span>';stage.appendChild(hud);
+  var A=12,R=4200,L=98,vis=true;new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(stage);
+  setInterval(function(){if(!vis||document.hidden||reduce)return;A=Math.max(8,Math.min(18,A+(Math.random()-.5)*2));R=Math.max(3900,Math.min(4500,R+(Math.random()-.5)*160));L=Math.max(94,Math.min(100,L+(Math.random()-.5)*2));
+   hA.textContent=String(Math.round(A)).padStart(3,"0");hR.textContent=Math.round(R);hL.textContent=Math.round(L)},900)}
+})();
+});
+</script>
 </body>
 </html>
