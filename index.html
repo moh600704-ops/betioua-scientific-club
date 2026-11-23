@@ -38,6 +38,10 @@
 .hero-stage canvas{display:block;width:100%!important;height:100%!important}
 .hero-copy{position:relative;z-index:2}
 .hero-x .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.25);opacity:0;transition:opacity .6s ease;
+  -webkit-mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 45%,transparent 100%);pointer-events:none}
+.hero-vid.on{opacity:1}
+.hero-vid.fade{opacity:0;transition-duration:.45s}
 .hero-stage.no-webgl{background:url(drone-fallback.svg) center/contain no-repeat}
 @media(min-width:900px){
   .hero-x{padding:110px 0 70px;min-height:calc(100vh - 20px);display:flex;align-items:center}
@@ -285,7 +289,12 @@
         </a>
       </div>
     </div>
-    <div class="hero-stage" id="droneStage" aria-hidden="true"></div>
+    <div class="hero-stage" id="droneStage" aria-hidden="true">
+      <video class="hero-vid" id="heroVid" muted playsinline preload="none" poster="hero-drone.jpg" disablepictureinpicture>
+        <source src="hero-drone.webm" type="video/webm" />
+        <source src="hero-drone.mp4" type="video/mp4" />
+      </video>
+    </div>
   </div>
   <div class="scroll-cue" aria-hidden="true"><i></i></div>
 </section>
@@ -406,7 +415,37 @@
   </nav>
 
   <script src="app.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer onerror="var s=document.getElementById('droneStage');if(s)s.classList.add('no-webgl')"></script>
+  <script>
+/* Hero: lightweight video first (0.6 MB). If it cannot play, the interactive 3D drone loads as a fallback. */
+(function () {
+  var stage = document.getElementById('droneStage'), v = document.getElementById('heroVid');
+  if (!stage || !v) return;
+  var cn = navigator.connection || {}, still = false, started = false;
+  try { still = matchMedia('(prefers-reduced-motion: reduce)').matches || cn.saveData; } catch (e) {}
+  function loadDrone() {
+    if (started) return; started = true;
+    v.style.display = 'none';
+    var sc = document.createElement('script');
+    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    sc.onload = function () { try { window.__bscDrone(); } catch (e) { stage.classList.add('no-webgl'); } };
+    sc.onerror = function () { stage.classList.add('no-webgl'); };
+    document.head.appendChild(sc);
+  }
+  if (still) { v.poster && (stage.style.background = 'url(hero-drone.jpg) center/contain no-repeat'); v.style.display = 'none'; return; }
+  var visible = true, ready = false;
+  function sync() { if (!ready) return; if (visible && !document.hidden) v.play().catch(function () {}); else v.pause(); }
+  v.addEventListener('playing', function () { ready = true; v.classList.add('on'); });
+  v.addEventListener('timeupdate', function () { if (v.duration && v.currentTime > v.duration - 0.5) v.classList.add('fade'); });
+  v.addEventListener('ended', function () { v.currentTime = 0; v.classList.remove('fade'); v.play().catch(function () {}); });
+  v.addEventListener('error', loadDrone, true);
+  var fail = setTimeout(function () { if (!ready) loadDrone(); }, 7000);
+  v.addEventListener('playing', function () { clearTimeout(fail); }, { once: true });
+  try { new IntersectionObserver(function (e) { visible = e[0].isIntersecting; sync(); }).observe(stage); } catch (e) {}
+  document.addEventListener('visibilitychange', sync);
+  v.preload = 'auto';
+  var p = v.play(); if (p && p.catch) p.catch(function () { ready = false; });
+})();
+  </script>
   <script>
 (function () {
   function init() {
@@ -610,8 +649,7 @@
     renderer.render(scene, camera);
     sync();
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  window.__bscDrone = init;
 })();
   </script>
   <script>
