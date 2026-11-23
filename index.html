@@ -38,7 +38,7 @@
 .hero-stage canvas{display:block;width:100%!important;height:100%!important}
 .hero-copy{position:relative;z-index:2}
 .hero-x .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.25);opacity:0;transition:opacity .6s ease;
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.08);opacity:0;transition:opacity .6s ease;
   -webkit-mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 45%,transparent 100%);pointer-events:none}
 .hero-vid.on{opacity:1}
 .hero-vid.fade{opacity:0;transition-duration:.45s}
@@ -290,7 +290,7 @@
       </div>
     </div>
     <div class="hero-stage" id="droneStage" aria-hidden="true">
-      <video class="hero-vid" id="heroVid" muted playsinline preload="none" poster="hero-drone.jpg" disablepictureinpicture>
+      <video class="hero-vid" id="heroVid" muted loop playsinline preload="none" poster="hero-drone.jpg" disablepictureinpicture>
         <source src="hero-drone.webm" type="video/webm" />
         <source src="hero-drone.mp4" type="video/mp4" />
       </video>
@@ -435,8 +435,6 @@
   var visible = true, ready = false;
   function sync() { if (!ready) return; if (visible && !document.hidden) v.play().catch(function () {}); else v.pause(); }
   v.addEventListener('playing', function () { ready = true; v.classList.add('on'); });
-  v.addEventListener('timeupdate', function () { if (v.duration && v.currentTime > v.duration - 0.5) v.classList.add('fade'); });
-  v.addEventListener('ended', function () { v.currentTime = 0; v.classList.remove('fade'); v.play().catch(function () {}); });
   v.addEventListener('error', loadDrone, true);
   var fail = setTimeout(function () { if (!ready) loadDrone(); }, 7000);
   v.addEventListener('playing', function () { clearTimeout(fail); }, { once: true });
