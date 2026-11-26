@@ -28,22 +28,18 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('bsc_lang')==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';}}catch(e){}</script>
+  <script>document.documentElement.classList.add('js');try{var _l=localStorage.getItem('bsc-lang')||localStorage.getItem('bsc_lang');if(_l==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr';}}catch(e){}</script>
   <style>
-/* Hero with 3D drone: text and drone live in separate areas (no overlap) */
+/* Hero with 3D drone */
 .hero-x{position:relative;overflow:hidden;padding:88px 0 40px;
   background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(56,189,248,.16),transparent 70%),#05070c}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:8px;align-items:center}
-.hero-stage{order:-1;position:relative;height:44vh;min-height:300px;max-height:440px;touch-action:pan-y}
+.hero-stage{order:-1;position:relative;height:44vh;min-height:300px;max-height:440px;touch-action:pan-y;cursor:grab}
+.hero-stage:active{cursor:grabbing}
 .hero-stage canvas{display:block;width:100%!important;height:100%!important}
 .hero-copy{position:relative;z-index:2}
 .hero-x .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.08);opacity:0;transition:opacity .6s ease;
-  -webkit-mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 58% 56% at 50% 50%,#000 45%,transparent 100%);pointer-events:none}
-.hero-vid.on{opacity:1}
-.hero-vid.fade{opacity:0;transition-duration:.45s}
-.hero-stage{background:url(drone-fallback.svg) center/contain no-repeat}
-.hero-stage.ready{background:none}
+.hero-stage.no-webgl{background:url(drone-fallback.svg) center/contain no-repeat}
 @media(min-width:900px){
   .hero-x{padding:110px 0 70px;min-height:calc(100vh - 20px);display:flex;align-items:center}
   .hero-x .container{width:100%}
@@ -51,22 +47,22 @@
   .hero-stage{order:0;height:600px;max-height:none}
 }
 
-/* ===== Home: annotated gear model + lighter lower sections ===== */
+/* Home: annotated gear model + lighter lower sections */
 .sec-tight{padding:52px 0}
 @media(min-width:900px){.sec-tight{padding:76px 0}}
 .section-header{margin-bottom:30px;max-width:none}
 .section-title{margin-bottom:0}
 
-/* gear plate: gears, leader lines and callouts share one coordinate system */
+/* Gear plate */
 .gx-stage{--p:0;--mx:0;--my:0;position:relative;touch-action:pan-y}
 .gx-plate{position:relative;width:min(100%,1000px);margin:0 auto;aspect-ratio:1000/400;
-  transform:perspective(1200px) rotateX(calc(5deg + var(--my)*-5deg)) rotateY(calc(var(--p)*-9deg + var(--mx)*7deg))}
+  transform:perspective(1200px) rotateX(calc(5deg + var(--my)*-5deg)) rotateY(calc(var(--p)*-9deg + var(--mx)*7deg));transition:transform .2s ease-out}
 .gx-plat{position:absolute;left:25%;top:66%;width:50%;height:auto;z-index:0}
 .gx-svg{position:absolute;left:27%;top:8.75%;width:46%;height:82.5%;overflow:visible;z-index:1}
 .gx-lead{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
 .gx-hub{position:absolute;z-index:3;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;display:grid;place-items:center;
   font:700 .74rem 'Space Grotesk',monospace;letter-spacing:.04em;color:#fff;background:rgba(5,7,12,.82);border:1.5px solid var(--accent-amber);box-shadow:0 0 14px rgba(249,115,22,.45)}
-
+.gx-hub.h1{left:40%;top:55%}.gx-hub.h2{left:53.8%;top:33.5%}.gx-hub.h3{left:63.8%;top:51%}
 .gx-co{position:absolute;z-index:3;transform:translateY(-50%)}
 .gx-co h3{font-size:1.12rem;font-weight:700;color:#fff;margin:2px 0 4px}
 .gx-co p{font-size:.9rem;color:var(--text-secondary);line-height:1.55}
@@ -92,111 +88,40 @@
   .gx-svg{left:0;top:0;width:100%;height:100%}
   .gx-lead,.gx-co{display:none}
   .gx-hub{width:28px;height:28px;margin:-14px 0 0 -14px;font-size:.66rem}
+  .gx-hub.h1{left:28.3%;top:56%}.gx-hub.h2{left:58.3%;top:30%}.gx-hub.h3{left:80%;top:51.2%}
   .gx-list{display:block}
 }
 
-
-/* domains: thick rounded gears (stacked rim profile, raised hub) + blueprint cube; CSS 3D only */
-.gx-3d{transform-style:preserve-3d;transform:perspective(900px) rotateX(calc(32deg + var(--my)*-8deg)) rotateY(calc(var(--p)*-16deg + var(--mx)*14deg))}
-.g3{position:absolute;aspect-ratio:1;transform-style:preserve-3d;animation:gxSpin 20s linear infinite}
-.g3.gx-rev{animation-direction:reverse}
-.gl{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transform:translateZ(var(--z)) scale(var(--s,1))}
-.g-sh{position:absolute;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0));transform:translateZ(-40px)}
-.gx-3d .gx-hub{transform:translateZ(var(--z))}
-.gx-stage.paused .g3{animation-play-state:paused}
-@media(prefers-reduced-motion:reduce){.g3{animation:none!important}}
-@media(max-width:899px){.gl.gm:nth-of-type(even){display:none}}
-
-/* ===== domains: one interactive turntable carrying three models (CSS 3D, no WebGL) ===== */
-.dm-grid{display:grid;gap:26px;align-items:center}
-.dm-list{display:grid;gap:10px;order:2}
-.dm-row{display:flex;gap:16px;align-items:flex-start;text-align:start;width:100%;padding:16px 18px;border-radius:16px;border:1px solid var(--border-subtle);background:rgba(255,255,255,.015);color:inherit;font:inherit;cursor:pointer;transition:border-color .3s,background .3s,transform .3s}
-.dm-row b{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 .76rem 'Space Grotesk',monospace;color:var(--accent-amber);border:1px solid rgba(249,115,22,.5);background:rgba(249,115,22,.07);transition:.3s}
-.dm-tag{display:block;font:600 .68rem 'Space Grotesk',monospace;letter-spacing:.16em;color:var(--accent-cyan);opacity:.75}
-.dm-row h3{font-size:1.1rem;font-weight:700;color:#cbd5e1;margin:2px 0 3px;transition:color .3s}
-.dm-row p{font-size:.9rem;color:var(--text-secondary);line-height:1.55}
-.dm-row:hover{border-color:rgba(56,189,248,.4)}
-.dm-row.on{border-color:var(--accent-amber);background:linear-gradient(90deg,rgba(249,115,22,.1),rgba(56,189,248,.04));transform:translateX(0)}
-.dm-row.on h3{color:#fff}.dm-row.on b{background:var(--accent-amber);color:#fff;box-shadow:0 0 16px rgba(249,115,22,.5)}
-.tt-stage{position:relative;height:330px;perspective:1100px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;order:1}
-.tt-stage:active{cursor:grabbing}
-.tt-stage::before{content:"";position:absolute;inset:6% 4% 2%;background:radial-gradient(ellipse at 50% 70%,rgba(56,189,248,.14),transparent 68%);pointer-events:none}
-.tt-scene{position:absolute;inset:0;transform-style:preserve-3d;transform:scale(var(--k,.7)) rotateX(calc(-18deg + var(--my,0)*6deg)) rotateY(calc(var(--mx,0)*10deg))}
-.tt{position:absolute;left:50%;top:48%;width:0;height:0;transform-style:preserve-3d;transform:rotateY(var(--a,0deg))}
-.tt-disc{position:absolute;left:-240px;top:-140px;width:480px;height:480px;border-radius:50%;transform:rotateX(90deg);border:1px solid rgba(56,189,248,.55);
-  background:radial-gradient(closest-side,rgba(56,189,248,.18),rgba(56,189,248,.05) 72%,transparent),repeating-conic-gradient(rgba(56,189,248,.32) 0 .5deg,transparent .5deg 7.5deg);-webkit-mask:radial-gradient(closest-side,#000 96%,transparent);mask:radial-gradient(closest-side,#000 96%,transparent)}
-.tt-disc::before{content:"";position:absolute;inset:44px;border-radius:50%;border:1px solid rgba(56,189,248,.28);background:#050912}
-.tt-disc::after{content:"";position:absolute;inset:104px;border-radius:50%;border:1px dashed rgba(249,115,22,.55)}
-.ob{position:absolute;left:-75px;top:-75px;width:150px;height:150px;transform-style:preserve-3d;transform:rotateY(calc(var(--i)*120deg)) translateZ(190px)}
-.ob-in{position:absolute;inset:0;transform-style:preserve-3d;transform:scale(var(--sc,1))}
-.ob-in>div{position:absolute;inset:0;transform-style:preserve-3d}
-@keyframes mSway{from{transform:rotateX(8deg) rotateY(-30deg)}to{transform:rotateX(8deg) rotateY(30deg)}}
-@keyframes mZ{to{transform:rotate(360deg)}}
-.m1{animation:mSway 8s ease-in-out infinite alternate}
-.m1-gear{position:absolute;inset:0;transform-style:preserve-3d;animation:mZ 26s linear infinite}
-.m1-wr{position:absolute;left:34px;top:-6px;width:84px;height:176px;transform-style:preserve-3d;transform:translateZ(30px) rotate(-38deg)}
-.m2{transform:rotateX(76deg)}
-.m2 .cp{position:absolute;left:10px;top:10px;width:130px;height:130px;transform-style:preserve-3d;animation:mZ2 20s linear infinite}
-@keyframes mZ2{from{transform:rotateZ(-40deg)}to{transform:rotateZ(320deg)}}
-.cp-top,.cp-bot{position:absolute;inset:0;border-radius:10px;background:linear-gradient(135deg,#142238,#0a1424);border:1.5px solid rgba(56,189,248,.7);box-shadow:0 0 22px rgba(56,189,248,.22) inset}
-.cp-top{transform:translateZ(12px)}.cp-top svg{position:absolute;inset:0;width:100%;height:100%}
-.cp-bot{transform:translateZ(-12px);background:#070d18}
-.cp-s{position:absolute;background:#0d1a2c;border:1px solid rgba(56,189,248,.35)}
-.cp-s.n,.cp-s.s{left:0;width:130px;height:24px;top:-12px;transform:rotateX(90deg)}.cp-s.s{top:118px}
-.cp-s.w,.cp-s.e{top:0;height:130px;width:24px;left:-12px;transform:rotateY(90deg)}.cp-s.e{left:118px}
-.pin{position:absolute}
-.pin.pn,.pin.ps{left:6px;width:118px;height:16px;background:repeating-linear-gradient(90deg,#e7b866 0 6px,transparent 6px 14px)}.pin.pn{top:-16px}.pin.ps{top:130px}
-.pin.pw,.pin.pe{top:6px;height:118px;width:16px;background:repeating-linear-gradient(180deg,#e7b866 0 6px,transparent 6px 14px)}.pin.pw{left:-16px}.pin.pe{left:130px}
-.cp-glow{position:absolute;left:-10px;top:-10px;width:170px;height:170px;border-radius:50%;background:radial-gradient(closest-side,rgba(249,115,22,.28),transparent);transform:translateZ(-30px)}
-.trc{stroke-dasharray:6 8;animation:mDash 1.6s linear infinite}.trc.t2{animation-direction:reverse}
-@keyframes mDash{to{stroke-dashoffset:-28}}
-.m3{animation:m3a 18s linear infinite}
-@keyframes m3a{from{transform:rotateX(-22deg) rotateY(0)}to{transform:rotateX(-22deg) rotateY(360deg)}}
-.m3-cube{position:absolute;left:30px;top:30px;width:90px;height:90px;transform-style:preserve-3d}
-.q{position:absolute;inset:0;border:1.5px solid rgba(56,189,248,.85);background:linear-gradient(rgba(56,189,248,.12) 1px,transparent 1px) 0 0/15px 15px,linear-gradient(90deg,rgba(56,189,248,.12) 1px,transparent 1px) 0 0/15px 15px,rgba(56,189,248,.05);box-shadow:0 0 14px rgba(56,189,248,.2) inset}
-.q0{transform:translateZ(45px)}.q1{transform:rotateY(180deg) translateZ(45px)}.q2{transform:rotateY(90deg) translateZ(45px)}.q3{transform:rotateY(-90deg) translateZ(45px)}.q4{transform:rotateX(90deg) translateZ(45px)}.q5{transform:rotateX(-90deg) translateZ(45px)}
-.m3-core{position:absolute;left:23px;top:23px;width:44px;height:44px;transform-style:preserve-3d;animation:m3c 7s linear infinite reverse}
-@keyframes m3c{to{transform:rotateX(360deg) rotateY(360deg)}}
-.r{position:absolute;inset:0;border:1px solid #fdba74}
-.r0{transform:translateZ(22px);background:#f97316}.r1{transform:rotateY(180deg) translateZ(22px);background:#9a3412}.r2{transform:rotateY(90deg) translateZ(22px);background:#ea580c}.r3{transform:rotateY(-90deg) translateZ(22px);background:#c2410c}.r4{transform:rotateX(90deg) translateZ(22px);background:#fb923c}.r5{transform:rotateX(-90deg) translateZ(22px);background:#7c2d12}
-.m3-ring{position:absolute;left:-14px;top:-14px;width:178px;height:178px;border-radius:50%;border:1.5px dashed rgba(249,115,22,.6);transform:rotateX(90deg) translateZ(-62px)}
-.tt-stage.paused .ob *{animation-play-state:paused!important}
-@media(prefers-reduced-motion:reduce){.ob *{animation:none!important}}
-@media(min-width:900px){.dm-grid{grid-template-columns:minmax(300px,.8fr) 1.2fr;gap:44px}.dm-list{order:0}.tt-stage{height:460px;order:0}.tt-scene{--k:1}}
-@media(min-width:600px) and (max-width:899px){.tt-scene{--k:.9}.tt-stage{height:400px}}
-@media(max-width:899px){.gl.gm:nth-of-type(even){display:none}}
-@media(max-width:420px){.tt-scene{--k:.62}.tt-stage{height:290px}}
-
-
-/* workflow: connected nodes, titles only */
+/* Workflow: connected nodes */
 .flow{list-style:none;position:relative;display:grid;grid-template-columns:1fr;gap:26px}
 .flow::before{content:"";position:absolute;top:8px;bottom:8px;inset-inline-start:27px;width:1px;background:linear-gradient(var(--accent-cyan),var(--accent-amber));opacity:.5}
-.flow-step{position:relative;display:flex;align-items:center;gap:18px}
-.flow-step h3{font-size:1.12rem;font-weight:700}
+.flow-step{position:relative;display:flex;align-items:center;gap:18px;cursor:pointer}
+.flow-step h3{font-size:1.12rem;font-weight:700;transition:color .3s}
 .flow-node{position:relative;z-index:1;flex:none;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
   background:#0b111e;border:1px solid var(--border-accent);color:var(--accent-cyan);
   box-shadow:0 0 0 6px var(--bg-primary),0 0 22px rgba(56,189,248,.16);transition:var(--transition-smooth)}
 .flow-node em{position:absolute;top:-9px;inset-inline-end:-9px;min-width:24px;height:20px;padding:0 5px;border-radius:6px;display:grid;place-items:center;
   font:700 .68rem 'Space Grotesk',monospace;font-style:normal;letter-spacing:.06em;color:#fb923c;background:#0b111e;border:1px solid rgba(249,115,22,.5)}
-.flow-step:hover .flow-node{border-color:var(--accent-amber);color:#fb923c;transform:translateY(-3px)}
+.flow-step:hover .flow-node,.flow-step.on .flow-node{border-color:var(--accent-amber);color:#fb923c;transform:translateY(-3px)}
+.flow-step:hover h3,.flow-step.on h3{color:#38bdf8}
 
-/* workflow model: exploded stack of four layers (CSS 3D only, no WebGL) */
+/* Workflow model: exploded stack of four layers */
 .ex-grid{display:grid;gap:34px;align-items:center}
-.ex-stage{--ex:0;--mx:0;--my:0;position:relative;height:390px;perspective:1100px;touch-action:pan-y}
+.ex-stage{--ex:1;--mx:0;--my:0;position:relative;height:390px;perspective:1100px;touch-action:pan-y}
 .ex-stage::before{content:"";position:absolute;inset:8% 6%;background:radial-gradient(ellipse at 50% 55%,rgba(56,189,248,.14),transparent 68%);pointer-events:none}
 .ex-stack{position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-95px 0 0 -95px;transform-style:preserve-3d;
-  transform:rotateX(calc(58deg + var(--my)*-8deg)) rotateZ(calc(-32deg + var(--mx)*16deg))}
+  transform:rotateX(calc(58deg + var(--my)*-8deg)) rotateZ(calc(-32deg + var(--mx)*16deg));transition:transform .25s ease-out}
 .ex-spin{position:absolute;inset:0;transform-style:preserve-3d;animation:exSway 14s ease-in-out infinite alternate}
 @keyframes exSway{from{transform:rotateZ(-12deg)}to{transform:rotateZ(12deg)}}
 .ex-layer{position:absolute;inset:0;border-radius:12px;border:1px solid rgba(56,189,248,.45);
   background:linear-gradient(rgba(56,189,248,.07) 1px,transparent 1px) 0 0/19px 19px,linear-gradient(90deg,rgba(56,189,248,.07) 1px,transparent 1px) 0 0/19px 19px,rgba(9,14,26,.86);
   box-shadow:0 0 24px rgba(56,189,248,.12);
-  transform:translateZ(calc((var(--i) - 1.5)*var(--gap,64px)*var(--ex) + var(--lift,0px)));transition:transform .45s ease,border-color .3s,box-shadow .3s}
+  transform:translateZ(calc((var(--i) - 1.5)*var(--gap,64px)*var(--ex) + var(--lift,0px)));transition:transform .55s cubic-bezier(.22,1,.36,1),border-color .3s,box-shadow .3s}
 .ex-layer svg{position:absolute;inset:8%;width:84%;height:84%}
 .ex-layer b{position:absolute;top:8px;inset-inline-end:10px;font:700 .72rem 'Space Grotesk',monospace;letter-spacing:.08em;color:#fb923c}
-.ex-layer.on{--lift:16px;border-color:var(--accent-amber);box-shadow:0 0 28px rgba(249,115,22,.35)}
+.ex-layer.on{--lift:18px;border-color:var(--accent-amber);box-shadow:0 0 28px rgba(249,115,22,.35)}
 .ex-axis{position:absolute;left:50%;top:50%;width:0;height:calc(var(--gap,64px)*3*var(--ex));border-inline-start:1px dashed rgba(249,115,22,.7);
-  transform:translateZ(calc(var(--gap,64px)*-1.5*var(--ex))) rotateX(90deg);transform-origin:top}
+  transform:translateZ(calc(var(--gap,64px)*-1.5*var(--ex))) rotateX(90deg);transform-origin:top;transition:height .55s ease,transform .55s ease}
 .ex-stage.paused .ex-spin{animation-play-state:paused}
 @media(min-width:900px){
   .ex-grid{grid-template-columns:1fr 1fr;gap:56px}
@@ -206,22 +131,18 @@
 }
 @media(prefers-reduced-motion:reduce){.ex-spin{animation:none}}
 
-/* closing call to action: one line, no box */
+/* Closing CTA */
 .cta-line{margin-top:56px;padding-top:30px;border-top:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
 .cta-title{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.3}
 
-/* gentle reveal; always visible without JS/IntersectionObserver */
+/* Reveal */
 .js .rvx{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .js .rvx.in-view{opacity:1;transform:none}
-@keyframes rvxSafe{to{opacity:1;transform:none}}
-.js .rvx{animation:rvxSafe .01s 3s forwards}
 @media(prefers-reduced-motion:reduce){
   .js .rvx{opacity:1;transform:none;transition:none}
   .gx-r,.gx-dash{animation:none}
 }
 .site-footer{margin-top:16px}
-  </style>
-<style>
 .hero-x{--gx:50%;--gy:30%}
 .hero-x::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px circle at var(--gx) var(--gy),rgba(56,189,248,.12),transparent 70%)}
 .hero-title .highlight{background-size:200% 100%;animation:shine 7s ease-in-out infinite alternate}
@@ -231,22 +152,16 @@
 .scroll-cue i{width:1px;height:34px;background:linear-gradient(#38bdf8,transparent);animation:cue 2s ease-in-out infinite}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .section-title::after{content:"";display:block;width:44px;height:3px;border-radius:2px;margin-top:14px;background:linear-gradient(90deg,#f97316,#38bdf8)}
-.inno-band{margin-top:56px;display:grid;grid-template-columns:150px 1fr auto;gap:28px;align-items:center;padding:26px 30px;border-radius:22px;background:linear-gradient(120deg,rgba(56,189,248,.08),rgba(249,115,22,.06));border:1px solid var(--border-subtle)}
-.inno-orbit{width:150px!important;height:150px!important;max-width:none;display:block;overflow:visible}
-.inno-orbit g{transform-origin:120px 120px;animation:spin 9s linear infinite}
-.inno-orbit .o2{animation-duration:14s;animation-direction:reverse}.inno-orbit .o3{animation-duration:5s}
+.inno-band{margin-top:56px;display:grid;grid-template-columns:230px 1fr auto;gap:28px;align-items:center;padding:34px 36px;border-radius:22px;background:linear-gradient(120deg,rgba(56,189,248,.08),rgba(249,115,22,.06));border:1px solid var(--border-subtle);overflow:hidden}
 .inno-txt h2{font-size:clamp(1.3rem,2.4vw,1.8rem);margin:4px 0 6px}.inno-txt p{color:var(--text-secondary);margin:0}
 .eyebrow-x{font-size:.78rem;letter-spacing:.08em;color:#38bdf8}
-@media(max-width:700px){.inno-band{grid-template-columns:1fr;text-align:center;justify-items:center}}
 .site-footer.slim{padding:22px 0 100px;margin-top:40px}
 @media(min-width:768px){.site-footer.slim{padding:22px 0}}
 .slim-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px}
 .slim-links{display:flex;gap:22px;flex-wrap:wrap}.slim-links a{color:var(--text-secondary);font-size:.9rem}.slim-links a:hover{color:#38bdf8}
 .slim-copy{font-size:.78rem;color:var(--text-muted,#6b7a90);letter-spacing:.04em}
-@media(prefers-reduced-motion:reduce){.hero-title .highlight,.scroll-cue i,.inno-orbit g{animation:none}}
-</style>
-<style>
-/* ===== v3 bold layer ===== */
+
+/* Bold HUD & Manifesto layer */
 .pbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:200;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#f97316,#38bdf8);pointer-events:none}
 .hero-x::after{content:"BSC";position:absolute;inset-inline:0;bottom:-.16em;text-align:center;font:700 clamp(9rem,32vw,30rem)/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(56,189,248,.09);pointer-events:none;z-index:0;direction:ltr}
 .hero-grid{position:relative;z-index:1}
@@ -270,34 +185,35 @@
 .mf-k{display:flex;align-items:center;gap:12px;color:#38bdf8;font:600 .78rem 'Space Grotesk',monospace;letter-spacing:.16em;margin-bottom:22px}
 .mf-k::before{content:"";width:34px;height:2px;background:#f97316}
 .mf-t{font-size:clamp(1.9rem,5.2vw,3.7rem);font-weight:700;line-height:1.35;max-width:1000px;text-wrap:balance}
-.mf-t .w{color:rgba(203,213,225,.2);transition:color .35s,text-shadow .35s}
+.mf-t .w{color:rgba(203,213,225,.28);transition:color .35s,text-shadow .35s}
 .mf-t .w.on{color:#f8fafc}.mf-t .w.hl.on{color:#38bdf8;text-shadow:0 0 28px rgba(56,189,248,.45)}.mf-t .w.am.on{color:#fb923c;text-shadow:0 0 28px rgba(249,115,22,.4)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-block:1px solid var(--border-subtle)}
 .stat{padding:30px 10px;text-align:center;position:relative}
-.stat+.stat::before{content:"";position:absolute;inset-block:26% ;inset-inline-start:0;width:1px;background:var(--border-subtle)}
+.stat+.stat::before{content:"";position:absolute;inset-block:26%;inset-inline-start:0;width:1px;background:var(--border-subtle)}
 .stat b{display:block;font:700 clamp(2.4rem,7vw,4.6rem)/1 'Space Grotesk',sans-serif;background:linear-gradient(180deg,#fff,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
 .stat span{display:block;margin-top:10px;color:var(--text-muted);font-size:.9rem}
 .stat:nth-child(2) b{background:linear-gradient(180deg,#fff,#f97316);-webkit-background-clip:text;background-clip:text}
+
 /* ID cards */
-.inno-band{grid-template-columns:230px 1fr auto;padding:34px 36px;overflow:hidden}
 .idc-stack{position:relative;width:200px;height:170px;direction:ltr}
 .idc{position:absolute;left:50%;top:50%;width:104px;height:140px;margin:-70px 0 0 -52px;border-radius:12px;padding:12px;background:linear-gradient(160deg,#111b2e,#0a101c);border:1px solid rgba(56,189,248,.4);box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .6s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column;gap:8px}
 .idc svg{width:100%;height:62px}.idc i{display:block;height:5px;border-radius:3px;background:rgba(148,163,184,.3)}.idc i+i{width:60%}
 .idc em{margin-top:auto;font:700 .62rem 'Space Grotesk',monospace;color:#fb923c;letter-spacing:.1em;font-style:normal}
 .idc:nth-child(1){transform:rotate(-14deg) translateX(-46px)}.idc:nth-child(2){transform:translateY(-6px);z-index:2;border-color:#f97316}.idc:nth-child(3){transform:rotate(14deg) translateX(46px)}
 .inno-band:hover .idc:nth-child(1){transform:rotate(-20deg) translateX(-70px)}.inno-band:hover .idc:nth-child(2){transform:translateY(-14px)}.inno-band:hover .idc:nth-child(3){transform:rotate(20deg) translateX(70px)}
-@media(max-width:700px){.inno-band{grid-template-columns:1fr}.idc-stack{margin-inline:auto}}
-/* mega marquee */
+@media(max-width:700px){.inno-band{grid-template-columns:1fr;text-align:center;justify-items:center}.idc-stack{margin-inline:auto}}
+
+/* Mega marquee */
 .mega{overflow:hidden;direction:ltr;margin-top:70px;padding-block:6px;border-block:1px solid var(--border-subtle)}
 .mega-track{display:flex;width:max-content;animation:mega 36s linear infinite}
 .mega span{font:700 clamp(3rem,10vw,7.5rem)/1.1 'Space Grotesk',sans-serif;color:transparent;-webkit-text-stroke:1.2px rgba(56,189,248,.55);padding-inline:.35em;white-space:nowrap}
 .mega span:nth-child(even){-webkit-text-stroke-color:rgba(249,115,22,.7)}
 @keyframes mega{to{transform:translateX(-50%)}}
-@media(prefers-reduced-motion:reduce){.mega-track,.hero-copy>*,.hud .live{animation:none}}
+@media(prefers-reduced-motion:reduce){.mega-track,.hero-copy>*,.hud .live,.hero-title .highlight,.scroll-cue i{animation:none}}
 .btn-primary{position:relative;overflow:hidden}
 .btn-primary::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s}
 .btn-primary:hover::after{transform:translateX(120%)}
-</style>
+  </style>
 </head>
 <body>
 
@@ -340,39 +256,40 @@
 
   <main>
     <!-- HERO WITH 3D DRONE -->
-<section class="hero-x">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <div class="inst-badge">
-        <span class="dot"></span>
-        <span data-i18n="instBadge">معهد التكوين المهني — بطيوة</span>
+    <section class="hero-x" id="heroSec">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="inst-badge">
+            <span class="dot"></span>
+            <span data-i18n="instBadge">معهد التكوين المهني — بطيوة</span>
+          </div>
+          <h1 class="hero-title">
+            <span data-i18n="heroTitle1">فكّر أبعد...</span>
+            <span class="highlight" data-i18n="heroTitle2">واصنع المستقبل.</span>
+          </h1>
+          <p class="hero-desc" data-i18n="heroDesc">
+            فضاء للتجريب والابتكار الهندسي، حيث تتحول الأفكار إلى نماذج حقيقية.
+          </p>
+          <div class="hero-actions">
+            <a href="innovators.html" class="btn btn-primary">
+              <span data-i18n="btnExploreProjects">استكشف المشاريع</span>
+              <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </a>
+            <a href="activities.html" class="btn btn-secondary">
+              <span data-i18n="navActivities">النشاطات</span>
+            </a>
+          </div>
+        </div>
+        <div class="hero-stage" id="droneStage" aria-hidden="true">
+          <div class="hud">
+            <span class="h1"><i class="live"></i>SYS <b>3D</b></span>
+            <span class="h2">RPM <b id="hudRpm">2400</b></span>
+            <span class="h3">YAW <b id="hudYaw">0°</b></span>
+          </div>
+        </div>
       </div>
-      <h1 class="hero-title">
-        <span data-i18n="heroTitle1">فكّر أبعد...</span>
-        <span class="highlight" data-i18n="heroTitle2">واصنع المستقبل.</span>
-      </h1>
-      <p class="hero-desc" data-i18n="heroDesc">
-        فضاء للتجريب والابتكار الهندسي، حيث تتحول الأفكار إلى نماذج حقيقية.
-      </p>
-      <div class="hero-actions">
-        <a href="innovators.html" class="btn btn-primary">
-          <span data-i18n="btnExploreProjects">استكشف المشاريع</span>
-          <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        </a>
-        <a href="activities.html" class="btn btn-secondary">
-          <span data-i18n="navActivities">النشاطات</span>
-        </a>
-      </div>
-    </div>
-    <div class="hero-stage" id="droneStage" aria-hidden="true">
-      <video class="hero-vid" id="heroVid" muted loop playsinline preload="none" poster="hero-drone.jpg" disablepictureinpicture>
-        <source src="hero-drone.webm" type="video/webm" />
-        <source src="hero-drone.mp4" type="video/mp4" />
-      </video>
-    </div>
-  </div>
-  <div class="scroll-cue" aria-hidden="true"><i></i></div>
-</section>
+      <div class="scroll-cue" aria-hidden="true"><i></i></div>
+    </section>
 
     <!-- TICKER -->
     <div class="telemetry-ticker" aria-hidden="true">
@@ -400,8 +317,23 @@
       </div>
     </div>
 
-    <div class="pbar" id="pbar"></div><div class="ruler" aria-hidden="true"></div>
-    <!-- DOMAINS: one gear per field, labelled on the model -->
+    <div class="pbar" id="pbar"></div>
+    <div class="ruler" aria-hidden="true"></div>
+
+    <!-- MANIFESTO & STATS -->
+    <section class="manifesto">
+      <div class="container">
+        <div class="mf-k" data-i18n="mfKicker">MANIFESTO // الرؤية</div>
+        <p class="mf-t" id="mfText">نؤمن بأن الابتكار يبدأ من الورشة؛ حيث يلتقي الفضول العلمي بالمهارة التطبيقية لبناء حلول هندسية حقيقية بأيدي شباب معهد بطيوة.</p>
+        <div class="stats rvx">
+          <div class="stat"><b data-count="3">3</b><span data-i18n="stat1">مجالات تقنية</span></div>
+          <div class="stat"><b data-count="4">4</b><span data-i18n="stat2">مراحل من الفكرة إلى النموذج</span></div>
+          <div class="stat"><b data-count="1">1</b><span data-i18n="stat3">فريق واحد</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOMAINS: 3 INTERLOCKING GEARS -->
     <section class="section sec-tight">
       <div class="container">
         <div class="section-header">
@@ -410,31 +342,24 @@
         </div>
         <div class="gx-stage rvx" id="gxStage">
           <div class="gx-plate">
-            <svg class="gx-plat" viewBox="0 0 300 70" aria-hidden="true"><ellipse cx="150" cy="35" rx="146" ry="30" fill="rgba(56,189,248,.05)" stroke="rgba(56,189,248,.45)"/><ellipse class="gx-dash" cx="150" cy="35" rx="120" ry="24" fill="none" stroke="rgba(56,189,248,.55)" stroke-dasharray="2 9"/><ellipse cx="150" cy="35" rx="90" ry="17" fill="none" stroke="rgba(249,115,22,.4)"/></svg><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><radialGradient id="mM1" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#6f8db3"/><stop offset=".5" stop-color="#b6cbe6"/><stop offset="1" stop-color="#7e9bc0"/></radialGradient><radialGradient id="mM2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4f8aa8"/><stop offset=".5" stop-color="#a3dcf2"/><stop offset="1" stop-color="#5a9bbd"/></radialGradient></defs></svg><div class="gx-svg gx-3d" aria-hidden="true"><i class="g-sh" style="left:5.435%;top:28.485%;width:45.652%"></i><i class="g-sh" style="left:41.304%;top:10.606%;width:33.913%"></i><i class="g-sh" style="left:66.087%;top:36.061%;width:27.826%"></i><div class="g3" style="left:6.739%;top:26.061%;width:43.043%;animation-duration:20s"><svg class="gl gb" viewBox="31 86 198 198" style="--z:-11.7px;--s:0.93" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#1a2a3d" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.25" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:-9.1px;--s:0.975" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:-6.5px;--s:1" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:-3.9px;--s:1" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:-1.3px;--s:1" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:1.3px;--s:1" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:3.9px;--s:1" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:6.5px;--s:1" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:9.1px;--s:0.975" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gf" viewBox="31 86 198 198" style="--z:11.7px;--s:0.93" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="url(#mM1)" fill-rule="evenodd" stroke="#7dd3fc" stroke-opacity="0.7" stroke-width="1.2"/><circle cx="130" cy="185" r="66.5" fill="none" stroke="#38bdf8" stroke-opacity=".3"/><circle cx="130" cy="185" r="30.4" fill="none" stroke="#f97316" stroke-opacity=".7" stroke-width="2"/><path d="M71.1 156.5 A66.5 66.5 0 0 1 139.5 119.45" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="3" stroke-linecap="round"/></svg><svg class="gl gx" viewBox="31 86 198 198" style="--z:13.5px;--s:1" aria-hidden="true"><circle cx="130" cy="185" r="28.5" fill="#5b7da3" stroke="#38bdf8" stroke-opacity=".5"/></svg><svg class="gl gx" viewBox="31 86 198 198" style="--z:15.3px;--s:1" aria-hidden="true"><circle cx="130" cy="185" r="25.65" fill="#7c9cc2" stroke="#38bdf8" stroke-opacity=".5"/></svg><svg class="gl gx" viewBox="31 86 198 198" style="--z:17.1px;--s:1" aria-hidden="true"><circle cx="130" cy="185" r="20.9" fill="#a9c3e2" stroke="#38bdf8" stroke-opacity=".5"/><circle cx="130" cy="185" r="9.5" fill="#0b111e" stroke="#f97316"/></svg></div><div class="g3 gx-rev" style="left:42.609%;top:8.182%;width:31.304%;animation-duration:14.3s"><svg class="gl gb" viewBox="196 27 144 144" style="--z:-11.7px;--s:0.93" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#1a3040" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.25" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:-9.1px;--s:0.975" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:-6.5px;--s:1" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:-3.9px;--s:1" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:-1.3px;--s:1" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:1.3px;--s:1" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:3.9px;--s:1" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:6.5px;--s:1" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="196 27 144 144" style="--z:9.1px;--s:0.975" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="#2a5068" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gf" viewBox="196 27 144 144" style="--z:11.7px;--s:0.93" aria-hidden="true"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="url(#mM2)" fill-rule="evenodd" stroke="#7dd3fc" stroke-opacity="0.7" stroke-width="1.2"/><circle cx="268" cy="99" r="47.6" fill="none" stroke="#38bdf8" stroke-opacity=".3"/><circle cx="268" cy="99" r="21.76" fill="none" stroke="#f97316" stroke-opacity=".7" stroke-width="2"/><path d="M225.84 78.6 A47.6 47.6 0 0 1 274.8 52.08" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="3" stroke-linecap="round"/></svg><svg class="gl gx" viewBox="196 27 144 144" style="--z:13.5px;--s:1" aria-hidden="true"><circle cx="268" cy="99" r="20.4" fill="#5b7da3" stroke="#38bdf8" stroke-opacity=".5"/></svg><svg class="gl gx" viewBox="196 27 144 144" style="--z:15.3px;--s:1" aria-hidden="true"><circle cx="268" cy="99" r="18.36" fill="#7c9cc2" stroke="#38bdf8" stroke-opacity=".5"/></svg><svg class="gl gx" viewBox="196 27 144 144" style="--z:17.1px;--s:1" aria-hidden="true"><circle cx="268" cy="99" r="14.96" fill="#a9c3e2" stroke="#38bdf8" stroke-opacity=".5"/><circle cx="268" cy="99" r="6.8" fill="#0b111e" stroke="#f97316"/></svg></div><div class="g3" style="left:67.391%;top:33.636%;width:25.217%;animation-duration:11.4s"><svg class="gl gb" viewBox="310 111 116 116" style="--z:-11.7px;--s:0.93" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#1a2a3d" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.25" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:-9.1px;--s:0.975" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:-6.5px;--s:1" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:-3.9px;--s:1" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:-1.3px;--s:1" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:1.3px;--s:1" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:3.9px;--s:1" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:6.5px;--s:1" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gm" viewBox="310 111 116 116" style="--z:9.1px;--s:0.975" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2"/></svg><svg class="gl gf" viewBox="310 111 116 116" style="--z:11.7px;--s:0.93" aria-hidden="true"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="url(#mM1)" fill-rule="evenodd" stroke="#7dd3fc" stroke-opacity="0.7" stroke-width="1.2"/><circle cx="368" cy="169" r="37.8" fill="none" stroke="#38bdf8" stroke-opacity=".3"/><circle cx="368" cy="169" r="17.28" fill="none" stroke="#f97316" stroke-opacity=".7" stroke-width="2"/><path d="M334.52 152.8 A37.8 37.8 0 0 1 373.4 131.74" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="3" stroke-linecap="round"/></svg><svg class="gl gx" viewBox="310 111 116 116" style="--z:13.5px;--s:1" aria-hidden="true"><circle cx="368" cy="169" r="16.2" fill="#5b7da3" stroke="#38bdf8" stroke-opacity=".5"/></svg><svg class="gl gx" viewBox="310 111 116 116" style="--z:15.3px;--s:1" aria-hidden="true"><circle cx="368" cy="169" r="14.58" fill="#7c9cc2" stroke="#38bdf8" stroke-opacity=".5"/></svg><svg class="gl gx" viewBox="310 111 116 116" style="--z:17.1px;--s:1" aria-hidden="true"><circle cx="368" cy="169" r="11.88" fill="#a9c3e2" stroke="#38bdf8" stroke-opacity=".5"/><circle cx="368" cy="169" r="5.4" fill="#0b111e" stroke="#f97316"/></svg></div><b class="gx-hub h1" style="left:28.26%;top:56.06%;--z:22.7px">01</b><b class="gx-hub h2" style="left:58.26%;top:30.00%;--z:22.7px">02</b><b class="gx-hub h3" style="left:80.00%;top:51.21%;--z:22.7px">03</b></div><svg class="gx-lead" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true"><g stroke="#38bdf8" stroke-opacity=".7" stroke-width="1.2" fill="none"><path d="M255 220H293" vector-effect="non-scaling-stroke"/><path d="M611 110H700" vector-effect="non-scaling-stroke"/><path d="M698 214H745" vector-effect="non-scaling-stroke"/></g><g fill="#f97316"><circle cx="293" cy="220" r="3.5"/><circle cx="611" cy="110" r="3.5"/><circle cx="698" cy="214" r="3.5"/></g></svg><div class="gx-co c1"><span class="gx-n">01 // SYS</span><h3 data-i18n="domain1Title">.</h3><p data-i18n="domain1Desc">.</p></div><div class="gx-co c2"><span class="gx-n">02 // AUTO</span><h3 data-i18n="domain2Title">.</h3><p data-i18n="domain2Desc">.</p></div><div class="gx-co c3"><span class="gx-n">03 // INNOV</span><h3 data-i18n="domain3Title">.</h3><p data-i18n="domain3Desc">.</p></div>
+            <svg class="gx-plat" viewBox="0 0 300 70" aria-hidden="true"><ellipse cx="150" cy="35" rx="146" ry="30" fill="rgba(56,189,248,.05)" stroke="rgba(56,189,248,.45)"/><ellipse class="gx-dash" cx="150" cy="35" rx="120" ry="24" fill="none" stroke="rgba(56,189,248,.55)" stroke-dasharray="2 9"/><ellipse cx="150" cy="35" rx="90" ry="17" fill="none" stroke="rgba(249,115,22,.4)"/></svg>
+            <svg class="gx-svg" viewBox="0 0 460 330" aria-hidden="true"><defs><radialGradient id="gxM1" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4e6a8c"/><stop offset=".55" stop-color="#9fb8d8"/><stop offset="1" stop-color="#6b86a8"/></radialGradient><radialGradient id="gxM2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#3f7896"/><stop offset=".55" stop-color="#8fd0ea"/><stop offset="1" stop-color="#4f8fb0"/></radialGradient></defs><circle cx="137" cy="194" r="95.0" fill="rgba(0,0,0,.4)"/><circle cx="275" cy="108" r="68.0" fill="rgba(0,0,0,.4)"/><circle cx="375" cy="178" r="54.0" fill="rgba(0,0,0,.4)"/><g class="gx-r" style="transform-origin:130px 185px;animation-duration:20s"><g transform="rotate(0 130 185)"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="url(#gxM1)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/><circle cx="130" cy="185" r="66.3" fill="none" stroke="#38bdf8" stroke-opacity=".35"/><circle cx="130" cy="185" r="30.0" fill="none" stroke="#f97316" stroke-opacity=".85" stroke-width="2"/></g></g><circle cx="130" cy="185" r="11.0" fill="#0b111e" stroke="#f97316"/><g class="gx-r gx-rev" style="transform-origin:268px 99px;animation-duration:14.3s"><g transform="rotate(18 268 99)"><path d="M327.0 99.0L344.7 105.8L342.1 120.0L323.1 120.0L315.7 133.7L326.1 149.6L315.6 159.5L300.2 148.4L286.2 155.1L285.3 174.0L270.9 175.9L265.0 157.9L249.8 155.1L237.9 169.9L225.1 163.0L231.0 144.9L220.3 133.7L202.0 138.6L195.7 125.5L211.0 114.4L209.0 99.0L191.3 92.2L193.9 78.0L212.9 78.0L220.3 64.3L209.9 48.4L220.4 38.5L235.8 49.6L249.8 42.9L250.7 24.0L265.1 22.1L271.0 40.1L286.2 42.9L298.1 28.1L310.9 35.0L305.0 53.1L315.7 64.3L334.0 59.4L340.3 72.5L325.0 83.6ZM283.0 99.0A15.0 15.0 0 1 0 253.0 99.0A15.0 15.0 0 1 0 283.0 99.0ZM312.8 99.0A8.3 8.3 0 1 0 296.3 99.0A8.3 8.3 0 1 0 312.8 99.0ZM287.6 133.8A8.3 8.3 0 1 0 271.0 133.8A8.3 8.3 0 1 0 287.6 133.8ZM246.7 120.5A8.3 8.3 0 1 0 230.1 120.5A8.3 8.3 0 1 0 246.7 120.5ZM246.7 77.5A8.3 8.3 0 1 0 230.1 77.5A8.3 8.3 0 1 0 246.7 77.5ZM287.6 64.2A8.3 8.3 0 1 0 271.0 64.2A8.3 8.3 0 1 0 287.6 64.2Z" fill="url(#gxM2)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/><circle cx="268" cy="99" r="46.0" fill="none" stroke="#38bdf8" stroke-opacity=".35"/><circle cx="268" cy="99" r="22.5" fill="none" stroke="#f97316" stroke-opacity=".85" stroke-width="2"/></g></g><circle cx="268" cy="99" r="8.2" fill="#0b111e" stroke="#f97316"/><g class="gx-r" style="transform-origin:368px 169px;animation-duration:11.4s"><g transform="rotate(22.5 368 169)"><path d="M414.0 169.0L429.6 175.8L426.3 190.0L409.3 189.2L400.5 201.5L406.8 217.4L394.4 225.1L382.9 212.5L368.0 215.0L361.2 230.6L347.0 227.3L347.8 210.3L335.5 201.5L319.6 207.8L311.9 195.4L324.5 183.9L322.0 169.0L306.4 162.2L309.7 148.0L326.7 148.8L335.5 136.5L329.2 120.6L341.6 112.9L353.1 125.5L368.0 123.0L374.8 107.4L389.0 110.7L388.2 127.7L400.5 136.5L416.4 130.2L424.1 142.6L411.5 154.1ZM380.0 169.0A12.0 12.0 0 1 0 356.0 169.0A12.0 12.0 0 1 0 380.0 169.0ZM403.0 169.0A6.4 6.4 0 1 0 390.1 169.0A6.4 6.4 0 1 0 403.0 169.0ZM374.4 197.5A6.4 6.4 0 1 0 361.6 197.5A6.4 6.4 0 1 0 374.4 197.5ZM345.9 169.0A6.4 6.4 0 1 0 333.0 169.0A6.4 6.4 0 1 0 345.9 169.0ZM374.4 140.5A6.4 6.4 0 1 0 361.6 140.5A6.4 6.4 0 1 0 374.4 140.5Z" fill="url(#gxM1)" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/><circle cx="368" cy="169" r="35.9" fill="none" stroke="#38bdf8" stroke-opacity=".35"/><circle cx="368" cy="169" r="18.0" fill="none" stroke="#f97316" stroke-opacity=".85" stroke-width="2"/></g></g><circle cx="368" cy="169" r="6.6" fill="#0b111e" stroke="#f97316"/></svg>
+            <svg class="gx-lead" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true"><g stroke="#38bdf8" stroke-opacity=".7" stroke-width="1.2" fill="none"><path d="M255 220H293" vector-effect="non-scaling-stroke"/><path d="M611 110H700" vector-effect="non-scaling-stroke"/><path d="M698 214H745" vector-effect="non-scaling-stroke"/></g><g fill="#f97316"><circle cx="293" cy="220" r="3.5"/><circle cx="611" cy="110" r="3.5"/><circle cx="698" cy="214" r="3.5"/></g></svg>
+            <b class="gx-hub h1">01</b><b class="gx-hub h2">02</b><b class="gx-hub h3">03</b>
+            <div class="gx-co c1"><span class="gx-n">01 // SYS</span><h3 data-i18n="domain1Title">الصيانة والأنظمة</h3><p data-i18n="domain1Desc">تشخيص الأعطال، الصيانة الصناعية، وتطوير الحلول الكهروميكانيكية.</p></div>
+            <div class="gx-co c2"><span class="gx-n">02 // AUTO</span><h3 data-i18n="domain2Title">الأتمتة والتحكم</h3><p data-i18n="domain2Desc">الأنظمة المدمجة، المتحكمات المنطقية PLC، والروبوتيك التطبيقي.</p></div>
+            <div class="gx-co c3"><span class="gx-n">03 // INNOV</span><h3 data-i18n="domain3Title">الابتكار والنماذج</h3><p data-i18n="domain3Desc">التصميم ثلاثي الأبعاد وبناء النماذج الأولية القابلة للتطبيق.</p></div>
           </div>
-          <ol class="gx-list"><li><span class="gx-ln">01</span><div><h3 data-i18n="domain1Title">.</h3><p data-i18n="domain1Desc">.</p></div></li><li><span class="gx-ln">02</span><div><h3 data-i18n="domain2Title">.</h3><p data-i18n="domain2Desc">.</p></div></li><li><span class="gx-ln">03</span><div><h3 data-i18n="domain3Title">.</h3><p data-i18n="domain3Desc">.</p></div></li></ol>
+          <ol class="gx-list">
+            <li><span class="gx-ln">01</span><div><h3 data-i18n="domain1Title">الصيانة والأنظمة</h3><p data-i18n="domain1Desc">تشخيص الأعطال، الصيانة الصناعية، وتطوير الحلول الكهروميكانيكية.</p></div></li>
+            <li><span class="gx-ln">02</span><div><h3 data-i18n="domain2Title">الأتمتة والتحكم</h3><p data-i18n="domain2Desc">الأنظمة المدمجة، المتحكمات المنطقية PLC، والروبوتيك التطبيقي.</p></div></li>
+            <li><span class="gx-ln">03</span><div><h3 data-i18n="domain3Title">الابتكار والنماذج</h3><p data-i18n="domain3Desc">التصميم ثلاثي الأبعاد وبناء النماذج الأولية القابلة للتطبيق.</p></div></li>
+          </ol>
         </div>
       </div>
     </section>
 
-    <!-- WORKBENCH: interactive turntable carrying three models -->
-    <section class="section sec-tight">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-kicker" data-i18n="platKicker">منصة العمل</span>
-          <h2 class="section-title" data-i18n="platTitle">مجسمات من ورشتنا</h2>
-        </div>
-        <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><radialGradient id="mG1" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#6f8db3"/><stop offset=".5" stop-color="#b6cbe6"/><stop offset="1" stop-color="#7e9bc0"/></radialGradient><linearGradient id="mG2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fdba74"/><stop offset=".5" stop-color="#f97316"/><stop offset="1" stop-color="#c2410c"/></linearGradient></defs></svg><div class="tt-wrap rvx"><div class="dm-grid"><div class="dm-list"><button type="button" class="dm-row" data-i="0" aria-pressed="false"><b>01</b><div><span class="dm-tag">SYS</span><h3 data-i18n="plat1Title">ورشة الصيانة</h3><p data-i18n="plat1Desc">أدوات وتشخيص وإصلاح.</p></div></button><button type="button" class="dm-row" data-i="1" aria-pressed="false"><b>02</b><div><span class="dm-tag">AUTO</span><h3 data-i18n="plat2Title">مختبر الإلكترونيات</h3><p data-i18n="plat2Desc">دارات ومتحكمات وحساسات.</p></div></button><button type="button" class="dm-row" data-i="2" aria-pressed="false"><b>03</b><div><span class="dm-tag">INNOV</span><h3 data-i18n="plat3Title">نموذج قيد الاختبار</h3><p data-i18n="plat3Desc">من المخطط إلى القطعة الحقيقية.</p></div></button></div><div class="tt-stage" id="ttStage" aria-hidden="true"><div class="tt-scene"><div class="tt"><i class="tt-disc"></i><div class="ob" style="--i:0"><div class="ob-in"><div class="m1"><div class="m1-gear"><svg class="gl " viewBox="31 86 198 198" style="--z:-8.5px" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#1a2a3d" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".25"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:-5.1px" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".4"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:-1.7px" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".4"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:1.7px" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".4"/></svg><svg class="gl gm" viewBox="31 86 198 198" style="--z:5.1px" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="#2c4560" fill-rule="evenodd" stroke="#38bdf8" stroke-opacity=".4"/></svg><svg class="gl " viewBox="31 86 198 198" style="--z:8.5px" aria-hidden="true"><path d="M215.0 185.0L234.8 191.6L233.0 205.6L212.1 206.9L206.6 221.9L221.6 236.4L213.8 248.2L194.5 240.3L183.0 251.5L190.2 271.0L178.1 278.3L164.1 262.9L148.9 267.9L146.9 288.6L132.8 290.0L126.9 269.9L111.1 267.9L100.3 285.7L87.0 280.8L90.4 260.2L77.0 251.5L59.5 262.8L49.7 252.7L61.7 235.6L53.4 221.9L32.7 224.5L28.3 211.1L46.5 200.9L45.0 185.0L25.2 178.4L27.0 164.4L47.9 163.1L53.4 148.1L38.4 133.6L46.2 121.8L65.5 129.7L77.0 118.5L69.8 99.0L81.9 91.7L95.9 107.1L111.1 102.1L113.1 81.4L127.2 80.0L133.1 100.1L148.9 102.1L159.7 84.3L173.0 89.2L169.6 109.8L183.0 118.5L200.5 107.2L210.3 117.3L198.3 134.4L206.6 148.1L227.3 145.5L231.7 158.9L213.5 169.1ZM150.0 185.0A20.0 20.0 0 1 0 110.0 185.0A20.0 20.0 0 1 0 150.0 185.0ZM194.6 185.0A11.9 11.9 0 1 0 170.8 185.0A11.9 11.9 0 1 0 194.6 185.0ZM168.2 230.6A11.9 11.9 0 1 0 144.4 230.6A11.9 11.9 0 1 0 168.2 230.6ZM115.6 230.6A11.9 11.9 0 1 0 91.8 230.6A11.9 11.9 0 1 0 115.6 230.6ZM89.2 185.0A11.9 11.9 0 1 0 65.4 185.0A11.9 11.9 0 1 0 89.2 185.0ZM115.5 139.4A11.9 11.9 0 1 0 91.7 139.4A11.9 11.9 0 1 0 115.5 139.4ZM168.2 139.4A11.9 11.9 0 1 0 144.4 139.4A11.9 11.9 0 1 0 168.2 139.4Z" fill="url(#mG1)" fill-rule="evenodd" stroke="#7dd3fc" stroke-opacity=".6" stroke-width="1.5"/><circle cx="130" cy="185" r="66" fill="none" stroke="#38bdf8" stroke-opacity=".35"/><circle cx="130" cy="185" r="30" fill="none" stroke="#f97316" stroke-opacity=".85" stroke-width="2"/></svg></div><div class="m1-wr"><svg class="gl " viewBox="60 4 80 188" style="--z:-4px" aria-hidden="true"><path d="M82 14L94 14L94 34L106 34L106 14L118 14A34 34 0 0 1 112 72L112 172A12 12 0 0 1 88 172L88 72A34 34 0 0 1 82 14ZM106 172A6 6 0 1 0 94 172A6 6 0 1 0 106 172Z" fill="#7c2d12" fill-rule="evenodd"/></svg><svg class="gl gm" viewBox="60 4 80 188" style="--z:-1px" aria-hidden="true"><path d="M82 14L94 14L94 34L106 34L106 14L118 14A34 34 0 0 1 112 72L112 172A12 12 0 0 1 88 172L88 72A34 34 0 0 1 82 14ZM106 172A6 6 0 1 0 94 172A6 6 0 1 0 106 172Z" fill="#b45309" fill-rule="evenodd"/></svg><svg class="gl gm" viewBox="60 4 80 188" style="--z:2px" aria-hidden="true"><path d="M82 14L94 14L94 34L106 34L106 14L118 14A34 34 0 0 1 112 72L112 172A12 12 0 0 1 88 172L88 72A34 34 0 0 1 82 14ZM106 172A6 6 0 1 0 94 172A6 6 0 1 0 106 172Z" fill="#d9640f" fill-rule="evenodd"/></svg><svg class="gl " viewBox="60 4 80 188" style="--z:5px" aria-hidden="true"><path d="M82 14L94 14L94 34L106 34L106 14L118 14A34 34 0 0 1 112 72L112 172A12 12 0 0 1 88 172L88 72A34 34 0 0 1 82 14ZM106 172A6 6 0 1 0 94 172A6 6 0 1 0 106 172Z" fill="url(#mG2)" fill-rule="evenodd" stroke="#fdba74" stroke-opacity=".7"/></svg></div></div></div></div><div class="ob" style="--i:1"><div class="ob-in"><div class="m2"><i class="cp-glow"></i><div class="cp"><div class="cp-top"><svg viewBox="0 0 130 130" aria-hidden="true"><rect x="40" y="40" width="50" height="50" rx="6" fill="#0b1626" stroke="#38bdf8" stroke-opacity=".8" stroke-width="1.5"/><rect x="50" y="50" width="30" height="30" rx="3" fill="rgba(56,189,248,.14)" stroke="#f97316" stroke-width="1.4"/><circle cx="65" cy="65" r="4.5" fill="#f97316"/><circle cx="14" cy="14" r="3" fill="#94a3b8"/><path class="trc" d="M22 22H40V44H56" fill="none" stroke="#f97316" stroke-width="1.8"/><path class="trc t2" d="M108 88H92V66H76" fill="none" stroke="#f97316" stroke-width="1.8"/><path d="M22 50H36V62H52M108 40H94V30H78M44 108V92H56M86 108V94H74M44 12V28H56M86 12V26H74" fill="none" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.6"/></svg></div><div class="cp-bot"></div><div class="cp-s n"></div><div class="cp-s s"></div><div class="cp-s w"></div><div class="cp-s e"></div><div class="pin pn"></div><div class="pin ps"></div><div class="pin pw"></div><div class="pin pe"></div></div></div></div></div><div class="ob" style="--i:2"><div class="ob-in"><div class="m3"><div class="m3-ring"></div><div class="m3-cube"><i class="q q0"></i><i class="q q1"></i><i class="q q2"></i><i class="q q3"></i><i class="q q4"></i><i class="q q5"></i><div class="m3-core"><i class="r r0"></i><i class="r r1"></i><i class="r r2"></i><i class="r r3"></i><i class="r r4"></i><i class="r r5"></i></div></div></div></div></div></div></div><i class="tt-hint"></i></div></div></div>
-        <p class="mf-t" id="mfText" aria-label="" hidden></p>
-        <div class="stats rvx" style="margin-top:46px">
-        <div class="stat"><b data-count="3">0</b><span data-i18n="stat1">مجالات تقنية</span></div>
-        <div class="stat"><b data-count="4">0</b><span data-i18n="stat2">مراحل من الفكرة إلى النموذج</span></div>
-        <div class="stat"><b data-count="1">0</b><span data-i18n="stat3">فريق واحد</span></div>
-      </div>
-      </div>
-    </section>
-
-    <!-- WORKFLOW + CTA -->
+    <!-- WORKFLOW: 4-LAYER 3D STACK + CTA -->
     <section class="section sec-tight">
       <div class="container">
         <div class="section-header">
@@ -442,20 +367,46 @@
           <h2 class="section-title" data-i18n="workflowTitle">من الفكرة إلى النموذج</h2>
         </div>
         <div class="ex-grid rvx">
-          <div class="ex-stage" id="exStage" aria-hidden="true"><div class="ex-stack"><div class="ex-spin"><i class="ex-axis"></i><div class="ex-layer" style="--i:0" data-ex="0"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><path d="M100 58c-22 0-34 17-34 33 0 13 8 20 14 29v10h40v-10c6-9 14-16 14-29 0-16-12-33-34-33z"/><path d="M84 138h32M88 148h24"/><path d="M100 20v16M52 40l11 11M148 40l-11 11M26 92h16M158 92h16"/><path d="M90 108q5-12 10 0t10 0" stroke="#f97316"/></g></svg><b>01</b></div><div class="ex-layer" style="--i:1" data-ex="1"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><circle cx="100" cy="96" r="44"/><circle cx="100" cy="96" r="22" stroke-dasharray="3 6"/><path d="M40 96h120M100 36v120" stroke-opacity=".5"/><path d="M56 160h88M56 154v12M144 154v12" stroke="#f97316"/><path d="M62 160l8-4v8zM138 160l-8-4v8z" fill="#f97316" stroke="#f97316"/></g></svg><b>02</b></div><div class="ex-layer" style="--i:2" data-ex="2"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#f97316"><path d="M150 100L163.8 105.6L161.6 117.5L146.7 117.8L140.5 129.4L148.3 142L139.5 150.3L127.3 141.9L115.5 147.6L114.4 162.4L102.4 164L97.5 149.9L84.5 147.6L75 158.9L64.4 153.2L68.6 138.9L59.5 129.4L45.1 132.9L39.9 122.1L51.7 113L50 100L36.2 94.4L38.4 82.5L53.3 82.2L59.5 70.6L51.7 58L60.5 49.7L72.7 58.1L84.5 52.4L85.6 37.6L97.6 36L102.5 50.1L115.5 52.4L125 41.1L135.6 46.8L131.4 61.1L140.5 70.6L154.9 67.1L160.1 77.9L148.3 87ZM112 100A12 12 0 1 0 88 100A12 12 0 1 0 112 100Z" fill="rgba(249,115,22,.1)"/><circle cx="100" cy="100" r="24" stroke="#38bdf8" stroke-opacity=".7"/></g></svg><b>03</b></div><div class="ex-layer" style="--i:3" data-ex="3"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><circle cx="100" cy="86" r="42"/><path d="M80 87l15 15 28-30" stroke="#f97316" stroke-width="3.2"/><path d="M30 156h28l10-18 14 32 14-24 10 10h66" stroke-opacity=".8"/></g></svg><b>04</b></div></div></div></div>
+          <div class="ex-stage" id="exStage" aria-hidden="true">
+            <div class="ex-stack">
+              <div class="ex-spin">
+                <i class="ex-axis"></i>
+                <div class="ex-layer" style="--i:0" data-ex="0"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><path d="M100 58c-22 0-34 17-34 33 0 13 8 20 14 29v10h40v-10c6-9 14-16 14-29 0-16-12-33-34-33z"/><path d="M84 138h32M88 148h24"/><path d="M100 20v16M52 40l11 11M148 40l-11 11M26 92h16M158 92h16"/><path d="M90 108q5-12 10 0t10 0" stroke="#f97316"/></g></svg><b>01</b></div>
+                <div class="ex-layer" style="--i:1" data-ex="1"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><circle cx="100" cy="96" r="44"/><circle cx="100" cy="96" r="22" stroke-dasharray="3 6"/><path d="M40 96h120M100 36v120" stroke-opacity=".5"/><path d="M56 160h88M56 154v12M144 154v12" stroke="#f97316"/><path d="M62 160l8-4v8zM138 160l-8-4v8z" fill="#f97316" stroke="#f97316"/></g></svg><b>02</b></div>
+                <div class="ex-layer" style="--i:2" data-ex="2"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#f97316"><path d="M150 100L163.8 105.6L161.6 117.5L146.7 117.8L140.5 129.4L148.3 142L139.5 150.3L127.3 141.9L115.5 147.6L114.4 162.4L102.4 164L97.5 149.9L84.5 147.6L75 158.9L64.4 153.2L68.6 138.9L59.5 129.4L45.1 132.9L39.9 122.1L51.7 113L50 100L36.2 94.4L38.4 82.5L53.3 82.2L59.5 70.6L51.7 58L60.5 49.7L72.7 58.1L84.5 52.4L85.6 37.6L97.6 36L102.5 50.1L115.5 52.4L125 41.1L135.6 46.8L131.4 61.1L140.5 70.6L154.9 67.1L160.1 77.9L148.3 87ZM112 100A12 12 0 1 0 88 100A12 12 0 1 0 112 100Z" fill="rgba(249,115,22,.1)"/><circle cx="100" cy="100" r="24" stroke="#38bdf8" stroke-opacity=".7"/></g></svg><b>03</b></div>
+                <div class="ex-layer" style="--i:3" data-ex="3"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" stroke="#38bdf8"><circle cx="100" cy="86" r="42"/><path d="M80 87l15 15 28-30" stroke="#f97316" stroke-width="3.2"/><path d="M30 156h28l10-18 14 32 14-24 10 10h66" stroke-opacity=".8"/></g></svg><b>04</b></div>
+              </div>
+            </div>
+          </div>
           <ol class="flow rvx">
-          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><em>01</em></span><h3 data-i18n="step1Title">الفكرة</h3></li>
-          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><em>02</em></span><h3 data-i18n="step2Title">التصميم</h3></li>
-          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><em>03</em></span><h3 data-i18n="step3Title">التركيب</h3></li>
-          <li class="flow-step"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><polyline points="22 4 12 14 9 11"/></svg><em>04</em></span><h3 data-i18n="step4Title">الاختبار</h3></li>
-        </ol>
+            <li class="flow-step" data-step="0"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><em>01</em></span><h3 data-i18n="step1Title">الفكرة</h3></li>
+            <li class="flow-step" data-step="1"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><em>02</em></span><h3 data-i18n="step2Title">التصميم</h3></li>
+            <li class="flow-step" data-step="2"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><em>03</em></span><h3 data-i18n="step3Title">التركيب</h3></li>
+            <li class="flow-step" data-step="3"><span class="flow-node"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><polyline points="22 4 12 14 9 11"/></svg><em>04</em></span><h3 data-i18n="step4Title">الاختبار</h3></li>
+          </ol>
         </div>
+
         <div class="inno-band rvx">
-  <div class="idc-stack" aria-hidden="true"><div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 001</em></div><div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 002</em></div><div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 003</em></div></div>
-  <div class="inno-txt"><span class="eyebrow-x" data-i18n="innoEyebrow">المبتكرون</span><h2 data-i18n="innoTitle">وجوه خلف كل نموذج</h2><p data-i18n="innoDesc">تعرّف على المتربصين وأفكارهم ومشاريعهم.</p></div>
-  <a href="innovators.html" class="btn btn-secondary"><span data-i18n="innoBtn">شاهد المبتكرين</span></a>
-</div>
-        <div class="mega" aria-hidden="true"><div class="mega-track"><span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span></div></div>
+          <div class="idc-stack" aria-hidden="true">
+            <div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 001</em></div>
+            <div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 002</em></div>
+            <div class="idc"><svg viewBox="0 0 60 40" aria-hidden="true"><circle cx="30" cy="15" r="9" fill="rgba(56,189,248,.35)"/><path d="M10 40c2-14 38-14 40 0" fill="rgba(56,189,248,.25)"/></svg><i></i><i></i><em>ID 003</em></div>
+          </div>
+          <div class="inno-txt">
+            <span class="eyebrow-x" data-i18n="innoEyebrow">المبتكرون</span>
+            <h2 data-i18n="innoTitle">وجوه خلف كل نموذج</h2>
+            <p data-i18n="innoDesc">تعرّف على المتربصين وأفكارهم ومشاريعهم.</p>
+          </div>
+          <a href="innovators.html" class="btn btn-secondary"><span data-i18n="innoBtn">شاهد المبتكرين</span></a>
+        </div>
+
+        <div class="mega" aria-hidden="true">
+          <div class="mega-track">
+            <span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span>
+            <span>THINK BEYOND</span><span>BUILD THE FUTURE</span><span>THINK BEYOND</span><span>BUILD THE FUTURE</span>
+          </div>
+        </div>
+
         <div class="cta-line rvx">
           <h2 class="cta-title" data-i18n="ctaTitle">لديك فكرة مشروع؟</h2>
           <a href="contact.html" class="btn btn-primary"><span data-i18n="ctaBtn">تواصل مع النادي</span><svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></a>
@@ -465,16 +416,23 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer slim"><div class="container slim-row">
-<div class="brand">
-            <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bmG2" x1="4" y1="3" x2="32" y2="33" gradientUnits="userSpaceOnUse"><stop stop-color="#7DD3FC"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs><path d="M18 2.5L31.5 10.25V25.75L18 33.5L4.5 25.75V10.25L18 2.5Z" fill="#0B1220" stroke="url(#bmG2)" stroke-width="1.6" stroke-linejoin="round"/><path d="M25.1 18L27.54 19.05L27.03 21.25L24.38 21.12L23.02 23.02L24 25.49L22.09 26.69L20.3 24.72L18 25.1L16.95 27.54L14.75 27.03L14.88 24.38L12.98 23.02L10.51 24L9.31 22.09L11.28 20.3L10.9 18L8.46 16.95L8.97 14.75L11.62 14.88L12.98 12.98L12 10.51L13.91 9.31L15.7 11.28L18 10.9L19.05 8.46L21.25 8.97L21.12 11.62L23.02 12.98L25.49 12L26.69 13.91L24.72 15.7ZM21.7 18A3.7 3.7 0 1 0 14.3 18A3.7 3.7 0 1 0 21.7 18Z" fill="#E2E8F0" fill-rule="evenodd"/><circle cx="18" cy="18" r="2.1" fill="#F97316"/></svg>
-            <div class="brand-text">
-              <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
-              <span class="brand-sub">BÉTIOUA SCIENTIFIC CLUB</span>
-            </div>
-          </div>
-<nav class="slim-links"><a href="innovators.html" data-i18n="navInnovators">المبتكرون</a><a href="activities.html" data-i18n="navActivities">النشاطات</a><a href="contact.html" data-i18n="navContact">تواصل معنا</a></nav>
-<span class="slim-copy">© 2026 BÉTIOUA SCIENTIFIC CLUB</span></div></footer>
+  <footer class="site-footer slim">
+    <div class="container slim-row">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bmG2" x1="4" y1="3" x2="32" y2="33" gradientUnits="userSpaceOnUse"><stop stop-color="#7DD3FC"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs><path d="M18 2.5L31.5 10.25V25.75L18 33.5L4.5 25.75V10.25L18 2.5Z" fill="#0B1220" stroke="url(#bmG2)" stroke-width="1.6" stroke-linejoin="round"/><path d="M25.1 18L27.54 19.05L27.03 21.25L24.38 21.12L23.02 23.02L24 25.49L22.09 26.69L20.3 24.72L18 25.1L16.95 27.54L14.75 27.03L14.88 24.38L12.98 23.02L10.51 24L9.31 22.09L11.28 20.3L10.9 18L8.46 16.95L8.97 14.75L11.62 14.88L12.98 12.98L12 10.51L13.91 9.31L15.7 11.28L18 10.9L19.05 8.46L21.25 8.97L21.12 11.62L23.02 12.98L25.49 12L26.69 13.91L24.72 15.7ZM21.7 18A3.7 3.7 0 1 0 14.3 18A3.7 3.7 0 1 0 21.7 18Z" fill="#E2E8F0" fill-rule="evenodd"/><circle cx="18" cy="18" r="2.1" fill="#F97316"/></svg>
+        <div class="brand-text">
+          <span class="brand-title" data-i18n="brandTitle">النادي العلمي لمعهد بطيوة</span>
+          <span class="brand-sub">BÉTIOUA SCIENTIFIC CLUB</span>
+        </div>
+      </div>
+      <nav class="slim-links">
+        <a href="innovators.html" data-i18n="navInnovators">المبتكرون</a>
+        <a href="activities.html" data-i18n="navActivities">النشاطات</a>
+        <a href="contact.html" data-i18n="navContact">تواصل معنا</a>
+      </nav>
+      <span class="slim-copy">© 2026 BÉTIOUA SCIENTIFIC CLUB</span>
+    </div>
+  </footer>
 
   <!-- MOBILE DOCK -->
   <nav class="mobile-dock" aria-label="Mobile Navigation">
@@ -497,104 +455,320 @@
   </nav>
 
   <script src="app.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script>
-/* Hero: lightweight video first (0.6 MB). If it cannot play, the interactive 3D drone loads as a fallback. */
-(function () {
-  var stage = document.getElementById('droneStage'), v = document.getElementById('heroVid');
-  if (!stage || !v) return;
-  var cn = navigator.connection || {}, still = false, started = false;
-  try { still = matchMedia('(prefers-reduced-motion: reduce)').matches || cn.saveData; } catch (e) {}
-  function loadDrone() {
-    if (started) return; started = true;
-    v.style.display = 'none';
-    var sc = document.createElement('script');
-    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-    sc.onload = function () { try { window.__bscDrone(); } catch (e) { stage.classList.add('no-webgl'); } };
-    sc.onerror = function () { stage.classList.add('no-webgl'); };
-    document.head.appendChild(sc);
-  }
-  if (still) { v.poster && (stage.style.background = 'url(hero-drone.jpg) center/contain no-repeat'); v.style.display = 'none'; return; }
-  var visible = true, ready = false;
-  function sync() { if (!ready) return; if (visible && !document.hidden) v.play().catch(function () {}); else v.pause(); }
-  v.addEventListener('playing', function () { ready = true; v.classList.add('on'); stage.classList.add('ready'); });
-  v.addEventListener('error', loadDrone, true);
-  var fail = setTimeout(function () { if (!ready) loadDrone(); }, 7000);
-  v.addEventListener('playing', function () { clearTimeout(fail); }, { once: true });
-  try { new IntersectionObserver(function (e) { visible = e[0].isIntersecting; sync(); }).observe(stage); } catch (e) {}
-  document.addEventListener('visibilitychange', sync);
-  v.preload = 'auto';
-  var p = v.play(); if (p && p.catch) p.catch(function () { ready = false; });
-})();
+  document.addEventListener('DOMContentLoaded', function () {
+    /* 1. Reveal all sections safely */
+    var rvxList = document.querySelectorAll('.rvx');
+    function showEl(el) { el.classList.add('in-view'); }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { showEl(en.target); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.08 });
+      rvxList.forEach(function (el) { io.observe(el); });
+    } else {
+      rvxList.forEach(showEl);
+    }
+    setTimeout(function () { rvxList.forEach(showEl); }, 1200);
+
+    /* 2. Progress bar */
+    var pbar = document.getElementById('pbar');
+    function updateScroll() {
+      var h = document.documentElement.scrollHeight - innerHeight;
+      if (pbar && h > 0) pbar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, scrollY / h)) + ')';
+      updateManifesto();
+    }
+    addEventListener('scroll', updateScroll, { passive: true });
+
+    /* 3. Manifesto word reveal + AR/EN sync */
+    var mfText = document.getElementById('mfText');
+    var mfCopy = {
+      ar: [
+        { t: 'نؤمن بأن', c: '' }, { t: 'الابتكار', c: 'hl' }, { t: 'يبدأ من الورشة؛ حيث يلتقي', c: '' },
+        { t: 'الفضول العلمي', c: 'am' }, { t: 'بالمهارة التطبيقية لبناء', c: '' },
+        { t: 'حلول هندسية حقيقية', c: 'hl' }, { t: 'بأيدي شباب معهد بطيوة.', c: '' }
+      ],
+      en: [
+        { t: 'We believe', c: '' }, { t: 'innovation', c: 'hl' }, { t: 'starts in the workshop—where', c: '' },
+        { t: 'scientific curiosity', c: 'am' }, { t: 'meets hands-on skill to build', c: '' },
+        { t: 'real engineering prototypes', c: 'hl' }, { t: 'at Bétioua Institute.', c: '' }
+      ]
+    };
+    var extraI18n = {
+      ar: { mfKicker: 'MANIFESTO // الرؤية', stat1: 'مجالات تقنية', stat2: 'مراحل من الفكرة إلى النموذج', stat3: 'فريق واحد', innoEyebrow: 'المبتكرون', innoTitle: 'وجوه خلف كل نموذج', innoDesc: 'تعرّف على المتربصين وأفكارهم ومشاريعهم.', innoBtn: 'شاهد المبتكرين' },
+      en: { mfKicker: 'MANIFESTO // VISION', stat1: 'Technical Domains', stat2: 'Stages from Idea to Prototype', stat3: 'Unified Team', innoEyebrow: 'INNOVATORS', innoTitle: 'Faces Behind Every Prototype', innoDesc: 'Meet our trainees, their ideas, and documented builds.', innoBtn: 'Explore Innovators' }
+    };
+    function renderManifesto() {
+      var lang = document.documentElement.lang === 'en' ? 'en' : 'ar';
+      if (mfText) {
+        mfText.innerHTML = '';
+        mfCopy[lang].forEach(function (seg) {
+          seg.t.split(' ').forEach(function (w) {
+            var sp = document.createElement('span');
+            sp.className = 'w on' + (seg.c ? ' ' + seg.c : '');
+            sp.textContent = w + ' ';
+            mfText.appendChild(sp);
+          });
+        });
+      }
+      var dict = extraI18n[lang];
+      Object.keys(dict).forEach(function (k) {
+        document.querySelectorAll('[data-i18n="' + k + '"]').forEach(function (el) { el.textContent = dict[k]; });
+      });
+    }
+    function updateManifesto() {
+      if (!mfText) return;
+      var words = mfText.querySelectorAll('.w');
+      if (!words.length) return;
+      var r = mfText.getBoundingClientRect();
+      var prog = Math.min(1, Math.max(0.25, (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35)));
+      var activeCount = Math.ceil(prog * words.length);
+      words.forEach(function (w, idx) { w.classList.toggle('on', idx < activeCount); });
+    }
+    renderManifesto();
+    updateScroll();
+    var langBtn = document.getElementById('langToggleBtn');
+    if (langBtn) langBtn.addEventListener('click', function () { setTimeout(renderManifesto, 30); });
+
+    /* 4. Animated stats */
+    var statsBox = document.querySelector('.stats');
+    if (statsBox && 'IntersectionObserver' in window) {
+      var sIo = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        sIo.disconnect();
+        statsBox.querySelectorAll('[data-count]').forEach(function (el) {
+          var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+          var cur = 0, step = Math.max(1, Math.ceil(target / 18));
+          var iv = setInterval(function () {
+            cur += step;
+            if (cur >= target) { el.textContent = target; clearInterval(iv); }
+            else el.textContent = cur;
+          }, 45);
+        });
+      }, { threshold: 0.3 });
+      sIo.observe(statsBox);
+    }
+
+    /* 5. Hero glow & Gears interactive tilt */
+    var heroSec = document.getElementById('heroSec');
+    if (heroSec) {
+      heroSec.addEventListener('pointermove', function (e) {
+        var r = heroSec.getBoundingClientRect();
+        heroSec.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        heroSec.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      }, { passive: true });
+    }
+    var gx = document.getElementById('gxStage');
+    if (gx) {
+      gx.addEventListener('pointermove', function (e) {
+        var r = gx.getBoundingClientRect();
+        gx.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(2));
+        gx.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(2));
+      }, { passive: true });
+      gx.addEventListener('pointerleave', function () {
+        gx.style.setProperty('--mx', '0'); gx.style.setProperty('--my', '0');
+      });
+    }
+
+    /* 6. Exploded 4-layer 3D stack + step highlight */
+    var ex = document.getElementById('exStage');
+    var layers = document.querySelectorAll('.ex-layer');
+    var steps = document.querySelectorAll('.flow-step');
+    if (ex) {
+      ex.addEventListener('pointermove', function (e) {
+        var r = ex.getBoundingClientRect();
+        ex.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(2));
+        ex.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(2));
+      }, { passive: true });
+      ex.addEventListener('pointerleave', function () {
+        ex.style.setProperty('--mx', '0'); ex.style.setProperty('--my', '0');
+      });
+    }
+    function setActiveStep(idx) {
+      layers.forEach(function (l, i) { l.classList.toggle('on', i === idx); });
+      steps.forEach(function (s, i) { s.classList.toggle('on', i === idx); });
+    }
+    steps.forEach(function (st, i) {
+      st.addEventListener('pointerenter', function () { setActiveStep(i); });
+      st.addEventListener('click', function () { setActiveStep(i); });
+    });
+
+    /* 7. Interactive 3D Drone (Three.js) */
+    function initDrone() {
+      var stage = document.getElementById('droneStage');
+      if (!stage) return;
+      if (typeof THREE === 'undefined') { stage.classList.add('no-webgl'); return; }
+      var renderer;
+      try { renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); }
+      catch (e) { stage.classList.add('no-webgl'); return; }
+
+      var CY = 0x38bdf8, OR = 0xf97316;
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nv = navigator, cn = nv.connection || {};
+      var weak = reduce || cn.saveData || (nv.deviceMemory && nv.deviceMemory <= 2);
+      var tier = weak ? 'lite' : (matchMedia('(pointer: coarse)').matches ? 'mid' : 'pro');
+      var Q = { lite: { dpr: 1, ptc: 70, fx: false }, mid: { dpr: 1.5, ptc: 110, fx: true }, pro: { dpr: 2, ptc: 180, fx: true } }[tier];
+
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, Q.dpr));
+      stage.appendChild(renderer.domElement);
+
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+
+      function part(geo, color, op) {
+        var g = new THREE.Group();
+        g.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+          color: 0x08121f, transparent: true, opacity: 0.88,
+          polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1
+        })));
+        g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo),
+          new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: op })));
+        return g;
+      }
+      function lines(pts, color, op) {
+        var geo = new THREE.BufferGeometry().setFromPoints(pts.map(function (p) { return new THREE.Vector3(p[0], p[1], p[2]); }));
+        return new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: op }));
+      }
+
+      var yaw = new THREE.Group();
+      var tilt = new THREE.Group();
+      var drone = new THREE.Group();
+      scene.add(yaw); yaw.add(tilt); tilt.add(drone);
+
+      /* Body & dome */
+      drone.add(part(new THREE.CylinderGeometry(0.95, 1.15, 0.45, 6), CY, 0.9));
+      var dome = part(new THREE.SphereGeometry(0.58, 12, 6, 0, Math.PI * 2, 0, Math.PI / 2), CY, 0.6);
+      dome.position.y = 0.22; drone.add(dome);
+
+      /* Camera gimbal */
+      var cam = part(new THREE.SphereGeometry(0.3, 12, 10), OR, 0.95);
+      cam.position.set(0, -0.32, 0.72); drone.add(cam);
+
+      /* 4 Arms, motors, spinning propellers */
+      var props = [];
+      for (var i = 0; i < 4; i++) {
+        var a = Math.PI / 4 + i * Math.PI / 2;
+        var arm = new THREE.Group(); arm.rotation.y = a; drone.add(arm);
+        var bar = part(new THREE.BoxGeometry(1.8, 0.12, 0.2), CY, 0.85);
+        bar.position.x = 1.1; arm.add(bar);
+        var motor = part(new THREE.CylinderGeometry(0.26, 0.26, 0.34, 12), CY, 0.9);
+        motor.position.set(2.1, 0.12, 0); arm.add(motor);
+        var front = Math.sin(a) < 0;
+        var pc = front ? OR : CY;
+        var prop = new THREE.Group(); prop.position.set(2.1, 0.4, 0); arm.add(prop);
+        [0, Math.PI / 2].forEach(function (r) {
+          var blade = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.025, 0.13),
+            new THREE.MeshBasicMaterial({ color: pc, transparent: true, opacity: 0.8 }));
+          blade.rotation.y = r; prop.add(blade);
+        });
+        var disc = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.008, 6, 48),
+          new THREE.MeshBasicMaterial({ color: pc, transparent: true, opacity: 0.35 }));
+        disc.rotation.x = Math.PI / 2; prop.add(disc);
+        props.push(prop);
+      }
+
+      /* Landing skids */
+      [-1, 1].forEach(function (s) {
+        drone.add(lines([[-1, -0.85, s * 0.6], [1, -0.85, s * 0.6]], CY, 0.7));
+        [-1, 1].forEach(function (x) {
+          drone.add(lines([[x * 0.6, -0.2, s * 0.55], [x * 0.8, -0.85, s * 0.6]], CY, 0.7));
+        });
+      });
+
+      /* Ground rings */
+      var ringA = new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.012, 6, 80),
+        new THREE.MeshBasicMaterial({ color: CY, transparent: true, opacity: 0.35 }));
+      var ringB = new THREE.Mesh(new THREE.TorusGeometry(3.0, 0.01, 6, 80),
+        new THREE.MeshBasicMaterial({ color: CY, transparent: true, opacity: 0.15 }));
+      [ringA, ringB].forEach(function (r) { r.rotation.x = Math.PI / 2; r.position.y = -2.4; yaw.add(r); });
+
+      /* Particles */
+      var N = Q.ptc, arr = new Float32Array(N * 3);
+      for (var j = 0; j < arr.length; j++) arr[j] = (Math.random() - 0.5) * 11;
+      var pg = new THREE.BufferGeometry();
+      pg.setAttribute('position', new THREE.BufferAttribute(arr, 3));
+      var pts = new THREE.Points(pg, new THREE.PointsMaterial({ size: 0.05, color: CY, transparent: true, opacity: 0.6 }));
+      scene.add(pts);
+
+      /* Glow sprites & scan beam */
+      if (Q.fx) {
+        try {
+          var cv = document.createElement('canvas'); cv.width = cv.height = 64;
+          var g2 = cv.getContext('2d'), gr = g2.createRadialGradient(32, 32, 0, 32, 32, 32);
+          gr.addColorStop(0, 'rgba(255,255,255,1)');
+          gr.addColorStop(0.35, 'rgba(255,255,255,.35)');
+          gr.addColorStop(1, 'rgba(255,255,255,0)');
+          g2.fillStyle = gr; g2.fillRect(0, 0, 64, 64);
+          var tex = new THREE.CanvasTexture(cv);
+          var glow = function (color, size, op) {
+            var sp = new THREE.Sprite(new THREE.SpriteMaterial({
+              map: tex, color: color, transparent: true, opacity: op,
+              blending: THREE.AdditiveBlending, depthWrite: false
+            }));
+            sp.scale.set(size, size, 1); return sp;
+          };
+          var eye = glow(OR, 1.5, 0.9); eye.position.copy(cam.position); drone.add(eye);
+          var core = glow(CY, 3.2, 0.28); drone.add(core);
+          var cone = new THREE.Mesh(
+            new THREE.ConeGeometry(1.6, 2.2, 24, 1, true),
+            new THREE.MeshBasicMaterial({ color: CY, transparent: true, opacity: 0.06, side: THREE.DoubleSide, depthWrite: false })
+          );
+          cone.position.y = -1.3; drone.add(cone);
+        } catch (e) {}
+      }
+
+      /* Resize */
+      function resize() {
+        var w = stage.clientWidth || 320, h = stage.clientHeight || 320;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.position.set(0, 1.15, innerWidth < 768 ? 8.8 : 7.6);
+        camera.lookAt(0, -0.25, 0);
+        camera.updateProjectionMatrix();
+      }
+      resize();
+      addEventListener('resize', resize);
+
+      /* Interactive drag & pointer tilt */
+      var drag = false, prevX = 0, userYaw = 0.42, tx = 0, ty = 0;
+      stage.addEventListener('pointerdown', function (e) { drag = true; prevX = e.clientX; });
+      addEventListener('pointerup', function () { drag = false; });
+      addEventListener('pointermove', function (e) {
+        if (drag) { userYaw += (e.clientX - prevX) * 0.01; prevX = e.clientX; }
+        var r = stage.getBoundingClientRect();
+        tx = ((e.clientX - r.left) / r.width - 0.5) * 0.35;
+        ty = ((e.clientY - r.top) / r.height - 0.5) * 0.25;
+      }, { passive: true });
+
+      var hudYaw = document.getElementById('hudYaw');
+      var visible = true, t0 = performance.now();
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(stage);
+      }
+
+      function animate(now) {
+        requestAnimationFrame(animate);
+        if (!visible || document.hidden) return;
+        var t = (now - t0) * 0.001;
+        props.forEach(function (p, idx) { p.rotation.y += (idx % 2 === 0 ? 0.42 : -0.42); });
+        drone.position.y = Math.sin(t * 2.1) * 0.16;
+        yaw.rotation.y = userYaw + Math.sin(t * 0.55) * 0.28;
+        tilt.rotation.z += (-tx - tilt.rotation.z) * 0.08;
+        tilt.rotation.x += (ty - tilt.rotation.x) * 0.08;
+        ringA.rotation.z = t * 0.35;
+        ringB.rotation.z = -t * 0.2;
+        pts.rotation.y = t * 0.04;
+        if (hudYaw) hudYaw.textContent = Math.round(((yaw.rotation.y * 180 / Math.PI) % 360 + 360) % 360) + '°';
+        renderer.render(scene, camera);
+      }
+      requestAnimationFrame(animate);
+    }
+
+    if (typeof THREE !== 'undefined') initDrone();
+    else window.addEventListener('load', initDrone);
+  });
   </script>
-  <script>
-(function () {
-  function init() {
-    try { initInner(); }
-    catch (e) {
-      try { console.error(e); } catch (x) {}
-      var st = document.getElementById('droneStage');
-      if (st) { [].slice.call(st.querySelectorAll('canvas')).forEach(function (c) { c.remove(); }); st.classList.add('no-webgl'); }
-    }
-  }
-  function initInner() {
-    const stage = document.getElementById('droneStage');
-    if (!stage) return;
-    if (typeof THREE === 'undefined') { stage.classList.add('no-webgl'); return; }
-    let renderer;
-    try { renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); }
-    catch (e) { stage.classList.add('no-webgl'); return; }
-
-    const CY = 0x38bdf8, OR = 0xf97316;
-    const mobile = () => innerWidth < 768;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // ===== مستويات الجودة (للتجربة: ?quality=lite أو mid أو pro ، ولعرض الأداء: ?debug) =====
-    const _nv = navigator, _cn = _nv.connection || {};
-    const _weak = reduce || _cn.saveData || (_nv.deviceMemory && _nv.deviceMemory <= 2) || (_nv.hardwareConcurrency && _nv.hardwareConcurrency <= 2);
-    let tier = _weak ? 'lite' : (matchMedia('(pointer: coarse)').matches ? 'mid' : 'pro');
-    try { const q = new URLSearchParams(location.search).get('quality'); if (q === 'lite' || q === 'mid' || q === 'pro') tier = q; } catch (e) {}
-    const Q = { lite: { dpr: 1, ptc: 70, fx: false }, mid: { dpr: 1.5, ptc: 110, fx: true }, pro: { dpr: 2, ptc: 180, fx: true } }[tier];
-    let dprCap = Q.dpr;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, dprCap));
-    stage.appendChild(renderer.domElement);
-    stage.classList.add('ready'); stage.classList.remove('no-webgl');
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-
-    // solid dark fill + glowing edges = clean "blueprint" look
-    function part(geo, color, op) {
-      const g = new THREE.Group();
-      g.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
-        color: 0x08121f, transparent: true, opacity: 0.88,
-        polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })));
-      g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo),
-        new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: op })));
-      return g;
-    }
-    function lines(pts, color, op) {
-      const geo = new THREE.BufferGeometry().setFromPoints(pts.map(p => new THREE.Vector3(...p)));
-      return new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: op }));
-    }
-
-    const yaw = new THREE.Group();   // slow sway + drag
-    const tilt = new THREE.Group();  // follows pointer
-    const drone = new THREE.Group(); // levitation
-    scene.add(yaw); yaw.add(tilt); tilt.add(drone);
-
-    // body
-    const body = part(new THREE.CylinderGeometry(0.95, 1.15, 0.45, 6), CY, 0.9);
-    drone.add(body);
-    const dome = part(new THREE.SphereGeometry(0.58, 12, 6, 0, Math.PI * 2, 0, Math.PI / 2), CY, 0.6);
-    dome.position.y = 0.22; drone.add(dome);
-    // camera gimbal (orange accent, faces front = +z)
-    const cam = part(new THREE.SphereGeometry(0.3, 12, 10), OR, 0.95);
-    cam.position.set(0, -0.32, 0.72); drone.add(cam);
-
-    // arms, motors, propellers
-    const props = [];
-    for (let i = 0; i < 4; i++) {
-      const a = Math.PI / 4 + i * Math.PI / 2;
-      const arm = new THREE.Group(); arm.rotation.y = a; drone.add(arm);
-      const bar = part(new THREE.BoxGeometry(1.8, 0.12, 0.2), CY, 0.85);
-      bar.position.x = 1.1; arm.add(bar);
-      const motor = part(new THREE.CylinderGeometry(0.26, 0.26, 0.34, 1
+</body>
+</html>
