@@ -357,7 +357,7 @@
         </a>
       </div>
     </div>
-    <div class="hero-stage" id="droneStage" aria-hidden="true"></div>
+    <div class="hero-stage no-webgl" id="droneStage" aria-hidden="true"></div>
   </div>
   <div class="scroll-cue" aria-hidden="true"><i></i></div>
 </section>
@@ -485,10 +485,18 @@
   </nav>
 
   <script src="app.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer onerror="var s=document.getElementById('droneStage');if(s)s.classList.add('no-webgl')"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" id="threeJs" async onerror="var s=document.getElementById('droneStage');if(s)s.classList.add('no-webgl')"></script>
   <script>
 (function () {
   function init() {
+    try { initInner(); }
+    catch (e) {
+      try { console.error(e); } catch (x) {}
+      var st = document.getElementById('droneStage');
+      if (st) { [].slice.call(st.querySelectorAll('canvas')).forEach(function (c) { c.remove(); }); st.classList.add('no-webgl'); }
+    }
+  }
+  function initInner() {
     const stage = document.getElementById('droneStage');
     if (!stage) return;
     if (typeof THREE === 'undefined') { stage.classList.add('no-webgl'); return; }
@@ -508,6 +516,7 @@
     let dprCap = Q.dpr;
     renderer.setPixelRatio(Math.min(devicePixelRatio, dprCap));
     stage.appendChild(renderer.domElement);
+    stage.classList.remove('no-webgl');
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
@@ -587,15 +596,9 @@
 
     // ===== طبقة التأثيرات (توهج وشعاع مسح وإضاءة أرضية): تُبنى فقط في mid و pro، وأي خطأ يُسقطها بصمت =====
     let fx = null;
-    if (Q.fx) { try {
+    if (Q.fx && /[?&]fx=1\b/.test(location.search)) { try {
       const cv = document.createElement('canvas'); cv.width = cv.height = 64;
       const g2 = cv.getContext('2d'), gr = g2.createRadialGradient(32, 32, 0, 32, 32, 32);
       gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.35, 'rgba(255,255,255,.35)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
       g2.fillStyle = gr; g2.fillRect(0, 0, 64, 64);
-      const tex = new THREE.CanvasTexture(cv);
-      const glow = (color, size, op) => {
-        const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, color: color, transparent: true, opacity: op, blending: THREE.AdditiveBlending, depthWrite: false }));
-        sp.scale.set(size, size, 1); return sp;
-      };
-      const eye = glow(OR, 1.5, 0.9); eye.position.copy(cam.position); drone.add(eye);
-      const core =
+      const tex = ne
